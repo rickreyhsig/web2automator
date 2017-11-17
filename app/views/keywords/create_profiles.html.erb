@@ -6,7 +6,17 @@ require 'watir'
 browser = Watir::Browser.new
 profiles = []
 
+#Facebook
+Rails.logger.info 'Facebook'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%facebook%").first.id)
+if kw2.length < 1
+    profiles << "Facebook Link Missing"
+else
+    profiles << kw2.first.link
+end
+
 #Twitter
+Rails.logger.info 'Twitter'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
 if kw2.length < 1
     browser.goto 'https://twitter.com'
@@ -23,6 +33,7 @@ else
 end
 
 #Pinterest
+Rails.logger.info 'Pinterest'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.pinterest.com/'
@@ -38,6 +49,7 @@ else
 end
 
 #Instagram
+Rails.logger.info 'Instagram'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%instagram%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.instagram.com/'
@@ -51,6 +63,7 @@ else
 end
 
 #MySpace
+Rails.logger.info 'MySpace'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myspace%").first.id)
 if kw2.length < 1
     profiles << "MySpace Link Missing"
@@ -59,6 +72,7 @@ else
 end
 
 #Tumblr
+Rails.logger.info 'Tumblr'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%tumblr%").first.id)
 if kw2.length < 1
     profiles << "Tumblr Link Missing"
@@ -66,37 +80,37 @@ else
     profiles << kw2.first.link
 end
 
+#Flickr
+Rails.logger.info 'Flickr'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%flickr%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.flickr.com/signup'
+    #browser.link(:text =>/Sign up/).click
+    browser.text_field(name: 'firstName').set @keyword.keyword
+    browser.text_field(name: 'lastName').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.select_list(name: 'mm').select_value('1')
+    browser.text_field(name: 'dd').set '01'
+    browser.text_field(name: 'yyyy').set '1980'
+    browser.button(type: 'submit').click
+    # Send me an Account Key button
+    browser.button(type: 'submit').click
 
+else
+    profiles << kw2.first.link
+end
 
+#Quora
+Rails.logger.info 'Quora'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%quora%").first.id)
+if kw2.length < 1
+    profiles << "Quora Link Missing"
+else
+    profiles << kw2.first.link
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Watir::Wait.until(180) { browser.text.include? 'Boom Shakalaka!' }
 
 
 =begin
