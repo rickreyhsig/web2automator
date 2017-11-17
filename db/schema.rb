@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171116215453) do
+ActiveRecord::Schema.define(:version => 20171117164527) do
 
   create_table "keywords", :force => true do |t|
     t.string   "keyword"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(:version => 20171116215453) do
     t.datetime "updated_at"
     t.string   "email"
     t.string   "password"
+  end
+
+  create_table "web2s", :force => true do |t|
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

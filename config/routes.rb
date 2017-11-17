@@ -1,4 +1,6 @@
 Web2automator::Application.routes.draw do
+  resources :web2s
+
   root :to => "keywords#index"
   resources :keywords
   get 'create_profiles' => 'keywords#create_profiles', as: 'create_profiles'
