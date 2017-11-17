@@ -130,6 +130,22 @@ if kw2.length < 1
     browser.text_field(id: 'user_login').set @keyword.keyword
     browser.text_field(id: 'user_email').set @keyword.email
     browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(value: 'Join with email').click
+    #browser.button(type: 'submit').click
+    #browser.link(text: 'skip this step').click
+else
+    profiles << kw2.first.link
+end
+
+#Vimeo
+#Need to verify this indeed works!!
+Rails.logger.info 'Vimeo'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%vimeo%").first.id)
+if kw2.length < 1
+    browser.goto 'https://vimeo.com/join'
+    browser.text_field(name: 'name').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
     browser.button(type: 'submit').click
     browser.button(type: 'submit').click
     browser.link(text: 'skip this step').click
