@@ -1,0 +1,120 @@
+<%
+require 'rubygems'
+require 'watir'
+
+# Authenticate
+browser = Watir::Browser.new
+
+#Twitter
+#browser.goto 'https://twitter.com'
+#browser.link(:text =>/Sign up/).click
+#
+#browser.text_field(name: 'user[name]').set @keyword.keyword
+#browser.text_field(name: 'user[email]').set @keyword.email
+#browser.text_field(name: 'user[user_password]').set @keyword.password
+#browser.input(id: 'submit_button').click
+
+#browser.link(:text =>/Skip/).click
+
+#Pinterest
+browser.goto 'https://www.pinterest.com/'
+browser.text_field(type: 'email').set @keyword.email
+browser.text_field(type: 'password').set @keyword.password
+browser.button(type: 'submit').click
+browser.text_field(placeholder: 'Full name').set @keyword.keyword
+browser.text_field(placeholder: 'Age').set '25'
+browser.radio(:name => 'gender', :value => 'male').set
+browser.button(type: 'submit').click
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=begin
+#browser.text_field(name: 'username').set user
+browser.text_field(name: 'password').set @project.password
+#browser.execute_script("alert(\"Please resolve the CAPTCHA to continue.\")")
+sleep 4
+
+# Make sure auth worked
+#browser.link(:text =>'3 - Valide seus anúncios').wait_until_present
+browser.link(:text =>'3 - Verify your Ads').wait_until_present
+
+# Grab anuncio text
+browser.goto 'http://brasiltelexbit.com/publicar.php'
+browser.text_field(name: 'usernames[]').set user
+browser.execute_script("window.scrollBy(0,500)")
+browser.input(:type =>'submit').click
+anuncio_text = browser.link(:id => 'ad'+user+'0').text
+
+# Post ads
+browser.goto 'https://office.telexbit.com/'
+#browser.link(:text =>'3 - Valide seus anúncios').click
+browser.link(:text =>'3 - Verify your Ads').click
+=end
+%>
+
+<%# [0,1,2,3,4].each do |num| %>
+<%# 	browser.select_list(:name, "n_adcentral").select_value(num.to_s) %>
+<%# 	browser.text_field(id: 'site_ads').set anuncio_text %>
+<%# 	browser.text_field(id: 'link_ads').set anuncio_text+num.to_s %>
+<%# 	browser.button(type: 'submit').click %>
+<%# 	sleep 1 %>
+<%#=	p "#{num} --- \xE2\x9C\x94" %>
+</br>
+<%# 	browser.goto 'https://office.telexbit.com/Ads/AdsSelectIII' %>
+<%# end %>
+
+Congrats, profiles were created! <br/>
+
+<%# browser.goto 'https://office.telexbit.com/Ads/MyAdcentral' %>
+<%#= puts browser.title %>
+<%# browser.close %>
+
+<%# @project.ad_timestamp = DateTime.now %>
+<%# @project.save! %>
+
+<br/>
+<%= link_to 'Back', keywords_path  %>

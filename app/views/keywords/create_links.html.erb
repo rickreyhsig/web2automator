@@ -1,0 +1,25 @@
+<%
+require 'rubygems'
+require 'watir'
+
+# Authenticate
+browser = Watir::Browser.new
+
+#Twitter
+browser.goto 'https://twitter.com'
+browser.link(:text =>/Log In/).click
+
+browser.text_field(name: 'session[username_or_email]').set @keyword.email
+browser.text_field(name: 'session[password]').set @keyword.password
+browser.input(type: 'submit').click
+
+#browser.link(:text =>/Skip/).click
+
+%>
+
+</br>
+
+Congrats, links were created! <br/>
+
+<br/>
+<%= link_to 'Back', keywords_path  %>

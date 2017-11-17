@@ -1,0 +1,32 @@
+<h1>Listing keywords</h1>
+
+<table>
+  <tr>
+    <th>Keyword</th>
+    <th>Link</th>
+    <th>Email</th>
+    <th>Password</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @keywords.each do |keyword| %>
+  <tr>
+    <td><%= keyword.keyword %></td>
+    <td><%= keyword.link %></td>
+    <td><%= keyword.email %></td>
+    <td><%= keyword.password %></td>
+    <td><%= link_to 'Create Profiles', create_profiles_path(id: keyword.id), class: 'rick_button' %></td>
+    <td><%= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>
+    <td><%= link_to 'Show', keyword %></td>
+    <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+    <td><%= link_to 'Destroy', keyword, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Keyword', new_keyword_path %>
+test
