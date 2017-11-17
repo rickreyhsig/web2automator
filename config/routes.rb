@@ -1,4 +1,6 @@
 Web2automator::Application.routes.draw do
+  resources :keyword_web2s
+
   resources :web2s
 
   root :to => "keywords#index"

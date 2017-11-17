@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Keyword:</b>
+  <%= Keyword.find(@keyword_web2.keyword).keyword %>
+</p>
+
+<p>
+  <b>Web2:</b>
+  <%= Web2.find(@keyword_web2.web2).url %>
+</p>
+
+<p>
+  <b>Link:</b>
+  <%= @keyword_web2.link %>
+</p>
+
+
+<%= link_to 'Edit', edit_keyword_web2_path(@keyword_web2) %> |
+<%= link_to 'Back', keyword_web2s_path %>

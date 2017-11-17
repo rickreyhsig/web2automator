@@ -1,0 +1,27 @@
+<h1>Listing keyword_web2s</h1>
+
+<table>
+  <tr>
+    <th>Keyword</th>
+    <th>Web2</th>
+    <th>Link</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @keyword_web2s.each do |keyword_web2| %>
+  <tr>
+    <td><%= Keyword.find(keyword_web2.keyword).keyword %></td>
+    <td><%= Web2.find(keyword_web2.web2).url %></td>
+    <td><%= keyword_web2.link %></td>
+    <td><%= link_to 'Show', keyword_web2 %></td>
+    <td><%= link_to 'Edit', edit_keyword_web2_path(keyword_web2) %></td>
+    <td><%= link_to 'Destroy', keyword_web2, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Keyword web2', new_keyword_web2_path %>

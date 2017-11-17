@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  keyword: 1
+  web2: 1
+
+two:
+  keyword: 1
+  web2: 1

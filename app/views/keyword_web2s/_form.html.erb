@@ -1,0 +1,29 @@
+<%= form_for(@keyword_web2) do |f| %>
+  <% if @keyword_web2.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@keyword_web2.errors.count, "error") %> prohibited this keyword_web2 from being saved:</h2>
+
+      <ul>
+      <% @keyword_web2.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :keyword %><br />
+    <%= f.select :keyword, Keyword.all.collect {|k| [ k.keyword, k.id ] } %>
+  </div>
+  <div class="field">
+    <%= f.label :web2 %><br />
+    <%= f.select :web2, Web2.all.collect {|w| [ w.url, w.id ] } %>
+  </div>
+  <div class="field">
+    <%= f.label :link %><br />
+    <%= f.text_field :link %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
