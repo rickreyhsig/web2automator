@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171117184336) do
+ActiveRecord::Schema.define(:version => 20171117185425) do
 
   create_table "keyword_web2s", :force => true do |t|
-    t.integer  "keyword"
-    t.integer  "web2"
+    t.integer  "keyword_id"
+    t.integer  "web2_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "link"

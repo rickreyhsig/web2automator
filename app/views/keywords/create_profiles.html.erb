@@ -6,15 +6,17 @@ require 'watir'
 browser = Watir::Browser.new
 
 #Twitter
-#browser.goto 'https://twitter.com'
-#browser.link(:text =>/Sign up/).click
-#
-#browser.text_field(name: 'user[name]').set @keyword.keyword
-#browser.text_field(name: 'user[email]').set @keyword.email
-#browser.text_field(name: 'user[user_password]').set @keyword.password
-#browser.input(id: 'submit_button').click
+if KeywordWeb2.where(keyword_id: @keyword.id).length < 1
+    browser.goto 'https://twitter.com'
+    browser.link(:text =>/Sign up/).click
 
-#browser.link(:text =>/Skip/).click
+    browser.text_field(name: 'user[name]').set @keyword.keyword
+    browser.text_field(name: 'user[email]').set @keyword.email
+    browser.text_field(name: 'user[user_password]').set @keyword.password
+    browser.input(id: 'submit_button').click
+
+    browser.link(:text =>/Skip/).click
+end
 
 #Pinterest
 browser.goto 'https://www.pinterest.com/'
