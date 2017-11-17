@@ -4,9 +4,11 @@ require 'watir'
 
 # Authenticate
 browser = Watir::Browser.new
+profiles = []
 
 #Twitter
-if KeywordWeb2.where(keyword_id: @keyword.id).length < 1
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
+if kw2.length < 1
     browser.goto 'https://twitter.com'
     browser.link(:text =>/Sign up/).click
 
@@ -16,30 +18,53 @@ if KeywordWeb2.where(keyword_id: @keyword.id).length < 1
     browser.input(id: 'submit_button').click
 
     browser.link(:text =>/Skip/).click
+else
+   profiles << kw2.first.link
 end
 
 #Pinterest
-browser.goto 'https://www.pinterest.com/'
-browser.text_field(type: 'email').set @keyword.email
-browser.text_field(type: 'password').set @keyword.password
-browser.button(type: 'submit').click
-browser.text_field(placeholder: 'Full name').set @keyword.keyword
-browser.text_field(placeholder: 'Age').set '25'
-browser.radio(:name => 'gender', :value => 'male').set
-browser.button(type: 'submit').click
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.pinterest.com/'
+    browser.text_field(type: 'email').set @keyword.email
+    browser.text_field(type: 'password').set @keyword.password
+    browser.button(type: 'submit').click
+    browser.text_field(placeholder: 'Full name').set @keyword.keyword
+    browser.text_field(placeholder: 'Age').set '25'
+    browser.radio(:name => 'gender', :value => 'male').set
+    browser.button(type: 'submit').click
+else
+   profiles << kw2.first.link
+end
 
+#Instagram
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%instagram%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.instagram.com/'
+    browser.text_field(name: 'emailOrPhone').set @keyword.email
+    browser.text_field(name: 'fullName').set @keyword.keyword
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Sign up').click
+else
+   profiles << kw2.first.link
+end
 
+#MySpace
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myspace%").first.id)
+if kw2.length < 1
+    profiles << "MySpace Link Missing"
+else
+    profiles << kw2.first.link
+end
 
-
-
-
-
-
-
-
-
-
-
+#Tumblr
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%tumblr%").first.id)
+if kw2.length < 1
+    profiles << "Tumblr Link Missing"
+else
+    profiles << kw2.first.link
+end
 
 
 
@@ -105,18 +130,25 @@ browser.link(:text =>'3 - Verify your Ads').click
 <%# 	browser.button(type: 'submit').click %>
 <%# 	sleep 1 %>
 <%#=	p "#{num} --- \xE2\x9C\x94" %>
-</br>
 <%# 	browser.goto 'https://office.telexbit.com/Ads/AdsSelectIII' %>
 <%# end %>
 
-Congrats, profiles were created! <br/>
-
-<%# browser.goto 'https://office.telexbit.com/Ads/MyAdcentral' %>
 <%#= puts browser.title %>
-<%# browser.close %>
 
 <%# @project.ad_timestamp = DateTime.now %>
 <%# @project.save! %>
 
+</br></br>
+
+Congrats, profiles were created!
+
+</br></br>
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
 <br/>
 <%= link_to 'Back', keywords_path  %>
+<% browser.close %>
