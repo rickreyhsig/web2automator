@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171117185425) do
+ActiveRecord::Schema.define(:version => 20171120195051) do
 
   create_table "keyword_web2s", :force => true do |t|
     t.integer  "keyword_id"
@@ -28,6 +28,20 @@ ActiveRecord::Schema.define(:version => 20171117185425) do
     t.datetime "updated_at"
     t.string   "email"
     t.string   "password"
+  end
+
+  create_table "project_keywords", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "keyword_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "web2s", :force => true do |t|

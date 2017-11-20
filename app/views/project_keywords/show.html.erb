@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Project:</b>
+  <%= @project_keyword.project_id %>
+</p>
+
+<p>
+  <b>Keyword:</b>
+  <%= @project_keyword.keyword_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_project_keyword_path(@project_keyword) %> |
+<%= link_to 'Back', project_keywords_path %>

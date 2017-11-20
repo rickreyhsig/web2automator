@@ -1,0 +1,25 @@
+<h1>Listing project_keywords</h1>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Keyword</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @project_keywords.each do |project_keyword| %>
+  <tr>
+    <td><%= project_keyword.project_id %></td>
+    <td><%= project_keyword.keyword_id %></td>
+    <td><%= link_to 'Show', project_keyword %></td>
+    <td><%= link_to 'Edit', edit_project_keyword_path(project_keyword) %></td>
+    <td><%= link_to 'Destroy', project_keyword, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Project keyword', new_project_keyword_path %>
