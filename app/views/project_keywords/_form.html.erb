@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :project_id %><br />
-    <%= f.number_field :project_id %>
+    <%= f.select :project_id, Project.all.collect {|p| [ p.name, p.id ] } %>
   </div>
   <div class="field">
     <%= f.label :keyword_id %><br />
-    <%= f.number_field :keyword_id %>
+    <%= f.select :keyword_id, Keyword.all.collect {|k| [ k.keyword, k.id ] } %>
   </div>
   <div class="actions">
     <%= f.submit %>

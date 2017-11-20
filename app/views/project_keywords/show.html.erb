@@ -2,14 +2,13 @@
 
 <p>
   <b>Project:</b>
-  <%= @project_keyword.project_id %>
+  <%= Project.find(@project_keyword.project_id).name %>
 </p>
 
 <p>
   <b>Keyword:</b>
-  <%= @project_keyword.keyword_id %>
+  <%= Keyword.find(@project_keyword.keyword_id).keyword %>
 </p>
-
 
 <%= link_to 'Edit', edit_project_keyword_path(@project_keyword) %> |
 <%= link_to 'Back', project_keywords_path %>

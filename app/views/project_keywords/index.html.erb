@@ -11,8 +11,8 @@
 
 <% @project_keywords.each do |project_keyword| %>
   <tr>
-    <td><%= project_keyword.project_id %></td>
-    <td><%= project_keyword.keyword_id %></td>
+    <td><%= Project.find(project_keyword.project_id).name %></td>
+    <td><%= Keyword.find(project_keyword.keyword_id).keyword %></td>
     <td><%= link_to 'Show', project_keyword %></td>
     <td><%= link_to 'Edit', edit_project_keyword_path(project_keyword) %></td>
     <td><%= link_to 'Destroy', project_keyword, confirm: 'Are you sure?', method: :delete %></td>
