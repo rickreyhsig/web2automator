@@ -20,6 +20,29 @@
   <%= @keyword.password %>
 </p>
 
+<% keyword_web2s = KeywordWeb2.where(keyword_id: @keyword.id) %>
+
+<table>
+  <tr>
+    <th>Keyword</th>
+    <th>Web2</th>
+    <th>Link</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% keyword_web2s.each do |keyword_web2| %>
+  <tr>
+    <td><%= Keyword.find(keyword_web2.keyword_id).keyword %></td>
+    <td><%= Web2.find(keyword_web2.web2_id).url %></td>
+    <td><%= link_to keyword_web2.link, keyword_web2.link %></td>
+    <td><%= link_to 'Show', keyword_web2 %></td>
+    <td><%= link_to 'Edit', edit_keyword_web2_path(keyword_web2) %></td>
+    <td><%= link_to 'Destroy', keyword_web2, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
 
 <%= link_to 'Edit', edit_keyword_path(@keyword) %> |
 <%= link_to 'Back', keywords_path %>
