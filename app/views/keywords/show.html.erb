@@ -20,6 +20,11 @@
   <%= @keyword.password %>
 </p>
 
+<%= link_to 'Create Profiles', create_profiles_path(id: @keyword.id) %></td>
+<%#= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>
+
+</br></br>
+
 <% keyword_web2s = KeywordWeb2.where(keyword_id: @keyword.id) %>
 
 <table>

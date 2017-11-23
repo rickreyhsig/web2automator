@@ -156,26 +156,71 @@ end
 #-----------  Essentials List ----------#
 #Google Plus
 #https://plus.google.com/
+Rails.logger.info 'Google Plus'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%plus.google%").first.id)
+if kw2.length < 1
+    profiles << "Google Plus Link Missing"
+else
+    profiles << kw2.first.link
+end
 
 
 #LinkedIn
 #https://www.linkedin.com/in
+Rails.logger.info 'LinkedIn'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%linkedin%").first.id)
+if kw2.length < 1
+    profiles << "LinkedIn Link Missing"
+else
+    profiles << kw2.first.link
+end
 
 
 #YouTube
 #https://www.youtube.com/
-
+Rails.logger.info 'YouTube'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%youtube%").first.id)
+if kw2.length < 1
+    profiles << "YouTube Link Missing"
+else
+    profiles << kw2.first.link
+end
 
 #USGBC
 #https://www.usgbc.org/
+Rails.logger.info 'USGBC'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%usgbc.org%").first.id)
+if kw2.length < 1
+    profiles << "USGBC Link Missing"
+else
+    profiles << kw2.first.link
+end
 
 
 #EventFul
 #http://eventful.com/
+Rails.logger.info 'Eventful'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%eventful.com%").first.id)
+if kw2.length < 1
+    browser.goto 'http://eventful.com/join'
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password1').set @keyword.password
+    browser.text_field(name: 'zipcode').set '20906'
+    browser.button(text: 'Male').click
+
+    browser.select_list(id: 'dob_month').select_value('1')
+    browser.select_list(id: 'dob_day').select_value('1')
+    browser.select_list(id: 'dob_year').select_value('37')
+    #Click Captcha and place link
+else
+    profiles << kw2.first.link
+end
+
 
 
 #ToolBox
 #http://it.toolbox.com/people/
+
 
 
 #Mashable
