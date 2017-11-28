@@ -16,32 +16,37 @@
 <h2>Project Keywords</h2>
 
 <table>
-  <tr>
-    <th>Keyword</th>
-    <th>Link</th>
-    <th>Email</th>
-    <th>Password</th>
-    <th># Profiles</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+      <tr>
+        <th>Keyword</th>
+        <th>Link</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th># Profiles</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
 
-<% keywords.each do |keyword| %>
-  <tr>
-    <td><%= keyword.keyword %></td>
-    <td><%= keyword.link %></td>
-    <td><%= keyword.email %></td>
-    <td><%= keyword.password %></td>
-    <td><%= KeywordWeb2.where(keyword_id: keyword.id).count %></td>
-    <td><%= link_to 'Create Profiles', create_profiles_path(id: keyword.id), class: 'rick_button' %></td>
-    <td><%= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>
-    <td><%= link_to 'Show', keyword %></td>
-    <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
-    <td><%= link_to 'Destroy', keyword, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+    <% keywords.each do |keyword| %>
+      <tr>
+        <td><%= keyword.keyword %></td>
+        <td><%= keyword.link %></td>
+        <td><%= keyword.email %></td>
+        <td><%= keyword.password %></td>
+        <td><%= KeywordWeb2.where(keyword_id: keyword.id).count %></td>
+        <td><%= link_to 'Create Profiles', create_profiles_path(id: keyword.id), class: 'rick_button' %></td>
+        <td><%= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>
+        <td><%= link_to 'Show', keyword %></td>
+        <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+        <td><%= link_to 'Destroy', keyword, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    <% end %>
+    </table>
+</div>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
