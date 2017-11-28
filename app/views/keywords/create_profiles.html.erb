@@ -16,9 +16,9 @@ else
 end
 
 #Twitter
-Rails.logger.info 'Twitter'
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
-if kw2.length < 1
+#Rails.logger.info 'Twitter'
+#kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
+#if kw2.length < 1
     browser.goto 'https://twitter.com'
     browser.link(:text =>/Sign up/).click
 
@@ -28,11 +28,11 @@ if kw2.length < 1
     browser.input(id: 'submit_button').click
 
     browser.link(:text =>/Skip/).click
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 
-Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+#Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
 =begin
 #Pinterest
 Rails.logger.info 'Pinterest'

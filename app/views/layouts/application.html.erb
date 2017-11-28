@@ -4,16 +4,20 @@
   <title>Web2automator</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<div class="container">
 <%= link_to 'Home', root_path %>
 <%= link_to 'Keywords', keywords_path %>
 <%= link_to 'Web2s', web2s_path %> |
 <%= link_to 'ProjectKeywords', project_keywords_path %>
 <%= link_to 'KeywordWeb2s', keyword_web2s_path %>
 <%= yield %>
+</div>
 
 </body>
 </html>
