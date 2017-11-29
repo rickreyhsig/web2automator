@@ -16,9 +16,10 @@ else
 end
 
 #Twitter
-#Rails.logger.info 'Twitter'
-#kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
-#if kw2.length < 1
+Rails.logger.info 'Twitter'
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
+if kw2.length < 1
+    # Creates account
     browser.goto 'https://twitter.com'
     browser.link(:text =>/Sign up/).click
 
@@ -27,11 +28,23 @@ end
     browser.text_field(name: 'user[user_password]').set @keyword.password
     browser.input(id: 'submit_button').click
 
-    browser.link(:text =>/Skip/).click
-
-#else
-#   profiles << kw2.first.link
-#end
+    # Logs in and adds link
+    browser.goto 'https://twitter.com/'
+    browser.link(:text =>/Log in/).click if browser.link(:text =>/Log in/).exists?
+    browser.text_field(name: "session[username_or_email]").set @keyword.email
+    browser.text_field(name: "session[password]").set @keyword.password
+    browser.input(type: 'submit').click
+    browser.link(id: 'user-dropdown-toggle').click
+    browser.link(data_nav: 'view_profile').click
+    browser.span(text: "Edit profile").click
+    browser.text_field(id: "user_url").set @keyword.link
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 1)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.button(text: "Save changes").click
+    browser.close
+else
+   profiles << kw2.first.link
+end
 
 #Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
 =begin
