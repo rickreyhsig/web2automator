@@ -26,7 +26,6 @@
 </br></br>
 
 <% keyword_web2s = KeywordWeb2.where(keyword_id: @keyword.id) %>
-
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
       <tr>
@@ -46,6 +45,27 @@
         <td><%= link_to 'Show', keyword_web2 %></td>
         <td><%= link_to 'Edit', edit_keyword_web2_path(keyword_web2) %></td>
         <td><%= button_to 'Destroy', keyword_web2, method: :delete %></td>
+      </tr>
+    <% end %>
+    </table>
+</div>
+</br>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+      <tr>
+        <th>Web2</th>
+        <th>Link</th>
+        <th>Create Profile</th>
+        <th>Place Link</th>
+      </tr>
+
+    <% Web2.all.each do |web2| %>
+      <tr>
+        <td><%= web2.url %></td>
+        <td><%= KeywordWeb2.find_by_web2_id_and_keyword_id(web2.id, @keyword.id).link if KeywordWeb2.find_by_web2_id_and_keyword_id(web2.id, @keyword.id) %></td>
+        <td><%= web2.id %></td>
+        <td><%= web2.url %></td>
       </tr>
     <% end %>
     </table>
