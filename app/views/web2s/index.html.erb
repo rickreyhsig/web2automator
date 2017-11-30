@@ -14,7 +14,7 @@
         <td><%= web2.url %></td>
         <td><%= link_to 'Show', web2 %></td>
         <td><%= link_to 'Edit', edit_web2_path(web2) %></td>
-        <td><%= link_to 'Destroy', web2, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= button_to 'Destroy', web2, method: :delete %></td>
       </tr>
     <% end %>
     </table>
