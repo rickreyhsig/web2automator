@@ -4,13 +4,18 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:id])
   end
 
+  def create_links
+    @keyword = Keyword.find(params[:id])
+  end
+
   def create_twitter_profile
     @keyword = Keyword.find(params[:keyword_id])
   end
 
-  def create_links
-    @keyword = Keyword.find(params[:id])
+  def place_twitter_link
+    @keyword = Keyword.find(params[:keyword_id])
   end
+
 
   # GET /keywords
   # GET /keywords.json

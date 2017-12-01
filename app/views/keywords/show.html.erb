@@ -39,12 +39,12 @@
       <tr>
         <% web2_name = URI.parse(web2.url).host.split('.').first %>
         <% web2_cp = "create_#{web2_name}_profile_path" %>
+        <% web2_pl = "place_#{web2_name}_link_path" %>
         <td><%= web2.url %></td>
         <% kwWeb2 = KeywordWeb2.find_by_web2_id_and_keyword_id(web2.id, @keyword.id) %>
         <td><%= link_to kwWeb2.link, kwWeb2.link if kwWeb2 %></td>
         <td><%= link_to "Create #{web2_name} profile", send(web2_cp, keyword_id: @keyword.id) %></td>
-        <td><%= web2_name %></td>
-        <td><%= web2_cp %></td>
+        <td><%= link_to "Place #{web2_name} link", send(web2_pl, keyword_id: @keyword.id) %></td>
       </tr>
     <% end %>
     </table>
