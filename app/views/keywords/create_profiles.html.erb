@@ -47,7 +47,7 @@ else
 end
 
 #Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
-=begin
+
 #Pinterest
 Rails.logger.info 'Pinterest'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
@@ -233,7 +233,6 @@ else
 end
 
 Watir::Wait.until(180) { browser.text.include? 'Boom Shakalaka!' }
-=end
 
 #ToolBox
 #http://it.toolbox.com/people/

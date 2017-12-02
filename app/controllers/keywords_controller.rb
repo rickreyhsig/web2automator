@@ -35,6 +35,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #MySpace
+  def create_myspace_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_myspace_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
   # GET /keywords
   # GET /keywords.json
   def index

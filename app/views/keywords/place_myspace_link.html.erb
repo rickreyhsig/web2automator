@@ -1,0 +1,38 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#MySpace
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myspace%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://myspace.com/signin'
+    browser.text_field(name: "email").set @keyword.email
+    browser.text_field(name: "password").set @keyword.password
+    browser.button(type: "submit").click
+    browser.span(text: @keyword.keyword).click
+    browser.execute_script("alert(\"Please place link to continue.\")")
+    sleep(15)
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 4)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, myspace link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

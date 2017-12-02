@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#MySpace
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myspace%").first.id)
+if kw2.length < 1
+    browser.goto 'https://myspace.com/signup/email'
+    browser.text_field(id: 'signupEmailFullName').set @keyword.keyword
+    browser.select_list(:id, "signupEmailGender").select_value("Male")
+    browser.text_field(id: 'signupEmailUsername').set @keyword.keyword
+    browser.text_field(id: 'signupEmailPassword').set @keyword.password
+    browser.text_field(id: 'signupEmailDobMonth').set '01'
+    browser.text_field(id: 'signupEmailDobDay').set '01'
+    browser.text_field(id: 'signupEmailDobYear').set '1980'
+    browser.text_field(id: 'signupEmailZipcode').set '20906'
+    browser.text_field(id: 'signupEmailEmail').set @keyword.email
+    #Have to finish the process manually
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    #sleep(3)
+	#browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, myspace profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
