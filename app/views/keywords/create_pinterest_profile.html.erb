@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Pinterest
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.pinterest.com/'
+    browser.text_field(type: 'email').set @keyword.email
+    browser.text_field(type: 'password').set @keyword.password
+    browser.button(type: 'submit').click
+    browser.text_field(placeholder: 'Full name').set @keyword.keyword
+    browser.text_field(placeholder: 'Age').set '25'
+    browser.radio(:name => 'gender', :value => 'male').set
+    browser.button(type: 'submit').click
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, pinterest profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
+<% browser.close %>

@@ -6,7 +6,6 @@ browser = Watir::Browser.new
 profiles = []
 
 #Twitter
-Rails.logger.info 'Twitter'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
 if kw2.length < 1
     # Creates account
@@ -24,11 +23,6 @@ end
 
 </br></br>
 Congrats, twitter profile was created!
-
-<% profiles.each do |p| %>
-    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
-    </br>
-<% end %>
 
 </br></br>
 
