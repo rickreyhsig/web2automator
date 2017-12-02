@@ -1,0 +1,28 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Instagram
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%instagram%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.instagram.com/'
+    browser.text_field(name: 'emailOrPhone').set @keyword.email
+    browser.text_field(name: 'fullName').set @keyword.keyword
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Sign up').click
+	browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, instagram profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

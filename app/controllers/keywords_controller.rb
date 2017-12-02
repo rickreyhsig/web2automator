@@ -26,7 +26,14 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Instagram
+  def create_instagram_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
 
+  def place_instagram_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
 
   # GET /keywords
   # GET /keywords.json
