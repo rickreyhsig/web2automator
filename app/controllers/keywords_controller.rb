@@ -53,6 +53,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Tumblr
+  def create_tumblr_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_tumblr_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json

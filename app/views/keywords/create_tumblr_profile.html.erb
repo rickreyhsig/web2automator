@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Tumblr
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%tumblr%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.tumblr.com/'
+    
+    browser.span(text: 'Get Started').click
+    browser.text_field(id: 'signup_email').set @keyword.email
+    browser.text_field(name: 'user[password]').set @keyword.password
+    browser.text_field(id: 'signup_username').set @keyword.keyword
+    browser.span(text: 'Sign up').click
+    browser.execute_script("alert(\"Please complete steps manually.\")")
+	browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, tumblr profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
