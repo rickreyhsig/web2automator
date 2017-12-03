@@ -8,6 +8,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:id])
   end
 
+  #Facebook
+  def create_facebook_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_facebook_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
   #Twitter
   def create_twitter_profile
     @keyword = Keyword.find(params[:keyword_id])

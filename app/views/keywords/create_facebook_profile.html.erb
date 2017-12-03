@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Facebook
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%facebook%").first.id)
+if kw2.length < 1
+    browser.goto 'https://facebook.com/'
+    browser.text_field(id: 'email').set 'kreysystemsseo@gmail.com'
+    browser.text_field(id: 'pass').set $FB_PASS
+    sleep(3)
+    browser.goto 'https://www.facebook.com/pages/create/'
+    browser.div(id: 'organization').click
+    browser.span(text: 'Aerospace Company').click
+    browser.text_field(id: 'organization_form_page_name').set @keyword.keyword
+    browser.button(type: 'submit').click
+    #browser.text_field(id: 'email').set 'kreysystemsseo@gmail.com'
+    #browser.text_field(id: 'pass').set $FB_PASS
+    #browser.button(id: 'loginbutton').click
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    #sleep(3)
+	#browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, facebook profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
