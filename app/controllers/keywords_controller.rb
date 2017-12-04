@@ -62,6 +62,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Flickr
+  def create_flickr_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_flickr_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json

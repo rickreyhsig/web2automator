@@ -1,0 +1,47 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Flickr
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%flickr%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.flickr.com/'
+    browser.link(text: 'Log In').click
+    browser.text_field(name: 'username').set @keyword.email
+    browser.button(id: 'login-signin').click
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(id: 'login-signin').click
+    sleep(3)
+    browser.goto 'https://www.flickr.com/account'
+    sleep(3)
+    browser.goto 'https://www.flickr.com/profile_edit.gne?from=personal'
+    browser.text_field(name: 'website').set @keyword.link
+    browser.text_field(name: 'website2').set @keyword.keyword
+    browser.button(text: 'SAVE IT').click
+    sleep(3)
+    browser.link(text: 'You').click
+    sleep(3)
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 6)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, flickr link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

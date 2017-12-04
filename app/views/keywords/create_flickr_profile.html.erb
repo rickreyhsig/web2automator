@@ -1,0 +1,26 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Flickr
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%flickr%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.flickr.com/'
+    #If using with Yahoo email, just need to sign in and finalize process
+    browser.execute_script("alert(\"If using with Yahoo email, just need to sign in and finalize process.\")")
+    sleep(5)
+	browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, flickr profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
