@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Quora
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%quora%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.quora.com/'
+    browser.link(text: 'Continue With Email').click
+    browser.text_field(name: 'first_name').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.execute_script("alert(\"Please place last name and solve Captcha to continue!\")")
+    sleep(100)
+	browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, quora profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

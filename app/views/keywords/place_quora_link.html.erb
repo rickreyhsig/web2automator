@@ -1,0 +1,40 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Quora
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%quora%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.quora.com/'
+    browser.text_field(placeholder: 'Email').set @keyword.email
+    browser.text_field(placeholder: 'Password').set @keyword.password
+    browser.button(value: 'Login').click
+    browser.img(class: 'profile_photo_img').click
+    browser.link(text: 'Profile').click
+    browser.link(text: 'Write a description about yourself').click
+    browser.execute_script("alert(\"Please place link to continue. You got 20 seconds to do so..\")")
+    sleep(22)
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 7)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, quora link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
