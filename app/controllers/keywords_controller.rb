@@ -89,6 +89,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #GitHub
+  def create_github_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_github_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json

@@ -46,10 +46,6 @@ else
    profiles << kw2.first.link
 end
 
-#Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
-#browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
-
-
 #Pinterest
 Rails.logger.info 'Pinterest'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
@@ -154,6 +150,9 @@ if kw2.length < 1
 else
     profiles << kw2.first.link
 end
+
+#Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+#browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
 
 #Vimeo
 #Need to verify this indeed works!!

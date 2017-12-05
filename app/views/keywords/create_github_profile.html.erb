@@ -1,0 +1,27 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#GitHub
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%github%").first.id)
+if kw2.length < 1
+    browser.goto 'https://github.com/join'
+    browser.text_field(id: 'user_login').set @keyword.keyword
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(value: 'Create an account').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, github profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
