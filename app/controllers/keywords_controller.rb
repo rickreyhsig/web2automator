@@ -80,6 +80,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Medium
+  def create_medium_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_medium_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
   # GET /keywords
   # GET /keywords.json
   def index
