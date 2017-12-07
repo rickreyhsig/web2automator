@@ -8,6 +8,7 @@ profiles = []
 #GitHub
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%github%").first.id)
 if kw2.length < 1
+	## Push some code prior to placing link ##
     # Logs in and adds link
     browser.goto 'https://github.com/login'
     browser.text_field(id: 'login_field').set @keyword.email

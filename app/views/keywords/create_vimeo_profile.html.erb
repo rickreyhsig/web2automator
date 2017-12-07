@@ -1,0 +1,27 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Vimeo
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%vimeo%").first.id)
+if kw2.length < 1
+    browser.goto 'https://vimeo.com/join'
+    browser.text_field(id: 'signup_name').set @keyword.keyword
+    browser.text_field(id: 'signup_email').set @keyword.email
+    browser.text_field(id: 'signup_password').set @keyword.password
+    browser.button(value: 'Join with email').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, vimeo profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
