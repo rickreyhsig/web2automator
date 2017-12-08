@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#USGBC
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%usgbc%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.usgbc.org/registration/create-user'
+    browser.text_field(id: 'edit-field-per-fname').set @keyword.keyword
+    browser.text_field(id: 'edit-mail').set @keyword.email
+    browser.text_field(id: 'edit-conf-mail').set @keyword.password
+    browser.text_field(id: 'edit-pass1').set @keyword.password
+    browser.text_field(id: 'edit-pass2').set @keyword.password
+    browser.checkbox(:id => 'edit-field-legal-accept').set
+    browser.text_field(id: 'edit-field-per-phone').set "test"
+    browser.text_field(id: 'edit-field-per-phone').set "3019608373"
+	browser.execute_script("alert(\"Please set last name, CAPTCHA and phone to 3019608373 to continue.  Then click CREATE ACCOUNT\")")
+	sleep(10)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, usgbc profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

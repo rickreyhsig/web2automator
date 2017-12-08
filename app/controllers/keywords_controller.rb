@@ -107,6 +107,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #USGBC
+  def create_usgbc_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_usgbc_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
 
 
 

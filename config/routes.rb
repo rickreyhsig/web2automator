@@ -39,6 +39,9 @@ Web2automator::Application.routes.draw do
   get 'create_vimeo_profile' => 'keywords#create_vimeo_profile'
   get 'place_vimeo_link' => 'keywords#place_vimeo_link'
   #
+  get 'create_usgbc_profile' => 'keywords#create_usgbc_profile'
+  get 'place_usgbc_link' => 'keywords#place_usgbc_link'
+  #
   get 'create_facebook_profile' => 'keywords#create_facebook_profile'
   get 'place_facebook_link' => 'keywords#place_facebook_link'
   #
@@ -50,9 +53,6 @@ Web2automator::Application.routes.draw do
   #
   get 'create_youtube_profile' => 'keywords#create_youtube_profile'
   get 'place_youtube_link' => 'keywords#place_youtube_link'
-  #
-  get 'create_usgbc_profile' => 'keywords#create_usgbc_profile'
-  get 'place_usgbc_link' => 'keywords#place_usgbc_link'
   #
   get 'create_eventful_profile' => 'keywords#create_eventful_profile'
   get 'place_eventful_link' => 'keywords#place_eventful_link'

@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#USGBC
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%usgbc%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.usgbc.org/user/login'
+    browser.text_field(id: 'edit-name').set @keyword.email
+    browser.text_field(id: 'edit-pass').set @keyword.password
+    browser.button(value: 'SIGN IN').click
+    sleep(7)
+    browser.goto 'https://www.usgbc.org/account/profile/personal'
+    browser.link(text: 'Visible').click
+    sleep(7)
+    browser.em(text: 'You currently have no website').click if browser.em(text: 'You currently have no website').exists?
+    browser.text_field(id: 'edit-per-txtwebsite').set @keyword.link if browser.text_field(id: 'edit-per-txtwebsite').exists?
+    browser.button(id: 'edit-save-website').click if browser.button(id: 'edit-save-website').exists?
+    browser.link(text: 'View profile').click
+    sleep(4)
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 15)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, usgbc link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
