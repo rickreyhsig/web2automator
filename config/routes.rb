@@ -6,6 +6,18 @@ Web2automator::Application.routes.draw do
   resources :web2s
   resources :keywords
 
+  get 'create_facebook_profile' => 'keywords#create_facebook_profile'
+  get 'place_facebook_link' => 'keywords#place_facebook_link'
+  #
+  get 'create_plus_profile' => 'keywords_plus_profile'
+  get 'place_plus_link' => 'keywords#place_plus_link'
+  #
+  get 'create_linkedin_profile' => 'keywords#create_linkedin_profile'
+  get 'place_linkedin_link' => 'keywords#place_linkedin_link'
+  #
+  get 'create_youtube_profile' => 'keywords#create_youtube_profile'
+  get 'place_youtube_link' => 'keywords#place_youtube_link'
+  ###
   get 'create_profiles' => 'keywords#create_profiles', as: 'create_profiles'
   get 'create_links' => 'keywords#create_links', as: 'create_links'
   #
@@ -41,18 +53,6 @@ Web2automator::Application.routes.draw do
   #
   get 'create_usgbc_profile' => 'keywords#create_usgbc_profile'
   get 'place_usgbc_link' => 'keywords#place_usgbc_link'
-  #
-  get 'create_facebook_profile' => 'keywords#create_facebook_profile'
-  get 'place_facebook_link' => 'keywords#place_facebook_link'
-  #
-  get 'create_plus_profile' => 'keywords_plus_profile'
-  get 'place_plus_link' => 'keywords#place_plus_link'
-  #
-  get 'create_linkedin_profile' => 'keywords#create_linkedin_profile'
-  get 'place_linkedin_link' => 'keywords#place_linkedin_link'
-  #
-  get 'create_youtube_profile' => 'keywords#create_youtube_profile'
-  get 'place_youtube_link' => 'keywords#place_youtube_link'
   #
   get 'create_eventful_profile' => 'keywords#create_eventful_profile'
   get 'place_eventful_link' => 'keywords#place_eventful_link'

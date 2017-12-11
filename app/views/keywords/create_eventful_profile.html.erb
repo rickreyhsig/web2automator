@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Eventful
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%eventful%").first.id)
+if kw2.length < 1
+    browser.goto 'http://eventful.com/join'
+    browser.text_field(id: 'inp-join-email').set @keyword.email
+    browser.text_field(id: 'inp-password1').set @keyword.password
+    browser.text_field(id: 'inp-join-zipcode').set "20906"
+    browser.button(id: 'btn-mJoin-gender-male').click
+    browser.select_list(id: 'dob_month').select_value('1')
+    browser.select_list(id: 'dob_day').select_value('1')
+    browser.select_list(id: 'dob_year').select_value('37')
+    browser.execute_script("alert(\"Please solve CAPTCHA.  You got 30 seconds!\")")
+	sleep(30)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, eventful profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
