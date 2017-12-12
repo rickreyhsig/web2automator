@@ -125,6 +125,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #About.me
+  def create_about_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_about_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json

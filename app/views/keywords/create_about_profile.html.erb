@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#About.Me
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%about.me%").first.id)
+if kw2.length < 1
+    browser.goto 'https://about.me/signup/email'
+    browser.div(text: 'Sign Up with Email').click if browser.div(text: 'Sign Up with Email').exists?
+    browser.text_field(placeholder: 'Enter your email address').set @keyword.email
+    browser.span(text: 'Next').click
+    browser.text_field(placeholder: 'First name').set @keyword.keyword
+    browser.span(text: 'Next').click
+    browser.execute_script("alert(\"Please choose file.\")")
+    sleep(3)
+    browser.button(text: 'Looks Good!').click
+    browser.execute_script("alert(\"Please complete the prompts to continue!\")")
+    sleep(25)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, about.me profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

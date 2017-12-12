@@ -57,4 +57,7 @@ Web2automator::Application.routes.draw do
   get 'create_eventful_profile' => 'keywords#create_eventful_profile'
   get 'place_eventful_link' => 'keywords#place_eventful_link'
   #
+  get 'create_about_profile' => 'keywords#create_about_profile'
+  get 'place_about_link' => 'keywords#place_about_link'
+  #
 end
