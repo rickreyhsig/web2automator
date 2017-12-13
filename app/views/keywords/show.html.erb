@@ -44,6 +44,7 @@
     <% Web2.all.each do |web2| %>
       <tr>
         <% web2_name = URI.parse(web2.url).host.split('.').first %>
+        <% web2_name.gsub!('-','') %>
         <% web2_cp = "create_#{web2_name}_profile_path" %>
         <% web2_pl = "place_#{web2_name}_link_path" %>
         <td><%= web2.url %></td>

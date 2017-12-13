@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Ask-book
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask-book%").first.id)
+if kw2.length < 1
+    browser.goto 'https://ask-book.com/'
+    browser.text_field(placeholder: 'Email or Username').set @keyword.email
+    browser.text_field(placeholder: 'Password').set @keyword.password
+    browser.button(text: 'Log In').click
+    sleep(1)
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'fullname').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'password2').set @keyword.password
+    browser.button(text: 'Sign Up').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ask-book profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

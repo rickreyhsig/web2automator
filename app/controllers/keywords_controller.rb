@@ -134,6 +134,18 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Ask-book
+  def create_askbook_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_askbook_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
+
+
 
   # GET /keywords
   # GET /keywords.json

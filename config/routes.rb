@@ -60,4 +60,8 @@ Web2automator::Application.routes.draw do
   get 'create_about_profile' => 'keywords#create_about_profile'
   get 'place_about_link' => 'keywords#place_about_link'
   #
+  get 'create_askbook_profile' => 'keywords#create_askbook_profile'
+  get 'place_askbook_link' => 'keywords#place_askbook_link'
+  #
+
 end
