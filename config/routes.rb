@@ -63,5 +63,9 @@ Web2automator::Application.routes.draw do
   get 'create_askbook_profile' => 'keywords#create_askbook_profile'
   get 'place_askbook_link' => 'keywords#place_askbook_link'
   #
+  get 'create_yelp_profile' => 'keywords#create_yelp_profile'
+  get 'place_yelp_link' => 'keywords#place_yelp_link'
+  #
+
 
 end

@@ -1,0 +1,53 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Yelp
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%yelp%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+
+    browser.goto 'https://www.yelp.com/login'
+    browser.execute_script("alert(\"Please login and place link to continue. You got 30 seconds to do so..\")")
+
+    #browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.span(text: 'Log In').click
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
+=begin
+    browser.text_field(placeholder: 'Email or Username').set @keyword.email
+    browser.text_field(placeholder: 'Password').set @keyword.password
+    browser.button(text: 'Log In').click
+    browser.link(id: 'naviMenu').click
+    browser.link(text: 'Settings').click
+    browser.execute_script("alert(\"Please place link and save to continue. You got 10 seconds to do so..\")")
+    sleep(10)
+    browser.div(id: "naviRight").links.each_with_index do | link, index |
+        link.click if index == 4
+    end
+=end
+
+    #profiles << browser.url
+    #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 20)
+    #keyword_web2.update_attributes(link: browser.url)
+    #browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ask-book link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Yelp
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%yelp%").first.id)
+if kw2.length < 1
+
+    browser.goto 'https://www.yelp.com/signup'
+    browser.text_field(id: 'first_name').set @keyword.keyword
+    browser.text_field(id: 'last_name').set @keyword.keyword
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.text_field(id: 'zip').set '20906'
+    browser.select_list(name: 'birthdate_m').select_value('1')
+    browser.select_list(name: 'birthdate_d').select_value('1')
+    browser.select_list(name: 'birthdate_y').select_value('1980')
+    browser.span(text: 'Sign Up').click
+    browser.link(text: 'Skip').click
+    browser.close
+else
+
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, yelp profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
