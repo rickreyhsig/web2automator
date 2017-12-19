@@ -66,6 +66,8 @@ Web2automator::Application.routes.draw do
   get 'create_yelp_profile' => 'keywords#create_yelp_profile'
   get 'place_yelp_link' => 'keywords#place_yelp_link'
   #
-
+  get 'create_goodreads_profile' => 'keywords#create_goodreads_profile'
+  get 'place_goodreads_link' => 'keywords#place_goodreads_link'
+  #
 
 end

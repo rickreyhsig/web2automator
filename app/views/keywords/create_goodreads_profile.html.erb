@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Goodreads
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%goodreads%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.goodreads.com/'
+    browser.text_field(id: 'user_first_name').set @keyword.keyword
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password_signup').set @keyword.password
+    browser.button(value: 'Sign up').click
+    browser.link(text: 'Skip this step »').click
+    browser.link(text: 'skip this step »').click
+    browser.div(id: 'genre_Christian').click
+    browser.button(text: "Continue").click
+    browser.link(text: 'I’m finished rating').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, goodreads profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
