@@ -20,6 +20,17 @@ if kw2.length < 1
     browser.select_list(name: 'birthdate_y').select_value('1980')
     browser.span(text: 'Sign Up').click
     browser.link(text: 'Skip').click
+    browser.goto 'https://www.yelp.com/profile'
+    sleep(3)
+    browser.text_field(id: 'blog').set @keyword.link
+    browser.span(text: 'Save Changes').click
+    sleep(3)
+    browser.goto 'https://www.yelp.com/user_personal_url'
+    sleep(3)
+    browser.execute_script("alert(\"Please set URL link to continue. You got 15 seconds to do so..\")")
+    sleep(15)
+    url = browser.link(class: 'vanity-url_link').click
+    sleep(3)
     browser.close
 else
 

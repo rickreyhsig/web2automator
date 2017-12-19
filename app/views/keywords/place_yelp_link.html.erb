@@ -10,10 +10,14 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     # Logs in and adds link
 
-    browser.goto 'https://www.yelp.com/login'
-    browser.execute_script("alert(\"Please login and place link to continue. You got 30 seconds to do so..\")")
+    #browser.goto 'https://www.yelp.com/login'
+    browser.goto 'https://www.yelp.com/signup'
+    browser.link(text: 'Log in').click
 
-    #browser.text_field(id: 'email').set @keyword.email
+
+    #browser.execute_script("alert(\"Please login and place link to continue. You got 30 seconds to do so..\")")
+    #sleep(3)
+    browser.text_field(placeholder: 'Email').set @keyword.email
     browser.text_field(id: 'password').set @keyword.password
     browser.span(text: 'Log In').click
     Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
