@@ -1,0 +1,34 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Behance
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%behance%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.behance.net/'
+    browser.span(text:'Sign Up With Email').click
+    browser.text_field(id: 'first_name').set @keyword.keyword
+    browser.text_field(id: 'last_name').set @keyword.keyword
+    browser.text_field(id: 'email_address').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password2
+    browser.execute_script("alert(\"Please select DOB, click Sign up and resolve CAPTCHA to continue. You got 35 seconds to do so..\")")
+    sleep(40)
+    #browser.select_list(name: 'month').select_value('1')
+    #browser.select_list(id: 'day').select_value('1')
+    #browser.select_list(id: 'year').select_value('1980')
+    #browser.button(text: 'Sign up').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, behance profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -69,5 +69,9 @@ Web2automator::Application.routes.draw do
   get 'create_goodreads_profile' => 'keywords#create_goodreads_profile'
   get 'place_goodreads_link' => 'keywords#place_goodreads_link'
   #
+  get 'create_behance_profile' => 'keywords#create_behance_profile'
+  get 'place_behance_link' => 'keywords#place_behance_link'
+  #
+
 
 end

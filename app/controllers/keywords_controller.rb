@@ -161,6 +161,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Behance
+  def create_behance_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_behance_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json
