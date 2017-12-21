@@ -23,6 +23,7 @@ if kw2.length < 1
     browser.goto 'https://www.yelp.com/profile'
     sleep(3)
     browser.text_field(id: 'blog').set @keyword.link
+    browser.execute_script("window.scrollBy(0,800)")
     browser.span(text: 'Save Changes').click
     sleep(3)
     browser.goto 'https://www.yelp.com/user_personal_url'
