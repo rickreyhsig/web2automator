@@ -16,6 +16,7 @@ if kw2.length < 1
     browser.text_field(id: 'signup_username').set @keyword.keyword
     browser.span(text: 'Sign up').click
     browser.execute_script("alert(\"Please complete steps manually.\")")
+    sleep(60)
 	browser.close
 else
    profiles << kw2.first.link

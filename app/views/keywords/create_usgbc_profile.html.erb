@@ -10,15 +10,15 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     browser.goto 'https://www.usgbc.org/registration/create-user'
     browser.text_field(id: 'edit-field-per-fname').set @keyword.keyword
+    browser.text_field(id: 'edit-field-per-lname').set @keyword.keyword
     browser.text_field(id: 'edit-mail').set @keyword.email
-    browser.text_field(id: 'edit-conf-mail').set @keyword.password
+    browser.text_field(id: 'edit-conf-mail').set @keyword.email
     browser.text_field(id: 'edit-pass1').set @keyword.password
     browser.text_field(id: 'edit-pass2').set @keyword.password
     browser.checkbox(:id => 'edit-field-legal-accept').set
-    browser.text_field(id: 'edit-field-per-phone').set "test"
     browser.text_field(id: 'edit-field-per-phone').set "3019608373"
 	browser.execute_script("alert(\"Please set last name, CAPTCHA and phone to 3019608373 to continue.  Then click CREATE ACCOUNT\")")
-	sleep(10)
+	sleep(22)
     browser.close
 else
    profiles << kw2.first.link

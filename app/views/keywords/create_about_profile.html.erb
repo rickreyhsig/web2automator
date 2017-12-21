@@ -18,7 +18,7 @@ if kw2.length < 1
     sleep(3)
     browser.button(text: 'Looks Good!').click
     browser.execute_script("alert(\"Please complete the prompts to continue!\")")
-    sleep(25)
+    sleep(60)
     browser.close
 else
    profiles << kw2.first.link
