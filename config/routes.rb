@@ -72,6 +72,10 @@ Web2automator::Application.routes.draw do
   get 'create_behance_profile' => 'keywords#create_behance_profile'
   get 'place_behance_link' => 'keywords#place_behance_link'
   #
+  get 'create_codeacademy_profile' => 'keywords#create_codeacademy_profile'
+  get 'place_codeacademy_link' => 'keywords#place_codeacademy_link'
+  #
+
 
 
 end
