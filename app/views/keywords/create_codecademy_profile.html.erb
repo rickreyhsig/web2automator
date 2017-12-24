@@ -1,0 +1,28 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#CodeCademy
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%codecademy%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.codecademy.com/register'
+    browser.text_field(id: 'sign_up_form_username').set @keyword.keyword
+    browser.text_field(id: 'sign_up_form_email').set @keyword.email
+    browser.text_field(id: 'sign_up_form_password').set @keyword.password
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click CREATE ACCOUNT to continue.\")")
+    sleep(25)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, codecademy profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

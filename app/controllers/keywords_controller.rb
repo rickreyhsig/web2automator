@@ -170,12 +170,12 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
-  #CodeAcademy
-  def create_codeacademy_profile
+  #CodeCademy
+  def create_codecademy_profile
     @keyword = Keyword.find(params[:keyword_id])
   end
 
-  def place_codeacademy_link
+  def place_codecademy_link
     @keyword = Keyword.find(params[:keyword_id])
   end
 
