@@ -1,0 +1,45 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#ArmorGames
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%armorgames%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://armorgames.com/login'
+    browser.text_field(id: 'username').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.button(type: 'submit').click
+        browser.execute_script("alert(\"Please confirm account and place link to continue.\")")
+
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
+    browser.goto 'https://www.foursquare.com/settings'
+    browser.execute_script("alert(\"Please place link in Biography to continue. You got 10 seconds to do so..\")")
+    sleep(15)
+    browser.div(id: 'user').click
+    sleep(2)
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 25)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, armorgames link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -78,6 +78,10 @@ Web2automator::Application.routes.draw do
   get 'create_foursquare_profile' => 'keywords#create_foursquare_profile'
   get 'place_foursquare_link' => 'keywords#place_foursquare_link'
   #
+  get 'create_armorgames_profile' => 'keywords#create_armorgames_profile'
+  get 'place_armorgames_link' => 'keywords#place_armorgames_link'
+  #
+
 
 
 

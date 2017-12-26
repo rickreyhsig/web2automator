@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#ArmorGames
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%armorgames%").first.id)
+if kw2.length < 1
+    browser.goto 'https://armorgames.com/register'
+    browser.text_field(id: 'user_name').set @keyword.keyword
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password_other').set @keyword.password
+    browser.checkbox(:id => 'agreement-input').set
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click Register Now to continue..\")")
+    sleep(25)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, armorgames profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

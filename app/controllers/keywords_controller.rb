@@ -188,6 +188,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #ArmorGames
+  def create_armorgames_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_armorgames_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json
