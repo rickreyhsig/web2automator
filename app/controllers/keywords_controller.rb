@@ -179,6 +179,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #FourSquare
+  def create_foursquare_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_foursquare_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
   # GET /keywords
   # GET /keywords.json

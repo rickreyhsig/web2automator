@@ -75,6 +75,10 @@ Web2automator::Application.routes.draw do
   get 'create_codecademy_profile' => 'keywords#create_codecademy_profile'
   get 'place_codecademy_link' => 'keywords#place_codecademy_link'
   #
+  get 'create_foursquare_profile' => 'keywords#create_foursquare_profile'
+  get 'place_foursquare_link' => 'keywords#place_foursquare_link'
+  #
+
 
 
 

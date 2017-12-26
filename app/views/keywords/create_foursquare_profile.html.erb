@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Foursquare
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%foursquare%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.foursquare.com/'
+    browser.link(text: 'Sign Up').click
+    browser.link(text: 'Or use your email').click
+    browser.text_field(id: 'inputEmail').set @keyword.email
+    browser.text_field(id: 'inputPassword').set @keyword.password
+    browser.text_field(id: 'inputFirstName').set @keyword.keyword
+
+    browser.text_field(id: 'inputBirthMonth').set '01'
+    browser.text_field(id: 'inputBirthDate').set '01'
+    browser.text_field(id: 'inputBirthYear').set '1980'
+    browser.file_field(id: 'inputProfilePhoto').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/KreySystemsSeoLogo.png')
+    browser.execute_script("alert(\"Please sign up to continue.. You got 10 seconds\")")
+    sleep(15)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, foursquare profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
