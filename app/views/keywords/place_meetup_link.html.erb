@@ -1,0 +1,39 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#MeetUp
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%meetup%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://secure.meetup.com/login/'
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.button(value: 'Log in').click
+    browser.goto 'https://www.meetup.com/account/'
+    browser.link(text: 'Add your photo').click
+    browser.link(id: 'upload-new-photo').click
+    browser.file_field(id: 'photoUploadField').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/KreySystemsSeoLogo.png')
+    browser.link(id: 'profileUploaderClose').click
+    browser.goto 'https://www.meetup.com/account/bio/'
+    browser.execute_script("alert(\"Please change user ID, place link in BIO and save link manually to continue.\")")
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, meetup link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

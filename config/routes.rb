@@ -81,9 +81,9 @@ Web2automator::Application.routes.draw do
   get 'create_armorgames_profile' => 'keywords#create_armorgames_profile'
   get 'place_armorgames_link' => 'keywords#place_armorgames_link'
   #
-
-
-
+  get 'create_meetup_profile' => 'keywords#create_meetup_profile'
+  get 'place_meetup_link' => 'keywords#place_meetup_link'
+  #
 
 
 end

@@ -1,0 +1,28 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#MeetUp
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%meetup%").first.id)
+if kw2.length < 1
+    browser.goto 'https://secure.meetup.com/register/?method=email'
+    browser.text_field(id: 'register-field--name').set @keyword.keyword
+    browser.text_field(id: 'register-field--email').set @keyword.email
+    browser.text_field(id: 'register-field--password').set @keyword.password
+    browser.button(type: 'submit').click
+    sleep(3)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, meetup profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
