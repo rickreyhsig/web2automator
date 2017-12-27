@@ -84,6 +84,10 @@ Web2automator::Application.routes.draw do
   get 'create_meetup_profile' => 'keywords#create_meetup_profile'
   get 'place_meetup_link' => 'keywords#place_meetup_link'
   #
+  get 'create_soundcloud_profile' => 'keywords#create_soundcloud_profile'
+  get 'place_soundcloud_link' => 'keywords#place_soundcloud_link'
+  #
+
 
 
 end

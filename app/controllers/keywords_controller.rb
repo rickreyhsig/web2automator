@@ -206,6 +206,14 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #SoundCloud
+  def create_soundcloud_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_soundcloud_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
 
 
   # GET /keywords

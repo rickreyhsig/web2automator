@@ -1,0 +1,34 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#SoundCloud
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%soundcloud%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://soundcloud.com'
+    browser.execute_script("alert(\"Please do this one manually to continue.. Auto bot detection is HIGH!!\")")
+    sleep(10)
+    #profiles << browser.url
+    #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 27)
+    #keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, soundcloud link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
