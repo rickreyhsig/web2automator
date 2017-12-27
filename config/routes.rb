@@ -87,7 +87,8 @@ Web2automator::Application.routes.draw do
   get 'create_soundcloud_profile' => 'keywords#create_soundcloud_profile'
   get 'place_soundcloud_link' => 'keywords#place_soundcloud_link'
   #
-
-
+  get 'create_soup_profile' => 'keywords#create_soup_profile'
+  get 'place_soup_link' => 'keywords#place_soup_link'
+  #
 
 end

@@ -215,6 +215,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Soup
+  def create_soup_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_soup_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
 
   # GET /keywords
   # GET /keywords.json

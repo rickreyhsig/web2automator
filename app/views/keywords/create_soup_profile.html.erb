@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Soup
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%soup%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.soup.io/signup'
+    browser.text_field(id: 'user_login').set @keyword.keyword
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.checkbox(:id => 'user_commercial').set
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click Sign up to continue..\")")
+    sleep(20)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, soup profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
