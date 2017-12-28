@@ -224,6 +224,14 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #500px
+  def create_500px_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_500px_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
 
 
   # GET /keywords

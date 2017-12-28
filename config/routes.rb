@@ -90,5 +90,9 @@ Web2automator::Application.routes.draw do
   get 'create_soup_profile' => 'keywords#create_soup_profile'
   get 'place_soup_link' => 'keywords#place_soup_link'
   #
+  get 'create_500px_profile' => 'keywords#create_500px_profile'
+  get 'place_500px_link' => 'keywords#place_500px_link'
+  #
+
 
 end

@@ -1,0 +1,28 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#500px
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%500px%").first.id)
+if kw2.length < 1
+    browser.goto 'https://500px.com/signup'
+    browser.span(text: 'Continue with Email').click
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.checkbox(name: 'email_notifications').set
+    browser.button(value: 'Sign up').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, 500px profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
