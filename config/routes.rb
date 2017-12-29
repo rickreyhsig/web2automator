@@ -93,6 +93,10 @@ Web2automator::Application.routes.draw do
   get 'create_500px_profile' => 'keywords#create_500px_profile'
   get 'place_500px_link' => 'keywords#place_500px_link'
   #
+  get 'create_deviantart_profile' => 'keywords#create_deviantart_profile'
+  get 'place_deviantart_link' => 'keywords#place_deviantart_link'
+  #
+
 
 
 end
