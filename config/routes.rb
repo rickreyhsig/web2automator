@@ -96,6 +96,10 @@ Web2automator::Application.routes.draw do
   get 'create_deviantart_profile' => 'keywords#create_deviantart_profile'
   get 'place_deviantart_link' => 'keywords#place_deviantart_link'
   #
+  get 'create_pearltrees_profile' => 'keywords#create_pearltrees_profile'
+  get 'place_pearltrees_link' => 'keywords#place_pearltrees_link'
+  #
+
 
 
 

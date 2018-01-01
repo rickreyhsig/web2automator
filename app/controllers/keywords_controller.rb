@@ -242,6 +242,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #PearlTrees
+  def create_pearltrees_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_pearltrees_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
 
   # GET /keywords

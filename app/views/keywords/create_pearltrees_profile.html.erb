@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#PearlTrees
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pearltrees%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.pearltrees.com/'
+    browser.text_field(id: 'username').set @keyword.keyword
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.div(id: 'signup-button').click
+    browser.span(text: 'Go Public').click
+    browser.file_field(id: 'fileupload').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/Logo-01.jpg')
+    browser.span(text: 'Continue').click
+    browser.span(text: 'Skip this step').click
+    browser.execute_script("alert(\"Please finish setup to continue. You got 15 seconds to do so..\")")
+    sleep(20)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, pearltrees profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
