@@ -251,6 +251,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Disqus
+  def create_disqus_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_disqus_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
 
 
   # GET /keywords

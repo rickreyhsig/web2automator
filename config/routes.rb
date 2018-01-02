@@ -99,7 +99,10 @@ Web2automator::Application.routes.draw do
   get 'create_pearltrees_profile' => 'keywords#create_pearltrees_profile'
   get 'place_pearltrees_link' => 'keywords#place_pearltrees_link'
   #
-
+  get 'create_disqus_profile' => 'keywords#create_disqus_profile'
+  get 'place_disqus_link' => 'keywords#place_disqus_link'
+  #
+ 
 
 
 
