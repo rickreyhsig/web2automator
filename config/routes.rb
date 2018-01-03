@@ -102,8 +102,9 @@ Web2automator::Application.routes.draw do
   get 'create_disqus_profile' => 'keywords#create_disqus_profile'
   get 'place_disqus_link' => 'keywords#place_disqus_link'
   #
+  get 'create_instructables_profile' => 'keywords#create_instructables_profile'
+  get 'place_instructables_link' => 'keywords#place_instructables_link'
+  #
  
-
-
 
 end

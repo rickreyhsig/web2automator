@@ -260,6 +260,14 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Instructables
+  def create_instructables_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_instructables_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
 
 
 

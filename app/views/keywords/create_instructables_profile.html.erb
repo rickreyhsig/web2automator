@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Instructables
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%instructables%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.instructables.com/account/register/'
+    browser.text_field(name: 'screenName').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.execute_script("alert(\"Please resolve CAPTCHA to continue. You got 15 seconds to do so..\")")
+    sleep(20)
+    browser.button(text: 'Create Account »').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, instructables profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

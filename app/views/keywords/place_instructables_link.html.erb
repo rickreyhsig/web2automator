@@ -1,0 +1,48 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Instructables
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%instructables%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.instructables.com/account/login/'
+    browser.text_field(name: 'u').set @keyword.keyword
+    browser.text_field(name: 'p').set @keyword.password
+    browser.button(text: 'Login').click
+    sleep(1)
+    browser.goto "https://www.instructables.com/member/#{@keyword.keyword}/"
+    sleep(2)
+    browser.link(text: 'Edit Profile').click
+    browser.text_field(name: 'websiteName').set @keyword.keyword
+    browser.text_field(name: 'url').set @keyword.link
+    browser.execute_script("alert(\"Please place photo and about to continue. You got 15 seconds to do so..\")")
+    sleep(20)
+    browser.button(text: 'Save Profile').click
+    # Go to profile
+    sleep(2)
+    browser.goto "https://www.instructables.com/member/#{@keyword.keyword}/"
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 33)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, instructables link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
