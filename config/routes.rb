@@ -105,6 +105,9 @@ Web2automator::Application.routes.draw do
   get 'create_instructables_profile' => 'keywords#create_instructables_profile'
   get 'place_instructables_link' => 'keywords#place_instructables_link'
   #
+  get 'create_livejournal_profile' => 'keywords#create_livejournal_profile'
+  get 'place_livejournal_link' => 'keywords#place_livejournal_link'
+  #
  
 
 end

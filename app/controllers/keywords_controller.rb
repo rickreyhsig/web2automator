@@ -269,6 +269,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #LiveJournal
+  def create_livejournal_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_livejournal_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
 
   # GET /keywords

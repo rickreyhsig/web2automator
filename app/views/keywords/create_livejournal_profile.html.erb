@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#LiveJournal
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%livejournal%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.livejournal.com/create'
+    browser.select_list(id: 'day').select_value('1')
+    browser.select_list(id: 'month').select_value('1')
+    browser.select_list(id: 'year').select_value('1980')
+    browser.select_list(id: 'gender').select_value('M')
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.execute_script("alert(\"Please resolve CAPTCHA and type in password2 to continue. You got 40 seconds to do so..\")")
+    sleep(45)
+    browser.button(text: 'Create account').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, livejournal profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
