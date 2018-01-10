@@ -9,13 +9,8 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%soundcloud%").first.id)
 if kw2.length < 1
     browser.goto 'https://soundcloud.com/'
-    browser.execute_script("alert(\"Please click on Create account to continue..\")")
+    browser.execute_script("alert(\"Please do this manually to continue..\")")
     sleep(4)
-    browser.text_field(name: 'username').set @keyword.email
-    browser.button(text: 'Continue').click
-    browser.text_field(type: 'password').set @keyword.password
-    browser.execute_script("alert(\"Please fill out rest to continue..\")")
-    sleep(5)
     browser.close
 else
    profiles << kw2.first.link

@@ -18,7 +18,7 @@ if kw2.length < 1
     browser.text_field(id: 'log_password').set @keyword.password
     browser.div(text: 'Log in').click
     browser.execute_script("alert(\"Please place link to continue. You got 15 seconds to do so..\")")
-    sleep(5)
+    sleep(15)
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 31)
     keyword_web2.update_attributes(link: browser.url)

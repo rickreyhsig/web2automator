@@ -14,7 +14,7 @@ if kw2.length < 1
     browser.text_field(id: 'password').set @keyword.password
     browser.div(id: 'signup-button').click
     browser.span(text: 'Go Public').click
-    browser.file_field(id: 'fileupload').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/Logo-01.jpg')
+    browser.file_field(id: 'fileupload').set(@keyword.logo_path)
     browser.span(text: 'Continue').click
     browser.span(text: 'Skip this step').click
     browser.execute_script("alert(\"Please finish setup to continue. You got 15 seconds to do so..\")")

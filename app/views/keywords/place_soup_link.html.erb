@@ -12,9 +12,8 @@ if kw2.length < 1
     browser.goto 'https://www.soup.io/login'
     browser.text_field(id: 'login').set @keyword.keyword
     browser.text_field(id: 'password').set @keyword.password
-    browser.execute_script("alert(\"Please fix login name to continue.\")")
+    browser.execute_script("alert(\"Please fix login name and login to continue.\")")
     sleep(5)
-    browser.button(value: 'Log in').click
     browser.span(text: 'My Soup').click
     browser.execute_script("alert(\"Please place link + logo to continue.\")")
     sleep(20)
