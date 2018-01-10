@@ -17,7 +17,7 @@ if kw2.length < 1
     sleep(2)
     browser.text_field(id: 'settings-website').set @keyword.link
     browser.select_list(name: 'avatar_source').select_value('computer')
-    browser.file_field(name: 'avatar_file').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/Logo-01.jpg')
+    browser.file_field(name: 'avatar_file').set(@keyword.logo_path)
     browser.button(text: 'Save').click
     sleep(5)
     # Go to profile

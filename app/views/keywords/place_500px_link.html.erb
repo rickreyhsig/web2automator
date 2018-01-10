@@ -17,7 +17,7 @@ if kw2.length < 1
     browser.goto 'https://500px.com/settings'
     sleep(2)
     #Upload logo
-    #browser.file_field(id: 'user_photo').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/Logo-01.jpg')
+    browser.file_field(id: 'user_photo').set(@keyword.logo_path)
     browser.text_field(id: 'user_contact_website').set @keyword.link
     browser.execute_script("window.scrollBy(0,1200)")
     browser.button(value: 'Save changes').click

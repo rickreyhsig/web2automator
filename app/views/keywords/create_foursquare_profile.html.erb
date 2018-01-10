@@ -18,7 +18,7 @@ if kw2.length < 1
     browser.text_field(id: 'inputBirthMonth').set '01'
     browser.text_field(id: 'inputBirthDate').set '01'
     browser.text_field(id: 'inputBirthYear').set '1980'
-    browser.file_field(id: 'inputProfilePhoto').set('/Users/ricardokreyhsig/Downloads/Me/KreySystemsSEO/Logo/KreySystemsSeoLogo.png')
+    browser.file_field(id: 'inputProfilePhoto').set(@keyword.logo_path)
     browser.execute_script("alert(\"Please sign up to continue.. You got 10 seconds\")")
     sleep(15)
     browser.close

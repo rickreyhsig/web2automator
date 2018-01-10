@@ -19,7 +19,7 @@ if kw2.length < 1
     browser.text_field(id: 'user_website').set @keyword.link
     browser.execute_script("window.scrollBy(0,1200)")
     #input field
-    browser.file_field(id: 'user_profile_image').set('/Users/ricardokreyhsig/Downloads/Me/rkAvatar.jpeg')
+    browser.file_field(id: 'user_profile_image').set(@keyword.logo_path)
     browser.button(value: 'Update Profile').click
     browser.button(id: 'dropdown-toggle').click
     browser.link(id: 'my-profile-link').click
