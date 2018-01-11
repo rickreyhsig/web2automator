@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Allnumis
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%allnumis%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.allnumis.com/auth/register'
+    browser.checkbox(name: 'agree1').set
+    browser.text_field(id: 'frm_login_username').set @keyword.keyword
+    browser.text_field(id: 'frm_register_password').set @keyword.password
+    browser.text_field(id: 'frm_register_email').set @keyword.email
+    browser.link(text: 'Sign up').click
+	sleep(3)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, allnumis profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

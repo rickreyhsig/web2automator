@@ -108,6 +108,8 @@ Web2automator::Application.routes.draw do
   get 'create_livejournal_profile' => 'keywords#create_livejournal_profile'
   get 'place_livejournal_link' => 'keywords#place_livejournal_link'
   #
- 
+  get 'create_allnumis_profile' => 'keywords#create_allnumis_profile'
+  get 'place_allnumis_link' => 'keywords#place_allnumis_link'
+  #
 
 end

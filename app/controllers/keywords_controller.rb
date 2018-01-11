@@ -278,6 +278,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #AllNumis
+  def create_allnumis_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_allnumis_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
 
   # GET /keywords
