@@ -9,6 +9,7 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%livejournal%").first.id)
 if kw2.length < 1
 	browser.execute_script("alert(\"Please do this one manually..\")")
+    sleep(5)
 	browser.close
 =begin
     browser.goto 'https://www.livejournal.com/create'

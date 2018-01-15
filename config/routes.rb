@@ -111,5 +111,9 @@ Web2automator::Application.routes.draw do
   get 'create_allnumis_profile' => 'keywords#create_allnumis_profile'
   get 'place_allnumis_link' => 'keywords#place_allnumis_link'
   #
+  get 'create_audimated_profile' => 'keywords#create_audimated_profile'
+  get 'place_audimated_link' => 'keywords#place_audimated_link'
+  #
+
 
 end

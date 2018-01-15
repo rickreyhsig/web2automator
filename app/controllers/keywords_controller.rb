@@ -287,6 +287,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Audimated
+  def create_audimated_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_audimated_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
 
 
   # GET /keywords

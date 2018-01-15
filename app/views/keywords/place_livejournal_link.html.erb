@@ -16,7 +16,7 @@ if kw2.length < 1
     browser.execute_script("alert(\"Please type # in password and fix username. You got 4 seconds to do so..\")")
     sleep(7)
     browser.button(name: 'action:login').click
-    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }4
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
     # Save link
     #profiles << browser.url
     #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 34)

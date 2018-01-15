@@ -1,0 +1,39 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Audimated
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%audimated%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'http://audimated.com/auth/login'
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Login').click
+    browser.goto 'http://audimated.com/profile/edit'
+    browser.execute_script("alert(\"Please place link and description and save to continue. You got 30 seconds to do so..\")")
+    sleep(75)
+    # Save link
+    profiles << "http://audimated.com/#{@keyword.keyword}"
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 36)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, audimated link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
