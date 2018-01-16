@@ -114,6 +114,10 @@ Web2automator::Application.routes.draw do
   get 'create_audimated_profile' => 'keywords#create_audimated_profile'
   get 'place_audimated_link' => 'keywords#place_audimated_link'
   #
+  get 'create_care2_profile' => 'keywords#create_care2_profile'
+  get 'place_care2_link' => 'keywords#place_care2_link'
+  #
+
 
 
 end
