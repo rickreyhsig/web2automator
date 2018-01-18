@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Colourlovers
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%colourlovers%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.colourlovers.com/register'
+    browser.text_field(name: 'userName').set @keyword.keyword
+    browser.text_field(name: 'userPassword').set @keyword.password
+    browser.text_field(name: 'userPassword_again').set @keyword.password
+    browser.text_field(name: 'userEmailAddress').set @keyword.email
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click Create Account to continue...\")")
+	sleep(35)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, colourlovers profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

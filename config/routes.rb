@@ -117,6 +117,10 @@ Web2automator::Application.routes.draw do
   get 'create_care2_profile' => 'keywords#create_care2_profile'
   get 'place_care2_link' => 'keywords#place_care2_link'
   #
+  get 'create_colourlovers_profile' => 'keywords#create_colourlovers_profile'
+  get 'place_colourlovers_link' => 'keywords#place_colourlovers_link'
+  #
+
 
 
 

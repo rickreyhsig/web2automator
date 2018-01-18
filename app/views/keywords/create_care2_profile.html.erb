@@ -22,7 +22,7 @@ if kw2.length < 1
 	browser.checkbox(name: 'f[c2cOption]').set
 	browser.file_field(name: 'photo').set(@keyword.logo_path)
     browser.execute_script("alert(\"Please resolve CAPTCHA and click Sign Up Now to continue...\")")
-	sleep(35)
+	sleep(75)
     browser.close
 else
    profiles << kw2.first.link
