@@ -120,6 +120,9 @@ Web2automator::Application.routes.draw do
   get 'create_colourlovers_profile' => 'keywords#create_colourlovers_profile'
   get 'place_colourlovers_link' => 'keywords#place_colourlovers_link'
   #
+  get 'create_creativemarket_profile' => 'keywords#create_creativemarket_profile'
+  get 'place_creativemarket_link' => 'keywords#place_creativemarket_link'
+  #
 
 
 

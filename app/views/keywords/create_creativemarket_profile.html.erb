@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#CreativeMarket
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%creativemarket%").first.id)
+if kw2.length < 1
+    browser.goto 'https://creativemarket.com/'
+    browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').click if browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').present?
+    sleep(2)
+    browser.link(text: 'Join Now').click
+    browser.button(text: 'Continue with Email').click
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1]
+    browser.text_field(name: 'email').set @keyword.email
+    browser.execute_script("alert(\"Please type in username/passswd and click Sign Up to continue..\")")
+    sleep(15)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, creativemarket profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
