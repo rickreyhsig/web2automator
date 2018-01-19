@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#DesignSpiration
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%designspiration%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.designspiration.net/signup/'
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Continue').click
+    browser.text_field(name: 'full_name').set @keyword.anchor_text
+    browser.button(text: 'Continue').click
+    browser.link(text: 'Skip').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, designspiration profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

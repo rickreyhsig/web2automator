@@ -123,8 +123,8 @@ Web2automator::Application.routes.draw do
   get 'create_creativemarket_profile' => 'keywords#create_creativemarket_profile'
   get 'place_creativemarket_link' => 'keywords#place_creativemarket_link'
   #
-
-
-
+  get 'create_designspiration_profile' => 'keywords#create_designspiration_profile'
+  get 'place_designspiration_link' => 'keywords#place_designspiration_link'
+  #
 
 end

@@ -23,7 +23,7 @@ if kw2.length < 1
     browser.link(text: 'View profile').click
     sleep(4)
     profiles << browser.url
-    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 15)
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%usgbc%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
 else

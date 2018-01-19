@@ -22,7 +22,7 @@ if kw2.length < 1
     browser.execute_script("alert(\"Please change user ID, place link in BIO and save link and navigate to profile manually to continue.\")")
     sleep(15)
     profiles << browser.url
-    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: 26)
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%meetup%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
 else

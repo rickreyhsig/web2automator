@@ -1,0 +1,49 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#DesignSpiration
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%designspiration%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.designspiration.net/login/'
+    browser.text_field(name: 'username').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Log in').click
+    browser.execute_script("alert(\"Please type click blue button twice to continue..\")")
+    sleep(2)
+    browser.goto 'https://www.designspiration.net/settings/'
+    sleep(8)
+    browser.file_field(name: 'media_upload').set(@keyword.logo_path)
+    browser.text_field(name: 'website').set @keyword.link
+    browser.text_field(name: 'location').set @keyword.anchor_text.split[0]
+    browser.textarea(name: 'bio').set @keyword.description
+    browser.execute_script("window.scrollBy(0,1800)")
+    browser.button(text: 'Save').click
+    sleep(2)
+    browser.span(text: 'View Profile').click
+    sleep(2)
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%designspiration%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, designspiration link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
