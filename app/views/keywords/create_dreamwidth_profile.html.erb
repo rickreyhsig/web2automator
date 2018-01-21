@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#DreamWidth
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%dreamwidth%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.dreamwidth.org/create?user='
+    browser.text_field(name: 'user').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password1').set @keyword.password
+    browser.text_field(name: 'password2').set @keyword.password
+	browser.select_list(name: 'bday_mm').select_value('1')
+	browser.select_list(name: 'bday_dd').select_value('1')
+    browser.text_field(name: 'bday_yyyy').set '1980'
+	browser.checkbox(name: 'tos').set
+	browser.execute_script("alert(\"Please answer anti-spam and click Create Account to continue.  You got 10 seconds..\")")
+	sleep(15)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, designspiration profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

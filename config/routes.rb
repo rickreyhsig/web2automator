@@ -126,5 +126,9 @@ Web2automator::Application.routes.draw do
   get 'create_designspiration_profile' => 'keywords#create_designspiration_profile'
   get 'place_designspiration_link' => 'keywords#place_designspiration_link'
   #
+  get 'create_dreamwidth_profile' => 'keywords#create_dreamwidth_profile'
+  get 'place_dreamwidth_link' => 'keywords#place_dreamwidth_link'
+  #
+
 
 end

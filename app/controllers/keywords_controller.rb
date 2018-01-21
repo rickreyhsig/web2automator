@@ -332,6 +332,16 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #DreamWidth
+  def create_dreamwidth_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_dreamwidth_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+
 
   # GET /keywords
   # GET /keywords.json
