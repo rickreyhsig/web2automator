@@ -132,5 +132,9 @@ Web2automator::Application.routes.draw do
   get 'create_ello_profile' => 'keywords#create_ello_profile'
   get 'place_ello_link' => 'keywords#place_ello_link'
   #
+  get 'create_gapyear_profile' => 'keywords#create_gapyear_profile'
+  get 'place_gapyear_link' => 'keywords#place_gapyear_link'
+  #
+
 
 end

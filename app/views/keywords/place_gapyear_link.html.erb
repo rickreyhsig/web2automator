@@ -1,0 +1,49 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#GapYear
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%gapyear%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.gapyear.com/account/login'
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Rock My World, Baby!').click
+    browser.link(text: 'Skip this step >').click
+    browser.link(text: 'Skip this step >').click
+    browser.link(text: 'Skip this step >').click
+    browser.text_field(name: 'my_travel_blogs').set @keyword.anchor_text
+    browser.text_field(name: 'my_travel_blogs_url').set @keyword.link
+    browser.span(text: 'Save Your Details').click
+    sleep(2)
+    browser.span(text: 'Finish >').click
+    sleep(2)
+    browser.execute_script("window.scrollBy(0,500)")
+    browser.link(text: 'Profile').click
+    sleep(2)
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%gapyear%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, gapyear link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

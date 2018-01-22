@@ -1,0 +1,36 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#GapYear
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%gapyear%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.gapyear.com/account/register'
+    browser.text_field(name: '_dob').set '01/01/1980'
+    browser.text_field(name: 'username').click
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'password_confirm').set @keyword.password
+    browser.text_field(name: 'first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'last_name').set @keyword.anchor_text.split[1]
+    browser.radio(:name => 'gender', :value => 'Male').set
+    browser.checkbox(:name => 'accept_terms').set
+    browser.checkbox(:name => 'newsletter').set
+    browser.execute_script("alert(\"Please select Home Country and resolve CAPTCHA continue.\")")
+    sleep(30)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, gapyear profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
