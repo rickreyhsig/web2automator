@@ -129,6 +129,8 @@ Web2automator::Application.routes.draw do
   get 'create_dreamwidth_profile' => 'keywords#create_dreamwidth_profile'
   get 'place_dreamwidth_link' => 'keywords#place_dreamwidth_link'
   #
-
+  get 'create_ello_profile' => 'keywords#create_ello_profile'
+  get 'place_ello_link' => 'keywords#place_ello_link'
+  #
 
 end

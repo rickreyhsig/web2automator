@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Ello
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ello%").first.id)
+if kw2.length < 1
+    browser.goto 'https://ello.co/join'
+    browser.text_field(name: 'user[email]').set @keyword.email
+    browser.button(text: 'Create account').click
+    browser.text_field(name: 'user[username]').set @keyword.keyword
+    browser.text_field(name: 'user[password]').set @keyword.password
+    browser.button(text: 'Discover Ello').click
+    browser.button(text: 'A Fan').click
+    browser.button(text: 'Create Account').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ello profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
