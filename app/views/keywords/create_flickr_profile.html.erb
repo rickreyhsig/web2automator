@@ -11,7 +11,7 @@ if kw2.length < 1
     browser.goto 'https://www.flickr.com/'
     #If using with Yahoo email, just need to sign in and finalize process
     browser.execute_script("alert(\"If using with Yahoo email, just need to sign in and finalize process.\")")
-    sleep(5)
+    sleep(15)
 	browser.close
 else
    profiles << kw2.first.link

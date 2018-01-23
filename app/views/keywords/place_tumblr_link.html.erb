@@ -18,10 +18,10 @@ if kw2.length < 1
     browser.span(class: 'blog-list-item-info-name').click
     browser.div(text: 'Edit appearance').click
     browser.button(text: 'Edit appearance').click
-    browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
-    sleep(30)
+    browser.execute_script("alert(\"Please place link, description and anchor text to continue. You got 30 seconds to do so..\")")
+    sleep(35)
     browser.execute_script("alert(\"Ready?\")")
-    sleep(3)
+    sleep(5)
     browser.link(:text =>/https:/).click
     sleep(3)
     profiles << browser.url

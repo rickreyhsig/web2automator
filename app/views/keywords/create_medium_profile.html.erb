@@ -13,7 +13,7 @@ if kw2.length < 1
     browser.span(text: 'Sign in with email').click
     browser.text_field(name: 'email').set @keyword.email
     browser.button(text: 'Continue').click
-    browser.execute_script("alert(\"Please follow instructions in email to continue!\")")
+    browser.execute_script("alert(\"Please follow instructions in email and place link manually to continue!\")")
     sleep(4)
 	browser.close
 else

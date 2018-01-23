@@ -3,7 +3,7 @@
 
 <h2>
   <b>Keyword:</b>
-  <%= @keyword.keyword %>
+  <%= @keyword.keyword + " - Web2.0 count: "+ KeywordWeb2.where(keyword_id: @keyword.id).count.to_s %> 
 </h2>
 
 <p>
@@ -41,9 +41,11 @@
   <%= @keyword.anchor_text %>
 </p>
 
+<p>
+  <b>City/Location:</b>
+  <%= @keyword.city %>
+</p>
 
-<!--<%#= link_to 'Create Profiles', create_profiles_path(id: @keyword.id) %></td>
-<%#= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>-->
 
 </br>
 

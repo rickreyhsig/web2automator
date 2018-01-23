@@ -16,7 +16,7 @@ if kw2.length < 1
     browser.img(class: 'profile_photo_img').click
     browser.link(text: 'Profile').click
     browser.link(text: 'Write a description about yourself').click
-    browser.execute_script("alert(\"Please place link to continue. You got 20 seconds to do so..\")")
+    browser.execute_script("alert(\"Please place link, description and photo to continue. You got 20 seconds to do so..\")")
     sleep(22)
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%quora%").first.id)
