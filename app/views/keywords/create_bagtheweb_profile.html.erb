@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#BagTheWeb
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%bagtheweb%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.bagtheweb.com/signup'
+    browser.text_field(id: 'user_username').set @keyword.keyword
+    browser.text_field(id: 'user_screen_name').set @keyword.anchor_text
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_password_confirmation').set @keyword.password
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click Create your account to continue. 10 secs..\")")
+    sleep(13)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, bagtheweb profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

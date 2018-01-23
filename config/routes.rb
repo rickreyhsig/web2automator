@@ -135,6 +135,10 @@ Web2automator::Application.routes.draw do
   get 'create_gapyear_profile' => 'keywords#create_gapyear_profile'
   get 'place_gapyear_link' => 'keywords#place_gapyear_link'
   #
+  get 'create_bagtheweb_profile' => 'keywords#create_bagtheweb_profile'
+  get 'place_bagtheweb_link' => 'keywords#place_bagtheweb_link'
+  #
+
 
 
 end
