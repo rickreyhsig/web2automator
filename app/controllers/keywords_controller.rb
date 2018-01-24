@@ -368,6 +368,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #PasteBin
+  def create_pastebin_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_pastebin_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
 
 

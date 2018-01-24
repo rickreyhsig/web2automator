@@ -138,7 +138,8 @@ Web2automator::Application.routes.draw do
   get 'create_bagtheweb_profile' => 'keywords#create_bagtheweb_profile'
   get 'place_bagtheweb_link' => 'keywords#place_bagtheweb_link'
   #
-
-
+  get 'create_pastebin_profile' => 'keywords#create_pastebin_profile'
+  get 'place_pastebin_link' => 'keywords#place_pastebin_link'
+  #
 
 end
