@@ -1,0 +1,31 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Plurk
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%plurk%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.plurk.com/signup'
+    browser.text_field(id: 'input_nick_name').set @keyword.keyword
+    browser.text_field(id: 'input_email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.select_list(name: 'year').select_value('1980')
+    browser.select_list(name: 'month').select_value('1')
+    browser.select_list(name: 'day').select_value('1')
+    browser.button(text: 'Sign up at Plurk!').click
+    sleep(12)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, plurk profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

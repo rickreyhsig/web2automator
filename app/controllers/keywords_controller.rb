@@ -377,6 +377,15 @@ class KeywordsController < ApplicationController
     @keyword = Keyword.find(params[:keyword_id])
   end
 
+  #Plurk
+  def create_plurk_profile
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
+  def place_plurk_link
+    @keyword = Keyword.find(params[:keyword_id])
+  end
+
 
 
 

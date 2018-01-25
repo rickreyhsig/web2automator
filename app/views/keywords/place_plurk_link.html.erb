@@ -1,0 +1,52 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+
+#Plurk
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%plurk%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.plurk.com/login'
+    browser.text_field(name: 'nick_name').set @keyword.keyword
+    browser.text_field(name: 'password').set @keyword.password
+    browser.execute_script("alert(\"Please fix username if necessary. You got 5 seconds to do so..\")")
+    sleep(7)
+    browser.button(text: 'Login').click
+    sleep 1
+    browser.goto 'https://www.plurk.com/Settings/show?page=profile'
+    browser.select_list(name: 'country_id').select_value('174')
+    browser.select_list(name: 'region_id').select_value('3540')
+    browser.select_list(name: 'city_id').select_value("I can't find my city here, I'll type it")
+    browser.text_field(name: 'city').set @keyword.city
+    browser.textarea(name: 'about').set @keyword.description + ' ' + @keyword.link
+    browser.button(text: 'Save changes').click
+    browser.goto 'https://www.plurk.com/Settings/show?page=picture'
+    browser.file_field(name: 'profile_image').set @keyword.logo_path
+    browser.button(text: 'Upload picture').click
+    browser.goto 'https://www.plurk.com/Settings/show?page=profile'
+    browser.link(text: 'Your Public profile').click
+    browser.goto 'https://www.plurk.com'
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%plurk%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, plurk link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -141,5 +141,9 @@ Web2automator::Application.routes.draw do
   get 'create_pastebin_profile' => 'keywords#create_pastebin_profile'
   get 'place_pastebin_link' => 'keywords#place_pastebin_link'
   #
+  get 'create_plurk_profile' => 'keywords#create_plurk_profile'
+  get 'place_plurk_link' => 'keywords#place_plurk_link'
+  #
+
 
 end
