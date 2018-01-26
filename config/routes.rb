@@ -144,6 +144,10 @@ Web2automator::Application.routes.draw do
   get 'create_plurk_profile' => 'keywords#create_plurk_profile'
   get 'place_plurk_link' => 'keywords#place_plurk_link'
   #
+  get 'create_weheartit_profile' => 'keywords#create_weheartit_profile'
+  get 'place_weheartit_link' => 'keywords#place_weheartit_link'
+  #
+
 
 
 end
