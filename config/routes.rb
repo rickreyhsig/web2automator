@@ -150,7 +150,9 @@ Web2automator::Application.routes.draw do
   get 'create_gravatar_profile' => 'keywords#create_gravatar_profile'
   get 'place_gravatar_link' => 'keywords#place_gravatar_link'
   #
-
+  get 'create_adsoftheworld_profile' => 'keywords#create_adsoftheworld_profile'
+  get 'place_adsoftheworld_link' => 'keywords#place_adsoftheworld_link'
+  #
 
 
 end

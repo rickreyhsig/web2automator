@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AdsOfTheworld
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%adsoftheworld%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.adsoftheworld.com/user/register'
+    browser.text_field(id: 'edit-mail').set @keyword.email
+    browser.text_field(id: 'edit-name').set @keyword.keyword
+    browser.text_field(id: 'edit-pass-pass1').set @keyword.password
+    browser.text_field(id: 'edit-pass-pass2').set @keyword.password
+    browser.button(text: 'Create new account').click
+    sleep 8
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, adsoftheworld profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

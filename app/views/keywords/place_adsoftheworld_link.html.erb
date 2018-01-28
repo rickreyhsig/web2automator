@@ -1,0 +1,51 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AdsOfTheworld
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%adsoftheworld%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.adsoftheworld.com/user/login'
+    browser.text_field(id: 'edit-name').set @keyword.keyword
+    browser.text_field(id: 'edit-pass').set @keyword.password
+    browser.button(text: 'Sign in').click
+    sleep 1
+    browser.execute_script("alert(\"Please click Edit Profile\")")
+    sleep 4
+    browser.execute_script("window.scrollBy(0,2000)")
+    browser.file_field(id: 'edit-picture-upload').set @keyword.logo_path
+    browser.execute_script("window.scrollBy(0,500)")
+    browser.textarea(id: 'edit-field-about-und-0-value').set @keyword.description
+    browser.execute_script("window.scrollBy(0,500)")
+    browser.text_field(id: 'edit-field-website-und-0-url').set @keyword.link
+    browser.execute_script("window.scrollBy(0,1000)")
+    browser.button(text: 'Save').click
+    sleep 1
+    browser.goto 'https://www.adsoftheworld.com/user'
+    sleep 1
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%adsoftheworld%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, adsoftheworld link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
