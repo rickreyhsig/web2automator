@@ -147,6 +147,9 @@ Web2automator::Application.routes.draw do
   get 'create_weheartit_profile' => 'keywords#create_weheartit_profile'
   get 'place_weheartit_link' => 'keywords#place_weheartit_link'
   #
+  get 'create_gravatar_profile' => 'keywords#create_gravatar_profile'
+  get 'place_gravatar_link' => 'keywords#place_gravatar_link'
+  #
 
 
 
