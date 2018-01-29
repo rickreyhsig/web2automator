@@ -153,6 +153,9 @@ Web2automator::Application.routes.draw do
   get 'create_adsoftheworld_profile' => 'keywords#create_adsoftheworld_profile'
   get 'place_adsoftheworld_link' => 'keywords#place_adsoftheworld_link'
   #
+  get 'create_ask_profile' => 'keywords#create_ask_profile'
+  get 'place_ask_link' => 'keywords#place_ask_link'
+  #
 
 
 end

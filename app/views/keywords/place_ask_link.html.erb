@@ -1,0 +1,47 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AskFM
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask.fm%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://ask.fm/login'
+    browser.text_field(name: 'login').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Log in').click
+    sleep 1
+    browser.goto 'https://ask.fm/account/settings/profile'
+    browser.text_field(id: 'user_location').set @keyword.city
+    browser.textarea(id: 'user_about_me').set @keyword.description
+    browser.textarea(id: 'user_website').set @keyword.link
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.file_field(id: 'user_avatar').set @keyword.logo_path
+    browser.execute_script("window.scrollBy(0,1200)")
+    browser.button(text: 'Save').click
+    sleep 1
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask.fm%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ask.fm link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
