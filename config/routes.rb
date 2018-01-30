@@ -156,6 +156,9 @@ Web2automator::Application.routes.draw do
   get 'create_ask_profile' => 'keywords#create_ask_profile'
   get 'place_ask_link' => 'keywords#place_ask_link'
   #
+  get 'create_authorstream_profile' => 'keywords#create_authorstream_profile'
+  get 'place_authorstream_link' => 'keywords#place_authorstream_link'
+  #
 
 
 end
