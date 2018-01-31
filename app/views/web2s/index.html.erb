@@ -6,6 +6,7 @@
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
       <tr>
         <th>Url</th>
+        <th>Manual</th>
         <th></th>
         <th></th>
         <th></th>
@@ -14,6 +15,7 @@
     <% @web2s.each do |web2| %>
       <tr>
         <td><%= web2.url %></td>
+        <td><%= web2.manual %></td>
         <td><%= link_to 'Show', web2 %></td>
         <td><%= link_to 'Edit', edit_web2_path(web2) %></td>
         <td><%= button_to 'Destroy', web2, method: :delete %></td>

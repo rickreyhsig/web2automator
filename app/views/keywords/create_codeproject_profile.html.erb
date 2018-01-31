@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#CodeProject
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%codeproject.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.codeproject.com/script/Membership/Modify.aspx'
+    #Need to do manually - dynamic id and name
+    browser.link(text: 'Sign Up for authorSTREAM').click
+    browser.text_field(id: 'txtFirstName').set @keyword.anchor_text
+    browser.text_field(id: 'txtUserID').set @keyword.keyword
+    browser.text_field(id: 'txtEmail').set @keyword.email
+    browser.text_field(id: 'txtPassword').set @keyword.password
+    browser.select_list(id: 'ddlAccountType').select_value('1')
+    browser.button(text: 'Sign Up').click
+    sleep 4
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, codeproject profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

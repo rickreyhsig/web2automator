@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180123212858) do
+ActiveRecord::Schema.define(:version => 20180131144706) do
 
   create_table "keyword_web2s", :force => true do |t|
     t.integer  "keyword_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20180123212858) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "manual"
   end
 
 end

@@ -159,6 +159,9 @@ Web2automator::Application.routes.draw do
   get 'create_authorstream_profile' => 'keywords#create_authorstream_profile'
   get 'place_authorstream_link' => 'keywords#place_authorstream_link'
   #
+  get 'create_codeproject_profile' => 'keywords#create_codeproject_profile'
+  get 'place_codeproject_link' => 'keywords#place_codeproject_link'
+  #
 
 
 end
