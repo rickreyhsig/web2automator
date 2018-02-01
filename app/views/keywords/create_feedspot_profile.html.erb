@@ -1,0 +1,28 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#FeedSpot
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%feedspot.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.feedspot.com/'
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.button(text: 'Continue').click
+    sleep 4
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, feedspot profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

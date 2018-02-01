@@ -162,6 +162,9 @@ Web2automator::Application.routes.draw do
   get 'create_codeproject_profile' => 'keywords#create_codeproject_profile'
   get 'place_codeproject_link' => 'keywords#place_codeproject_link'
   #
+  get 'create_feedspot_profile' => 'keywords#create_feedspot_profile'
+  get 'place_feedspot_link' => 'keywords#place_feedspot_link'
+  #
 
 
 end

@@ -1,0 +1,48 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#FeedSpot
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%feedspot.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.feedspot.com/login'
+
+    browser.text_field(id: 'loginem').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.button(text: 'Login').click
+    sleep 2
+    browser.div(id: 'rssp44').click if browser.div(id: 'rssp44').exists?
+    browser.span(id: 'sptls1next').click if browser.span(id: 'sptls1next').exists?
+    browser.goto 'https://www.feedspot.com/useredit'
+    browser.text_field(name: 'website').set @keyword.link.gsub('https://','').gsub('http://','')
+    browser.textarea(name: 'bio').set @keyword.description
+    #browser.button(text: 'Save Changes').click
+    sleep 1
+    browser.execute_script("alert(\"Please click 'Save Changes'to continue. \")")
+    sleep 3
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%feedspot.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, feedspot link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
