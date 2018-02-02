@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Filmow
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%filmow.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://filmow.com/usuarios/cadastrar/'
+    browser.text_field(id: 'id_name').set @keyword.anchor_text
+	browser.select_list(id: 'id_gender').select_value('m')
+    browser.text_field(id: 'id_login').set @keyword.keyword
+    browser.text_field(id: 'id_email').set @keyword.email
+    browser.text_field(id: 'id_password').set @keyword.password
+    browser.text_field(id: 'id_repassword').set @keyword.password
+	browser.execute_script("alert(\"Please solve Captcha and click Registrar to continue. You got 10 secs..\")")
+    sleep 15
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, filmow profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

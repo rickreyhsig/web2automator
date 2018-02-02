@@ -165,6 +165,8 @@ Web2automator::Application.routes.draw do
   get 'create_feedspot_profile' => 'keywords#create_feedspot_profile'
   get 'place_feedspot_link' => 'keywords#place_feedspot_link'
   #
-
+  get 'create_filmow_profile' => 'keywords#create_filmow_profile'
+  get 'place_filmow_link' => 'keywords#place_filmow_link'
+  #
 
 end

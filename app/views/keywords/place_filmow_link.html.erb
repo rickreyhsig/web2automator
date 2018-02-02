@@ -1,0 +1,51 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Filmow
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%filmow.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://filmow.com/login/'
+    browser.text_field(id: 'id_username').set @keyword.email
+    browser.text_field(id: 'id_password').set @keyword.password
+    #browser.button(text: 'Entrar').click
+    browser.execute_script("alert(\"Please click 'Entrar' to continue. \")")
+    sleep 4
+    browser.goto 'https://filmow.com/usuarios/editar-perfil/'
+    sleep 2
+    browser.textarea(id: 'id_about').set @keyword.description + ' ' + @keyword.link
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.button(text: 'Salvar').click
+    sleep 1
+    browser.goto 'https://filmow.com/usuarios/trocar-imagem-de-exibicao/'
+    browser.file_field(name: 'avatar').set(@keyword.logo_path)
+    browser.button(text: 'Enviar foto').click
+    sleep 2
+    browser.link(text: 'Perfil').click
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%filmow.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, filmow link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
