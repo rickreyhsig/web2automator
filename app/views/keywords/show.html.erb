@@ -76,3 +76,11 @@
 
 <%= link_to 'Edit', edit_keyword_path(@keyword) %> |
 <%= link_to 'Back', keywords_path %>
+
+<span style="float:right">
+  Download:
+  <!--<%#= link_to "CSV", keyword_path(@keyword, format: "csv") %> |-->
+  <%= link_to "Excel", keyword_path(@keyword, format: "xls") %>
+</span>
+
+<br/><br/><br/>

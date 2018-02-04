@@ -411,10 +411,13 @@ class KeywordsController < ApplicationController
   # GET /keywords/1.json
   def show
     @keyword = Keyword.find(params[:id])
+    Rails.logger.info '---------'
+    Rails.logger.info @keyword.inspect
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @keyword }
+      format.xls
     end
   end
 
