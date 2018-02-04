@@ -1,4 +1,5 @@
 class Keyword < ActiveRecord::Base
+=begin
 	require 'csv'
 
 	#def self.to_csv(options = {})
@@ -43,5 +44,5 @@ class Keyword < ActiveRecord::Base
 		  end
 		end
 	end
-
+=end
 end

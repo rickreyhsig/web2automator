@@ -17,6 +17,8 @@ if kw2.length < 1
     browser.text_field(name: 'password_confirm').set @keyword.password
     browser.text_field(name: 'first_name').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'last_name').set @keyword.anchor_text.split[1]
+    browser.execute_script("window.scrollBy(0,500)")
+
     browser.radio(:name => 'gender', :value => 'Male').set
     browser.checkbox(:name => 'accept_terms').set
     browser.checkbox(:name => 'newsletter').set

@@ -39,6 +39,12 @@
         <Cell><Data ss:Type="String"><%= @keyword.city %></Data></Cell>
       </Row>
 
+      <Row></Row>
+
+      <Row>
+        <Cell><Data ss:Type="String">Links:</Data></Cell>
+      </Row>
+
     <% KeywordWeb2.where(keyword_id: @keyword.id).each do |kw2| %>
       <Row>
         <Cell><Data ss:Type="String"><%= kw2.link %></Data></Cell>

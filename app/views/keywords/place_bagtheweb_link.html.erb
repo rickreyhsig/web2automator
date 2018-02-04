@@ -10,7 +10,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     # Logs in and adds link
     browser.goto 'http://www.bagtheweb.com/login'
-    browser.text_field(id: 'user_session_username').set @keyword.keyword
+    browser.text_field(id: 'user_session_username').set @keyword.email
     browser.text_field(id: 'user_session_password').set @keyword.password
     browser.button(text: 'Sign in').click
     browser.goto 'http://www.bagtheweb.com/edit_profile'

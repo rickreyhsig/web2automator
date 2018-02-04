@@ -18,6 +18,7 @@ if kw2.length < 1
     sleep 4
     browser.goto 'https://filmow.com/usuarios/editar-perfil/'
     sleep 2
+    browser.execute_script("window.scrollBy(0,800)")
     browser.textarea(id: 'id_about').set @keyword.description + ' ' + @keyword.link
     browser.execute_script("window.scrollBy(0,800)")
     browser.button(text: 'Salvar').click
