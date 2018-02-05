@@ -168,5 +168,8 @@ Web2automator::Application.routes.draw do
   get 'create_filmow_profile' => 'keywords#create_filmow_profile'
   get 'place_filmow_link' => 'keywords#place_filmow_link'
   #
+  get 'create_hawkee_profile' => 'keywords#create_hawkee_profile'
+  get 'place_hawkee_link' => 'keywords#place_hawkee_link'
+  #
 
 end

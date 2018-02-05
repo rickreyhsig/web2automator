@@ -47,7 +47,9 @@
 
     <% KeywordWeb2.where(keyword_id: @keyword.id).each do |kw2| %>
       <Row>
-        <Cell><Data ss:Type="String"><%= kw2.link %></Data></Cell>
+        <Cell ss:HRef="<%= kw2.link %>">
+          <Data ss:Type="String"><%= kw2.link %></Data>
+        </Cell>
       </Row>
     <% end %>
     </Table>

@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Hawkee
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hawkee.com%").first.id)
+if kw2.length < 1
+    browser.goto 'http://hawkee.com/register'
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'new_password').set @keyword.password
+    browser.text_field(name: 'password_confirm').set @keyword.password
+	browser.execute_script("alert(\"Please solve Captcha and click Sign up to continue. You got 10 secs..\")")
+    sleep 35
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, hawkee profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
