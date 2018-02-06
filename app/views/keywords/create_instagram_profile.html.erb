@@ -10,9 +10,10 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     browser.goto 'https://www.instagram.com/'
     browser.text_field(name: 'emailOrPhone').set @keyword.email
-    browser.text_field(name: 'fullName').set @keyword.keyword
+    browser.text_field(name: 'fullName').set @keyword.anchor_text
     browser.text_field(name: 'username').set @keyword.keyword
     browser.text_field(name: 'password').set @keyword.password
+    sleep 10
     browser.button(text: 'Sign up').click
 	browser.close
 else

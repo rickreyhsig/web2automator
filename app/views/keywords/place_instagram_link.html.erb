@@ -20,8 +20,10 @@ if kw2.length < 1
     browser.text_field(id: "pepWebsite").set @keyword.link
     browser.textarea(id: 'pepBio').set @keyword.description
     browser.execute_script("alert(\"Please upload logo to continue. You got 8 seconds to do so..\")")
+    sleep 1
     browser.link(text: 'Edit Profile Photo').click
     sleep(12)
+    browser.execute_script("window.scrollBy(0,800)")
     browser.button(text: 'Submit').click
     browser.link(:text =>/Profile/).click
     browser.goto 'https://instagram.com/'

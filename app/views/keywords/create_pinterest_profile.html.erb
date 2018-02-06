@@ -16,6 +16,8 @@ if kw2.length < 1
     browser.text_field(placeholder: 'Age').set '25'
     browser.radio(:name => 'gender', :value => 'male').set
     browser.button(type: 'submit').click
+    sleep 15
+    browser.close
 else
    profiles << kw2.first.link
 end

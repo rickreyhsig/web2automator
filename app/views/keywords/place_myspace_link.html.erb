@@ -13,6 +13,7 @@ if kw2.length < 1
     browser.text_field(name: "email").set @keyword.email
     browser.text_field(name: "password").set @keyword.password
     browser.button(type: "submit").click
+    sleep 2
     browser.span(text: @keyword.keyword).click
     browser.execute_script("alert(\"Please place link, bio and logo to continue.\")")
     sleep(35)

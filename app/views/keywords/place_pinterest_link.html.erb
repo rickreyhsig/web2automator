@@ -14,11 +14,21 @@ if kw2.length < 1
     browser.text_field(name: "id").set @keyword.email
     browser.text_field(name: "password").set @keyword.password
     browser.div(text: 'Continue').click
-    browser.div(text: @keyword.keyword).click
+    #browser.div(text: @keyword.keyword).click
+    sleep 2
     browser.goto 'https://www.pinterest.com/settings'
-    browser.text_field(id: "userWebsite").set @keyword.link
+    browser.execute_script("window.scrollBy(0,600)")
+    browser.textarea(id: 'userAbout').set @keyword.description
+    browser.text_field(id: 'userLocation').set @keyword.city
+    browser.execute_script("window.scrollBy(0,800)")
+    #browser.text_field(id: "userWebsite").set @keyword.link
+    #browser.div(text: 'Change picture').click
+    #browser.file_field(name: 'img').set(@keyword.logo_path)
+    browser.execute_script("alert(\"Please place pic and link to continue. You got 15 seconds to do so..\")")
+    sleep 20
     browser.div(text: 'Save settings').click
-    browser.div(text: @keyword.keyword).click
+    #browser.div(text: @keyword.keyword).click
+    browser.goto "https://www.pinterest.com/#{@keyword.keyword}"
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%pinterest%").first.id)
     keyword_web2.update_attributes(link: browser.url)
