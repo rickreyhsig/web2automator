@@ -10,11 +10,11 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     browser.goto 'https://www.quora.com/'
     browser.link(text: 'Continue With Email').click
-    browser.text_field(name: 'first_name').set @keyword.keyword
+    browser.text_field(name: 'first_name').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'email').set @keyword.email
     browser.text_field(name: 'password').set @keyword.password
     browser.execute_script("alert(\"Please place last name and solve Captcha to continue!\")")
-    sleep(100)
+    sleep(30)
 	browser.close
 else
    profiles << kw2.first.link

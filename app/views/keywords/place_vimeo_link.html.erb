@@ -15,10 +15,11 @@ if kw2.length < 1
     browser.button(value: 'Log in with email').click
     browser.goto 'https://vimeo.com/settings/profile/general'
     sleep(3)
-    browser.execute_script("window.scrollBy(0,200)")
+    browser.execute_script("window.scrollBy(0,400)")
     browser.link(text: '+ Add a new link').click
     browser.text_field(name: 'title').set @keyword.keyword
     browser.text_field(name: 'url').set @keyword.link
+    browser.text_field(name: 'location').set @keyword.city
     browser.text_field(name: 'description').set @keyword.keyword
     browser.execute_script("alert(\"Please click save to continue. You got 7 seconds to do so..\")")
     sleep(7)

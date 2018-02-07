@@ -17,8 +17,8 @@ if kw2.length < 1
     browser.text_field(id: 'edit-pass2').set @keyword.password
     browser.checkbox(:id => 'edit-field-legal-accept').set
     browser.text_field(id: 'edit-field-per-phone').set "3019608373"
-	browser.execute_script("alert(\"Please set last name, CAPTCHA and phone to 3019608373 to continue.  Then click CREATE ACCOUNT\")")
-	sleep(22)
+	browser.execute_script("alert(\"Please set last name, CAPTCHA and phone 3019608373 to continue.  Then click CREATE ACCOUNT\")")
+	sleep(30)
     browser.close
 else
    profiles << kw2.first.link
