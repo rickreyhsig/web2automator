@@ -14,13 +14,17 @@ if kw2.length < 1
     browser.text_field(id: 'user_password').set @keyword.password
     browser.button(value: 'Sign in').click
     browser.goto 'https://www.goodreads.com/user/edit'
+    browser.file_field(id: 'user_photo').set(@keyword.logo_path) if browser.file_field(id: 'user_photo').exists?
+    browser.button(text: 'Upload Photo').click if browser.button(text: 'Upload Photo').exists?
+    sleep 2
     browser.text_field(id: 'user_user_name').set @keyword.keyword
     browser.text_field(id: 'user_url').set @keyword.link
+    browser.textarea(id: 'user[about_me]').set @keyword.description
     #Scroll down 800 px
     browser.execute_script("window.scrollBy(0,800)")
     browser.button(value: 'Save Profile Settings').click
     browser.link(text: 'View My Profile').click
-    profiles << browser.url
+    profiles << "https://www.goodreads.com/#{@keyword.keyword}"
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%goodreads%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close

@@ -16,7 +16,16 @@ if kw2.length < 1
     browser.goto 'https://www.codecademy.com/account'
     sleep(2)
     browser.text_field(id: 'user_name').set @keyword.keyword
+    browser.text_field(id: 'user_location').set @keyword.city
+    browser.textarea(id: 'user_about_me').set @keyword.description
     browser.text_field(id: 'user_website').set @keyword.link
+    browser.execute_script("window.scrollBy(0,300)")
+    github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%')
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
+    browser.text_field(id: 'user_handles[github]').set github.first.link unless github.empty?
+    browser.text_field(id: 'user_handles[twitter]').set twitter.first.link unless twitter.empty?
+    browser.text_field(id: 'user_handles[linked_in]').set linkedin.first.link unless linkedin.empty?
     browser.execute_script("window.scrollBy(0,1200)")
     #input field
     browser.file_field(id: 'user_profile_image').set(@keyword.logo_path)

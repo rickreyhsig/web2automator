@@ -13,8 +13,8 @@ if kw2.length < 1
     browser.link(text: 'Or use your email').click
     browser.text_field(id: 'inputEmail').set @keyword.email
     browser.text_field(id: 'inputPassword').set @keyword.password
-    browser.text_field(id: 'inputFirstName').set @keyword.keyword
-
+    browser.text_field(id: 'inputFirstName').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'inputLastName').set @keyword.anchor_text.split[1]
     browser.text_field(id: 'inputBirthMonth').set '01'
     browser.text_field(id: 'inputBirthDate').set '01'
     browser.text_field(id: 'inputBirthYear').set '1980'
