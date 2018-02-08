@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Issuu
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%issuu.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://issuu.com/signup'
+    browser.text_field(name: 'email').set @keyword.email
+    sleep 1
+    browser.text_field(name: 'password').set @keyword.password
+    sleep 1
+	browser.checkbox(:name => 'tos').set
+    browser.button(text: 'Create account').click
+    browser.execute_script("alert(\"Please click around and finish process. You got 10 seconds to do so..\")")
+    sleep 12
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, issuu profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

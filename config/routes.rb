@@ -171,5 +171,8 @@ Web2automator::Application.routes.draw do
   get 'create_hawkee_profile' => 'keywords#create_hawkee_profile'
   get 'place_hawkee_link' => 'keywords#place_hawkee_link'
   #
+  get 'create_issuu_profile' => 'keywords#create_issuu_profile'
+  get 'place_issuu_link' => 'keywords#place_issuu_link'
+  #
 
 end
