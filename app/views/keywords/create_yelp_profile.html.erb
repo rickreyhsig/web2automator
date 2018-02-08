@@ -10,8 +10,8 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
 
     browser.goto 'https://www.yelp.com/signup'
-    browser.text_field(id: 'first_name').set @keyword.keyword
-    browser.text_field(id: 'last_name').set @keyword.keyword
+    browser.text_field(id: 'first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'last_name').set @keyword.anchor_text.split[1]
     browser.text_field(id: 'email').set @keyword.email
     browser.text_field(id: 'password').set @keyword.password
     browser.text_field(id: 'zip').set '20906'
@@ -23,7 +23,9 @@ if kw2.length < 1
     browser.goto 'https://www.yelp.com/profile'
     sleep(3)
     browser.text_field(id: 'blog').set @keyword.link
-    browser.execute_script("window.scrollBy(0,800)")
+    browser.text_field(id: 'nickname').set @keyword.keyword
+    browser.text_field(id: 'tagline').set @keyword.description
+    browser.execute_script("window.scrollBy(0,1200)")
     browser.span(text: 'Save Changes').click
     sleep(3)
     browser.goto 'https://www.yelp.com/user_personal_url'
