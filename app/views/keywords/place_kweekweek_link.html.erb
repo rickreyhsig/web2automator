@@ -1,0 +1,54 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Kweekweek
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%kweekweek.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.kweekweek.com/'
+    browser.span(text: 'Log in').click
+    browser.text_field(id: 'user_login').set @keyword.email
+    sleep 1
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_login').set @keyword.email
+    browser.button(text: 'Log in').click
+    sleep 1
+    browser.goto 'https://www.kweekweek.com/dashboard#settings/profile-information'
+    sleep 1
+    browser.text_field(id: 'display-name').set @keyword.anchor_text
+    browser.file_field(name: 'file').set(@keyword.logo_path)
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.text_field(id: 'city-input').set @keyword.city
+    browser.button(text: 'Save').click
+    sleep 1
+    browser.button(text: 'View profile').click
+    sleep 1
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%kweekweek.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, kweekweek link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Kweekweek
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%kweekweek.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.kweekweek.com/'
+    browser.span(text: 'Sign up').click
+    browser.text_field(id: 'user_forename').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'user_surname').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_password_confirmation').set @keyword.password
+    browser.execute_script("alert(\"Please set First Name, gender and birthday. You got 15 seconds to do so..\")")
+    sleep 20
+    browser.button(text: 'Sign up').click
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, kweekweek profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

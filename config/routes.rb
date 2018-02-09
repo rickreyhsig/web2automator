@@ -174,5 +174,11 @@ Web2automator::Application.routes.draw do
   get 'create_issuu_profile' => 'keywords#create_issuu_profile'
   get 'place_issuu_link' => 'keywords#place_issuu_link'
   #
+  get 'create_kweekweek_profile' => 'keywords#create_kweekweek_profile'
+  get 'place_kweekweek_link' => 'keywords#place_kweekweek_link'
+  #
 
+
+
+  
 end
