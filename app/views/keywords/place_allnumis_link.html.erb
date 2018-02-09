@@ -18,7 +18,10 @@ if kw2.length < 1
     browser
     browser.file_field(id: 'image1').set(@keyword.logo_path)
     browser.text_field(id: 'webpage').set @keyword.link
+    browser.text_field(id: 'location').set @keyword.city
+    browser.text_field(id: 'name').set @keyword.anchor_text
     browser.execute_script("window.scrollBy(0,1800)")
+    browser.textarea(id: 'about_me').set @keyword.description
     browser.link(text: 'Save').click
     sleep(2)
     browser.link(text: 'My Public Profile').click

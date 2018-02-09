@@ -13,17 +13,32 @@ if kw2.length < 1
     browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').click if browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').present?
     sleep(2)
     browser.link(text: 'Sign In').click
-    browser.execute_script("alert(\"Please type in username/passswd and click Sign In to continue..\")")
+    browser.execute_script("alert(\"Please type in email/passswd and click Sign In to continue..\")")
     sleep(15)
     browser.goto('https://creativemarket.com/account/settings')
     sleep(1)
+    browser.file_field(name: 'user-avatar-file').set(@keyword.logo_path)
+    sleep 5
     browser.text_field(name: 'location').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'website').set @keyword.link
-    browser.file_field(name: 'user-avatar-file').set(@keyword.logo_path)
-    browser.execute_script("alert(\"Please type description and save to continue.. You got 7 secs\")")
-    sleep(10)
-    browser.goto("https://creativemarket.com/#{@keyword.keyword}")
-    sleep(2)
+    browser.textarea(name: 'bio').set @keyword.description
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
+    tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%').first.link
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
+    github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first.link
+    browser.text_field(name: 'instagram').set instagram
+    browser.text_field(name: 'twitter').set twitter
+    browser.text_field(name: 'tumblr').set tumblr
+    browser.text_field(name: 'pinterest').set pinterest
+    browser.text_field(name: 'github').set github
+    browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
+    sleep 15
+    browser.button(text: 'Update Profile Info').click
+    sleep 3
+    browser.execute_script("alert(\"Please go to profile page to continue. You got 5 seconds to do so..\")")
+    sleep 8
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%creativemarket%").first.id)

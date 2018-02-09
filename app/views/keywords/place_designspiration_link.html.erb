@@ -19,8 +19,17 @@ if kw2.length < 1
     sleep(8)
     browser.file_field(name: 'media_upload').set(@keyword.logo_path)
     browser.text_field(name: 'website').set @keyword.link
-    browser.text_field(name: 'location').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'location').set @keyword.city
     browser.textarea(name: 'bio').set @keyword.description
+    browser.execute_script("window.scrollBy(0,500)")
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
+    browser.text_field(name: 'instagram').set instagram
+    browser.text_field(name: 'twitter').set twitter
+    browser.text_field(name: 'facebook').set facebook
+    browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
+    sleep 12
     browser.execute_script("window.scrollBy(0,1800)")
     browser.button(text: 'Save').click
     sleep(2)

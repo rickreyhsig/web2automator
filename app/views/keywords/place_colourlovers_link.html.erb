@@ -13,14 +13,16 @@ if kw2.length < 1
     browser.text_field(name: 'userName').set @keyword.keyword
     browser.text_field(name: 'userPassword').set @keyword.password
     browser.execute_script("alert(\"Please click Log In to continue.\")")
-    sleep(2)
+    sleep 5
     browser.goto 'http://www.colourlovers.com/account'
     browser.text_field(name: 'userUrl').set @keyword.link
-    browser.text_field(name: 'userLocation').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'userLocation').set @keyword.city
+    browser.textarea(name: 'userInfo').set @keyword.description
     browser.execute_script("window.scrollBy(0,800)")
     browser.file_field(name: 'userPicture').set(@keyword.logo_path)
-    browser.execute_script("alert(\"Please fill out description, save and  continue. You got 10 seconds to do so..\")")
-    sleep(20)
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.execute_script("alert(\"Please click Save Profile twice to continue. You got 7 seconds to do so..\")")
+    sleep(10)
     browser.span(class: 'user-name').click
     # Save link
     profiles << browser.url

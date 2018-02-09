@@ -14,10 +14,14 @@ if kw2.length < 1
     browser.text_field(id: 'login_care2_password').set @keyword.password
     browser.button(text: 'Sign In').click
     browser.goto 'http://www.care2.com/c2c/my/edit_personal.html'
-    browser.text_field(name: 'form[1]').set @keyword.link
+    link = @keyword.link.gsub("http://", "").gsub("https://", "")
+    browser.text_field(name: 'form[1]').set link
     browser.text_field(name: 'form[2]').set @keyword.anchor_text
-    browser.execute_script("alert(\"Please fill out description and save to continue. You got 10 seconds to do so..\")")
-    sleep(15)
+    browser.text_field(name: 'form[5]').set @keyword.city
+    browser.textarea(name: 'form[3]').set @keyword.description
+    browser.execute_script("window.scrollBy(0,1800)")
+    browser.button(text: 'Save Changes').click
+    sleep 2
     browser.link(text: 'View Your Profile').click
     sleep(3)
     # Save link
