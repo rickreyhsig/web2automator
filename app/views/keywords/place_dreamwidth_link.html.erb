@@ -28,7 +28,23 @@ if kw2.length < 1
     browser.text_field(id: 'city').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'url').set @keyword.link
     browser.text_field(name: 'urlname').set @keyword.anchor_text
-    browser.execute_script("window.scrollBy(0,1800)")
+    browser.execute_script("window.scrollBy(0,900)")
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
+    tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%').first.link
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
+    github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first.link
+    deviantart = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%deviantart.com%').first.link
+    browser.text_field(name: 'instagram').set instagram
+    browser.text_field(name: 'twitter').set twitter
+    browser.text_field(name: 'tumblr').set tumblr
+    browser.text_field(name: 'pinterest').set pinterest
+    browser.text_field(name: 'github').set github
+    browser.text_field(name: 'deviantart').set deviantart
+    browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
+    sleep 40
+    browser.execute_script("window.scrollBy(0,900)")
     browser.textarea(name: 'bio').set @keyword.description
     browser.button(text: 'Save Changes').click
     sleep(1)

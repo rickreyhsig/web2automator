@@ -23,7 +23,7 @@ if kw2.length < 1
     browser.text_field(id: 'last_name').set @keyword.anchor_text.split[1]
     browser.textarea(id: 'description').set @keyword.description
     browser.button(text: 'Save Profile Details').click
-    browser.execute_script("window.scrollBy(0,600)")
+    browser.execute_script("window.scrollBy(0,1000)")
 
     browser.button(text: 'Add').click
     browser.button(text: 'Add URL').click

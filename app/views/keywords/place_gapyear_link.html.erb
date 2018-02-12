@@ -13,18 +13,24 @@ if kw2.length < 1
     browser.text_field(name: 'username').set @keyword.keyword
     browser.text_field(name: 'password').set @keyword.password
     browser.button(text: 'Rock My World, Baby!').click
-    browser.link(text: 'Skip this step >').click
-    browser.link(text: 'Skip this step >').click
-    browser.link(text: 'Skip this step >').click
+    #browser.link(text: 'Skip this step >').click
+    #browser.link(text: 'Skip this step >').click
+    #browser.link(text: 'Skip this step >').click
+    browser.goto 'https://www.gapyear.com/account/profile'
+    sleep 2
+    browser.div(id: 'gy_tabs').li(id: 'tablist1-tab5').click
+    browser.execute_script("window.scrollBy(0,1500)")
     browser.text_field(name: 'my_travel_blogs').set @keyword.anchor_text
     browser.text_field(name: 'my_travel_blogs_url').set @keyword.link
+    browser.textarea(name: 'more_about_me').set @keyword.description
     browser.span(text: 'Save Your Details').click
-    sleep(2)
-    browser.span(text: 'Finish >').click
-    sleep(2)
+    browser.execute_script("alert(\"Please place profile pic to continue. You got 30 seconds to do so..\")")
+    sleep 3
+    #browser.span(text: 'Finish >').click
+    #sleep 2
     browser.execute_script("window.scrollBy(0,500)")
     browser.link(text: 'Profile').click
-    sleep(2)
+    sleep 2
     Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
     # Save link
     profiles << browser.url

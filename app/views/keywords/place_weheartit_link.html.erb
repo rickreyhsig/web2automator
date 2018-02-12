@@ -20,6 +20,7 @@ if kw2.length < 1
     browser.text_field(id: 'user_bio').set @keyword.description
     browser.text_field(id: 'user_location').set @keyword.city
     browser.text_field(id: 'user_link').set @keyword.link
+    browser.execute_script("window.scrollBy(0,800)")
     browser.button(text: 'Save changes').click
     browser.link(id: 'current_user').click
     # Save link

@@ -7,7 +7,7 @@ profiles = []
 
 #Ask-book
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask-book%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://ask-book.com/'
     browser.text_field(placeholder: 'Email or Username').set @keyword.email
@@ -15,8 +15,15 @@ if kw2.length < 1
     browser.button(text: 'Log In').click
     browser.link(id: 'naviMenu').click
     browser.link(text: 'Settings').click
-    browser.execute_script("alert(\"Please place link and save to continue. You got 10 seconds to do so..\")")
-    sleep(10)
+
+    browser.textarea(name: 'aboutme').set @keyword.description
+    browser.textarea(name: 'website').set @keyword.link
+    browser.text_field(name: 'location').set @keyword.city
+    browser.execute_script("window.scrollBy(0,1500)")
+    browser.button(text: 'Save').click
+    #browser.execute_script("alert(\"Please place link and save to continue. You got 10 seconds to do so..\")")
+    #sleep(10)
+
     browser.div(id: "naviRight").links.each_with_index do | link, index |
         link.click if index == 4
     end
@@ -24,9 +31,9 @@ if kw2.length < 1
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask-book%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

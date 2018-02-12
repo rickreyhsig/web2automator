@@ -12,10 +12,8 @@ if kw2.length < 1
     browser.goto 'https://www.plurk.com/login'
     browser.text_field(name: 'nick_name').set @keyword.keyword
     browser.text_field(name: 'password').set @keyword.password
-    browser.execute_script("alert(\"Please fix username if necessary. You got 5 seconds to do so..\")")
-    sleep(7)
-    browser.button(text: 'Login').click
-    sleep 1
+    browser.execute_script("alert(\"Please fix username if necessary and click Login. You got 5 seconds to do so..\")")
+    sleep 7
     browser.goto 'https://www.plurk.com/Settings/show?page=profile'
     browser.select_list(name: 'country_id').select_value('174')
     browser.select_list(name: 'region_id').select_value('3540')

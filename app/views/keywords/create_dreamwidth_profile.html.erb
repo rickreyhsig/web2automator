@@ -18,7 +18,7 @@ if kw2.length < 1
     browser.text_field(name: 'bday_yyyy').set '1980'
 	browser.checkbox(name: 'tos').set
 	browser.execute_script("alert(\"Please answer anti-spam and click Create Account to continue.  You got 10 seconds..\")")
-	sleep(15)
+	sleep(19)
     browser.close
 else
    profiles << kw2.first.link
@@ -26,7 +26,7 @@ end
 %>
 
 </br></br>
-Congrats, designspiration profile was created!
+Congrats, dreamwidth profile was created!
 
 </br></br>
 

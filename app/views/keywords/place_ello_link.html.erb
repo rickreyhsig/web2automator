@@ -15,17 +15,17 @@ if kw2.length < 1
     browser.button(text: 'Log in').click
     sleep 4
     browser.goto 'https://ello.co/settings'
-    sleep(2)
+    sleep 2
     browser.text_field(name: 'user[name]').set @keyword.anchor_text
-    browser.text_field(name: 'user[location]').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'user[location]').set @keyword.city
     browser.text_field(name: 'user[links]').set @keyword.link
     browser.textarea(name: 'user[unsanitized_short_bio]').set @keyword.description
-    sleep(5)
-    #browser.execute_script("alert(\"Make sure all last 4 fields are correctly filled out. You got 10 seconds to do so..\")")
-    #sleep(10)
+    sleep 5
+    browser.execute_script("alert(\"Make sure all last 4 fields are correctly filled out, that it saves and  upload pic. You got 10 seconds to do so..\")")
+    sleep 20
     browser.execute_script("window.scrollBy(0,500)")
     browser.link(text: 'View profile').click
-    sleep(1)
+    sleep 1
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ello%").first.id)

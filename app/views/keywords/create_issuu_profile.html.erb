@@ -17,7 +17,7 @@ if kw2.length < 1
 	browser.checkbox(:name => 'tos').set
     browser.button(text: 'Create account').click
     browser.execute_script("alert(\"Please click around and finish process. You got 10 seconds to do so..\")")
-    sleep 12
+    sleep 20
     browser.close
 else
    profiles << kw2.first.link
