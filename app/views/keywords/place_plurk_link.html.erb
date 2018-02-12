@@ -15,6 +15,7 @@ if kw2.length < 1
     browser.execute_script("alert(\"Please fix username if necessary and click Login. You got 5 seconds to do so..\")")
     sleep 7
     browser.goto 'https://www.plurk.com/Settings/show?page=profile'
+    browser.text_field(name: 'display_name').set @keyword.keyword[0..14]
     browser.select_list(name: 'country_id').select_value('174')
     browser.select_list(name: 'region_id').select_value('3540')
     browser.select_list(name: 'city_id').select_value("I can't find my city here, I'll type it")
