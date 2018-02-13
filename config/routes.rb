@@ -177,8 +177,11 @@ Web2automator::Application.routes.draw do
   get 'create_kweekweek_profile' => 'keywords#create_kweekweek_profile'
   get 'place_kweekweek_link' => 'keywords#place_kweekweek_link'
   #
+  get 'create_logopond_profile' => 'keywords#create_logopond_profile'
+  get 'place_logopond_link' => 'keywords#place_logopond_link'
+  #
 
 
 
-  
+
 end

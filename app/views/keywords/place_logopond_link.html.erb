@@ -1,0 +1,55 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Logopond
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%logopond.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://logopond.com/auth/login'
+    browser.text_field(name: 'user:name').set @keyword.keyword
+    browser.text_field(name: 'user:password').set @keyword.password
+    browser.button(text: 'Sign In').click
+    browser.span(text: 'Edit Profile').click
+    browser.execute_script("window.scrollBy(0,1200)")
+    browser.execute_script("alert(\"Please place SMALL (500x500max) photo to continue. You got 10 seconds to do so..\")")
+    sleep 10
+    browser.execute_script("window.scrollBy(0,600)")
+    browser.text_field(name: 'website').set @keyword.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
+    # Place fb+tw
+    browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '').tr('/', '')
+    browser.text_field(name: 'facebook').set facebook
+    browser.text_field(name: 'city').set @keyword.city
+    browser.execute_script("window.scrollBy(0,600)")
+    browser.textarea(name: 'bio').set @keyword.description
+    browser.button(text: 'Update Profile').click
+    sleep 1
+    browser.link(text: 'Profile').click
+    sleep 1
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%logopond.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, logopond link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
