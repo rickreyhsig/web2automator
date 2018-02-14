@@ -180,8 +180,9 @@ Web2automator::Application.routes.draw do
   get 'create_logopond_profile' => 'keywords#create_logopond_profile'
   get 'place_logopond_link' => 'keywords#place_logopond_link'
   #
-
-
+  get 'create_fontspace_profile' => 'keywords#create_fontspace_profile'
+  get 'place_fontspace_link' => 'keywords#place_fontspace_link'
+  #
 
 
 end

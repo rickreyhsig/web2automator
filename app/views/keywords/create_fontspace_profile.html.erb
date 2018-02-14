@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Fontspace
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%fontspace.com%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.fontspace.com/account/register'
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.execute_script("alert(\"Please enter magic number and click REGISTER. You got 10 seconds to do so..\")")
+    sleep 12
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, fontspace profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
