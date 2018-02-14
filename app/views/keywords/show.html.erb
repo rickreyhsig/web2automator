@@ -64,7 +64,15 @@
         <% web2_name.gsub!('-','') %>
         <% web2_cp = "create_#{web2_name}_profile_path" %>
         <% web2_pl = "place_#{web2_name}_link_path" %>
-        <td style="<%= 'background-color: #39CCCC;' if web2.manual %>"><%= web2.url %></td>
+        <% if web2.manual %>
+            <td style="background-color: #FFD700;"><%= web2.url %></td>
+        <% elsif web2.easy %>
+            <td style="background-color: #AFEEEE;"><%= web2.url %></td>
+        <% elsif web2.bad %>
+            <td style="background-color: #FF4500;"><%= web2.url %></td>
+        <% else %>
+            <td><%= web2.url %></td>
+        <% end %>
         <% kwWeb2 = KeywordWeb2.find_by_web2_id_and_keyword_id(web2.id, @keyword.id) %>
         <td><%= link_to kwWeb2.link, kwWeb2.link if kwWeb2 %></td>
         <td><%= link_to "Create #{web2_name} profile", send(web2_cp, keyword_id: @keyword.id) %></td>
