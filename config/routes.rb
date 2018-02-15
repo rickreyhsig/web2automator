@@ -183,6 +183,8 @@ Web2automator::Application.routes.draw do
   get 'create_fontspace_profile' => 'keywords#create_fontspace_profile'
   get 'place_fontspace_link' => 'keywords#place_fontspace_link'
   #
-
+  get 'create_audioboom_profile' => 'keywords#create_audioboom_profile'
+  get 'place_audioboom_link' => 'keywords#place_audioboom_link'
+  #
 
 end

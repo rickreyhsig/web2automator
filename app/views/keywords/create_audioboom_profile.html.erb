@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AudioBoom
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%audioboom.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://audioboom.com/login'
+    browser.link(text: 'Sign up').click
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.checkbox(name: 'terms').set
+    browser.button(text: 'Continue').click
+    sleep 10
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, audioboom profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
