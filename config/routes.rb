@@ -186,5 +186,8 @@ Web2automator::Application.routes.draw do
   get 'create_audioboom_profile' => 'keywords#create_audioboom_profile'
   get 'place_audioboom_link' => 'keywords#place_audioboom_link'
   #
+  get 'create_nationalgeographic_profile' => 'keywords#create_nationalgeographic_profile'
+  get 'place_nationalgeographic_link' => 'keywords#place_nationalgeographic_link'
+  #
 
 end

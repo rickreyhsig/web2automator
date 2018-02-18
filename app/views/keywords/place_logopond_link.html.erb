@@ -20,8 +20,10 @@ if kw2.length < 1
     sleep 10
     browser.execute_script("window.scrollBy(0,600)")
     browser.text_field(name: 'website').set @keyword.link
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
-    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
     # Place fb+tw
     browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '').tr('/', '')
     browser.text_field(name: 'facebook').set facebook

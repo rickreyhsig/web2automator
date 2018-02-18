@@ -1,0 +1,34 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#NationalGeographic
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%nationalgeographic.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://members.nationalgeographic.com/account/join'
+    browser.execute_script("alert(\"Please place photo to continue. You got 10 seconds to do so..\")")
+    sleep 15
+	browser.link(text: 'Sign up').click
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1]
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password2
+    browser.text_field(name: 'confirmPassword').set @keyword.password2
+    browser.execute_script("alert(\"Please place city, state, country and click Join Now to continue. You got 10 seconds to do so..\")")
+    sleep 15
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, nationalgeographic profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
