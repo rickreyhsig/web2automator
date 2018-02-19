@@ -12,14 +12,13 @@ if kw2.length < 1
     browser.goto 'https://members.nationalgeographic.com/account/join'
     browser.execute_script("alert(\"Please place photo to continue. You got 10 seconds to do so..\")")
     sleep 15
-	browser.link(text: 'Sign up').click
     browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1]
     browser.text_field(name: 'email').set @keyword.email
     browser.text_field(name: 'password').set @keyword.password2
     browser.text_field(name: 'confirmPassword').set @keyword.password2
     browser.execute_script("alert(\"Please place city, state, country and click Join Now to continue. You got 10 seconds to do so..\")")
-    sleep 15
+    sleep 18
     browser.close
 else
    profiles << kw2.first.link

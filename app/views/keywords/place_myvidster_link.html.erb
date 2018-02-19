@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#MyVidster
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myvidster.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.myvidster.com/user/'
+    browser.text_field(name: 'user_id').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Log In').click
+    browser.goto 'http://www.myvidster.com/user/options.php'
+    browser.text_field(name: 'website').set @keyword.link
+    browser.text_field(name: 'location').set @keyword.city
+    browser.textarea(name: 'about').set @keyword.description
+    browser.button(text: 'Save').click
+    browser.execute_script("alert(\"Please upload pic and go to Public Profile page. You got 15 seconds to do so..\")")
+    sleep 26
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myvidster.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, myvidster link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

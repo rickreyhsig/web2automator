@@ -12,10 +12,9 @@ if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://members.nationalgeographic.com/account/login'
     browser.text_field(name: 'username').set @keyword.email
-    browser.execute_script("alert(\"Please type in password2 to continue. You got 6 seconds to do so..\")")
-    sleep 8
+    browser.text_field(name: 'password').set @keyword.password2
     browser.button(text: 'Sign In').click
-    sleep 1
+    sleep 2
     browser.goto 'https://members.nationalgeographic.com/settings/public-profile/'
     browser.execute_script("window.scrollBy(0,800)")
     browser.text_field(id: 'personal-site').set @keyword.link

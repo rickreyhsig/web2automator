@@ -189,5 +189,8 @@ Web2automator::Application.routes.draw do
   get 'create_nationalgeographic_profile' => 'keywords#create_nationalgeographic_profile'
   get 'place_nationalgeographic_link' => 'keywords#place_nationalgeographic_link'
   #
+  get 'create_myvidster_profile' => 'keywords#create_myvidster_profile'
+  get 'place_myvidster_link' => 'keywords#place_myvidster_link'
+  #
 
 end
