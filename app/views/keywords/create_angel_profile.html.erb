@@ -1,0 +1,29 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AngelList
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%angel.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://angel.co/join'
+    browser.text_field(id: 'user_name').set @keyword.anchor_text
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(text: 'Sign up').click
+    sleep 2
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, angel profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

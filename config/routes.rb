@@ -192,5 +192,8 @@ Web2automator::Application.routes.draw do
   get 'create_myvidster_profile' => 'keywords#create_myvidster_profile'
   get 'place_myvidster_link' => 'keywords#place_myvidster_link'
   #
+  get 'create_angel_profile' => 'keywords#create_angel_profile'
+  get 'place_angel_link' => 'keywords#place_angel_link'
+  #
 
 end
