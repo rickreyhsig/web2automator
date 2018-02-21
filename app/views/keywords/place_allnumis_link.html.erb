@@ -13,7 +13,7 @@ if kw2.length < 1
     browser.text_field(id: 'frm_login_username').set @keyword.keyword
     browser.text_field(id: 'frm_login_password').set @keyword.password
     browser.execute_script("alert(\"Please click Login to continue.\")")
-    sleep(3)
+    sleep 4
     browser.link(text: 'Edit Profile').click
     browser
     browser.file_field(id: 'image1').set(@keyword.logo_path)

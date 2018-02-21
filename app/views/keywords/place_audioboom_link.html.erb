@@ -22,7 +22,7 @@ if kw2.length < 1
     browser.text_field(id: 'user_profile_name').set @keyword.anchor_text
     browser.text_field(id: 'user_profile_location').set @keyword.city
     browser.text_field(id: 'user_profile_website_url').set @keyword.link
-    browser.textarea(id: 'user_profile_description').set @keyword.description
+    browser.textarea(id: 'user_profile_description').set @keyword.description[0..179]
     browser.button(text: 'Update profile').click
     sleep 1
     browser.goto 'https://audioboom.com/profile'

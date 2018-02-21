@@ -18,7 +18,7 @@ if kw2.length < 1
     sleep 2
     browser.goto 'https://www.pinterest.com/settings'
     browser.execute_script("window.scrollBy(0,600)")
-    browser.textarea(id: 'userAbout').set @keyword.description
+    browser.textarea(id: 'userAbout').set @keyword.description[0..159]
     browser.text_field(id: 'userLocation').set @keyword.city
     browser.execute_script("window.scrollBy(0,800)")
     #browser.text_field(id: "userWebsite").set @keyword.link

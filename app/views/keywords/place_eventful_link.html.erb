@@ -14,11 +14,11 @@ if kw2.length < 1
     browser.text_field(id: 'inp-password').set @keyword.password
     browser.button(id: 'inp-signin').click
     browser.goto('http://eventful.com/preferences#/edit-profile')
-    sleep(4)
-    browser.execute_script("alert(\"Please place First/Last Name and fix username. You got 15 seconds to do so..\")")
-    sleep(15)
+    sleep 2
+    browser.execute_script("alert(\"Please place first + last name and save to continue. You got 10 seconds to do so..\")")
+    sleep 12
     browser.goto('http://eventful.com/performers/new')
-    sleep(4)
+    sleep 2
     browser.text_field(id: 'inp-create-performer-name').set @keyword.keyword
     browser.span(id: 'event-add-link-click').click
     browser.text_field(id: 'url-add-link').set @keyword.link
@@ -27,7 +27,7 @@ if kw2.length < 1
     browser.text_field(id: 'inp-create-performer-description').set @keyword.keyword
     browser.select_list(id: 'inp-create-performer-category').select_value('business')    
     browser.button(id: 'btn-create-performer-submit').click
-    sleep(4)
+    sleep 2
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%eventful%").first.id)
     keyword_web2.update_attributes(link: browser.url)

@@ -19,7 +19,8 @@ if kw2.length < 1
     browser.file_field(id: 'photoUploadField').set(@keyword.logo_path)
     browser.link(id: 'profileUploaderClose').click
     browser.goto 'https://www.meetup.com/account/bio/'
-    browser.execute_script("alert(\"Please change user ID, place link in BIO and save link and navigate to profile manually to continue.\")")
+    browser.textarea(id: 'bio').set (@keyword.link + '' + @keyword.description)[0..179]
+    browser.execute_script("alert(\"Please change user ID navigate to profile manually to continue.\")")
     sleep(15)
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%meetup%").first.id)

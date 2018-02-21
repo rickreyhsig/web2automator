@@ -15,10 +15,14 @@ if kw2.length < 1
     browser.text_field(id: 'password').set @keyword.password
     browser.button(text: 'Log in').click
     browser.goto 'https://www.foursquare.com/settings'
-    browser.textarea(id: 'inputBio').set @keyword.description + " " + @keyword.link
+    browser.textarea(id: 'inputBio').set (@keyword.link + " " + @keyword.description)[0..159]
+    browser.text_field(id: 'inputLocation').set @keyword.city
+    browser.execute_script("alert(\"Please make sure city is correct\")")
+    sleep 7
+    browser.execute_script("window.scrollBy(0,800)")
     browser.button(text: 'Save Changes').click
     browser.div(id: 'user').click
-    sleep 2
+    sleep 3
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%foursquare%").first.id)
     keyword_web2.update_attributes(link: browser.url)

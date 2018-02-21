@@ -19,18 +19,18 @@ if kw2.length < 1
     browser.execute_script("window.scrollBy(0,800)")
     browser.text_field(id: 'personal-site').set @keyword.link
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
-    twitter = twitter.first.link if twitter.first
+    twitter = twitter.first.link.gsub('https://twitter.com/', '').tr('/', '') if twitter.first
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    facebook = facebook.first.link if facebook.first
+    facebook = facebook.first.link.gsub('https://www.facebook.com/', '').tr('/', '') if facebook.first
     tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%')
-    tumblr = tumblr.first.link if tumblr.first
+    tumblr = tumblr.first.link.gsub('https://tumblr.com/', '') if tumblr.first
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
-    instagram = instagram.first.link if instagram.first
+    instagram = instagram.first.link.gsub('https://www.instagram.com/', '').tr('/', '') if instagram.first
     # Place socials
-    browser.text_field(name: 'followTwitter').set twitter.gsub('https://twitter.com/', '').tr('/', '')
-    browser.text_field(name: 'followFacebook').set facebook.gsub('https://www.facebook.com/', '').tr('/', '')
-    browser.text_field(name: 'followTumblr').set tumblr.gsub('https://tumblr.com/', '')
-    browser.text_field(name: 'followInstagram').set instagram.gsub('https://www.instagram.com/', '').tr('/', '')
+    browser.text_field(name: 'followTwitter').set twitter unless twitter.empty?
+    browser.text_field(name: 'followFacebook').set facebook unless facebook.empty?
+    browser.text_field(name: 'followTumblr').set tumblr unless tumblr.empty?
+    browser.text_field(name: 'followInstagram').set instagram unless instagram.empty?
     browser.textarea(name: 'bio').set @keyword.description
     browser.execute_script("alert(\"Please make sure socials are good continue. You got 12 seconds to do so..\")")
     sleep 15
