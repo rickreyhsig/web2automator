@@ -195,5 +195,8 @@ Web2automator::Application.routes.draw do
   get 'create_angel_profile' => 'keywords#create_angel_profile'
   get 'place_angel_link' => 'keywords#place_angel_link'
   #
+  get 'create_zillow_profile' => 'keywords#create_zillow_profile'
+  get 'place_zillow_link' => 'keywords#place_zillow_link'
+  #
 
 end
