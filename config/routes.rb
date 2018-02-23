@@ -198,5 +198,10 @@ Web2automator::Application.routes.draw do
   get 'create_zillow_profile' => 'keywords#create_zillow_profile'
   get 'place_zillow_link' => 'keywords#place_zillow_link'
   #
-
+  get 'create_wordpress_profile' => 'keywords#create_wordpress_profile'
+  get 'place_wordpress_link' => 'keywords#place_wordpress_link'
+  #
+  get 'create_steepster_profile' => 'keywords#create_steepster_profile'
+  get 'place_steepster_link' => 'keywords#place_steepster_link'
+  #
 end

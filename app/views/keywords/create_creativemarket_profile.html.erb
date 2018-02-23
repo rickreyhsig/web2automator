@@ -17,7 +17,7 @@ if kw2.length < 1
     browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1]
     browser.text_field(name: 'email').set @keyword.email
     browser.execute_script("alert(\"Please type in username/passswd and click Sign Up to continue..\")")
-    sleep(15)
+    sleep(20)
     browser.close
 else
    profiles << kw2.first.link

@@ -19,16 +19,18 @@ if kw2.length < 1
     sleep 1
     browser.text_field(name: 'user_location').set @keyword.city
     browser.text_field(name: 'user_website').set @keyword.link
-    browser.execute_script("alert(\"Yooooo..\")")
     sleep 2
     # -----
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link unless twitter.empty?
     browser.execute_script("window.scrollBy(0,50)")
-    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link unless facebook.empty?
+
     browser.execute_script("window.scrollBy(0,50)")
     # Place fb and twitter
-    browser.text_field(name: 'user_twitter_handle').set twitter.gsub('https://twitter.com', '')
-    browser.text_field(name: 'user_facebook_handle').set facebook.gsub('https://facebook.com', '')
+    browser.text_field(name: 'user_twitter_handle').set twitter.gsub('https://twitter.com', '') unless twitter.empty?
+    browser.text_field(name: 'user_facebook_handle').set facebook.gsub('https://facebook.com', '') unless facebook.empty?
     browser.execute_script("alert(\"Please make sure only usernames are written for fb+twitter. You got 10 seconds to do so..\")")
     sleep 10
 

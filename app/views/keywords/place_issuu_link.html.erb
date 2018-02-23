@@ -23,10 +23,14 @@ if kw2.length < 1
     browser.text_field(name: 'city').set @keyword.city
     browser.text_field(name: 'website').set @keyword.link
     browser.execute_script("window.scrollBy(0,800)")
-    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
-    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
-    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link unless instagram.empty?
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link unless twitter.empty?
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link unless facebook.empty?
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
+    pinterest = pinterest.first.link unless pinterest.empty?
     browser.execute_script("window.scrollBy(0,800)")
 
     # Place BIG 4
@@ -42,7 +46,7 @@ if kw2.length < 1
     sleep 1
     browser.execute_script("window.scrollBy(0,-2000)")
     browser.button(text: 'See my profile').click
-    sleep 1
+    sleep 3
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%issuu.com%").first.id)

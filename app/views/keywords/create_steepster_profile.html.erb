@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Steepster
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%steepster.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://steepster.com/signup'
+    browser.text_field(name: 'user[username]').set @keyword.keyword
+    browser.text_field(name: 'user[email]').set @keyword.email
+    browser.text_field(name: 'user[password]').set @keyword.password
+    browser.text_field(name: 'user[password_confirmation]').set @keyword.password
+    browser.execute_script("alert(\"Please complete CAPTCHA and click Sign up to continue. You got 10 seconds to do so..\")")
+    sleep 15
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, steepster profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Zillow
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%zillow.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.zillow.com/user/acct/register/'
+    browser.text_field(id: 'inputs-newEmail').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.span(text: 'Submit').click
+	browser.execute_script("alert(\"Please click SUBMIT to continue. You got 4 seconds to do so..\")")
+	sleep 5
+
+#
+	browser.goto 'https://www.zillow.com/user/EditProfile.htm'
+    browser.text_field(id: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'lastName').set @keyword.anchor_text.split[1]
+    browser.file_field(id: 'input_imgupload').set(@keyword.logo_path)
+    browser.button(text: 'Submit').click
+    sleep 2
+    browser.goto 'https://www.zillow.com/myzillow/Profile.htm#profile-aboutme-block'
+    browser.textarea(id: 'rte-aboutMeTextArea').set @keyword.description
+
+    browser.execute_script("alert(\"Please place link to continue. You got 10 seconds to do so..\")")
+    sleep 15
+#
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, myvidster profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
