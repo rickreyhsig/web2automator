@@ -204,4 +204,7 @@ Web2automator::Application.routes.draw do
   get 'create_steepster_profile' => 'keywords#create_steepster_profile'
   get 'place_steepster_link' => 'keywords#place_steepster_link'
   #
+  get 'create_ted_profile' => 'keywords#create_ted_profile'
+  get 'place_ted_link' => 'keywords#place_ted_link'
+  #
 end

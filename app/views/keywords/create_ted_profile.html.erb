@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Ted
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://auth.ted.com/users/new'
+    browser.text_field(id: 'user_first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'user_last_name').set @keyword.anchor_text.split[1] if @keyword.anchor_text.split.length>1
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(text: 'Create your account').click
+    sleep 7
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ted profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

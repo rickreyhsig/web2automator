@@ -1,0 +1,67 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Ted
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://auth.ted.com/session/new'
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(text: 'Log in').click
+    sleep 1
+    browser.goto 'https://www.ted.com/profile/edit'
+    sleep 1
+    browser.execute_script("alert(\"Please place picture to continue. You got 12 seconds to do so..\")")
+    sleep 25
+    browser.goto 'https://www.ted.com/profile/edit'
+    browser.execute_script("alert(\"Please select city. You got 10 seconds to do so..\")")
+    sleep 10
+    browser.text_field(id: 'identity_user_place_attributes_city').set @keyword.city
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(id: 'identity_user_links_attributes_0_url').set facebook unless facebook.empty?
+    browser.text_field(id: 'identity_user_links_attributes_0_label').set 'facebook' unless facebook.empty?
+
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
+    pinterest = pinterest.first.link if pinterest.first
+    browser.text_field(id: 'identity_user_links_attributes_1_url').set pinterest unless pinterest.empty?
+    browser.text_field(id: 'identity_user_links_attributes_1_label').set 'pinterest' unless pinterest.empty?
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link if instagram.first
+    browser.text_field(id: 'identity_user_links_attributes_2_url').set instagram unless instagram.empty?
+    browser.text_field(id: 'identity_user_links_attributes_2_label').set 'instagram' unless instagram.empty?
+
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.textarea(id: 'identity_user_biographies_attributes_0_value').set @keyword.description
+    browser.execute_script("window.scrollBy(0,2400)")
+
+    browser.button(text: 'Save').click
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ted link was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
