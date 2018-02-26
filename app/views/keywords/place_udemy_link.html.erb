@@ -1,0 +1,82 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Udemy
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/udemy.com%").first.id)
+if kw2.length < 1
+    # Logs in and adds link
+    browser.goto 'https://www.udemy.com'
+    browser.link(text: 'Log In').click
+    sleep 1
+    browser.text_field(id: 'id_email').set @keyword.email
+    browser.text_field(id: 'id_password').set @keyword.password
+    #browser.button(text: 'Log In').click
+    browser.execute_script("alert(\"Please LOGIN to continue. You got 10 seconds to do so..\")")
+    sleep 12
+    browser.goto 'https://www.udemy.com/user/edit-profile'
+    sleep 2
+    browser.text_field(id: 'id_job_title').set @keyword.city
+    browser.execute_script("alert(\"Please place DESCRIPTION to continue. You got 5 seconds to do so..\")")
+    sleep 10
+    browser.text_field(id: 'id_website_url').set @keyword.link
+    browser.execute_script("window.scrollBy(0,1000)")
+
+    google = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%plus.google.com%')
+    google = google.first.link.gsub('https://plus.google.com/', '') if google.first
+    browser.text_field(id: 'id_google_profile').set google unless google.empty?
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link.gsub('https://twitter.com/', '') if twitter.first
+    browser.text_field(id: 'id_twitter_profile').set twitter unless twitter.empty?
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link.gsub('https://facebook.com/', '') if facebook.first
+    browser.text_field(id: 'id_facebook_profile').set facebook unless facebook.empty?
+
+    linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
+    linkedin = linkedin.first.link.gsub('https://linkedin.com/in/', '') if linkedin.first
+    browser.text_field(id: 'id_linkedin_profile').set linkedin unless linkedin.empty?
+
+    youtube = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%youtube.com%')
+    youtube = youtube.first.link.gsub('https://youtube.com/', '') if youtube.first
+    browser.text_field(id: 'id_youtube_profile').set youtube unless youtube.empty?
+
+    browser.execute_script("alert(\"Please make sure socials are good. You got 10 seconds to do so..\")")
+    sleep 15
+    browser.execute_script("window.scrollBy(0,1000)")
+    browser.button(text: 'Save').click
+
+    sleep 2
+    browser.goto 'https://www.udemy.com/user/edit-photo/'
+    browser.file_field(name: 'qqfile').set(@keyword.logo_path)
+    sleep 5
+    browser.button(text: 'Save').click
+    sleep 2
+    browser.link(text: 'View Public Profile').click
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/udemy.com%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ted udemy was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

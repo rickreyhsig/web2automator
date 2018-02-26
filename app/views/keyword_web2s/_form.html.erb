@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :keyword %><br />
-    <%= f.select :keyword_id, Keyword.all.collect {|k| [ k.keyword, k.id ] } %>
+    <%= f.select :keyword_id, Keyword.order(:keyword).all.collect {|k| [ k.keyword, k.id ] } %>
   </div>
   <div class="field">
     <%= f.label :web2 %><br />
-    <%= f.select :web2_id, Web2.all.collect {|w| [ w.url, w.id ] } %>
+    <%= f.select :web2_id, Web2.order(:url).all.collect {|w| [ w.url, w.id ] } %>
   </div>
   <div class="field">
     <%= f.label :link %><br />

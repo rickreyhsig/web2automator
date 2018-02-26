@@ -28,10 +28,11 @@ if kw2.length < 1
     browser.text_field(id: 'identity_user_links_attributes_0_url').set facebook unless facebook.empty?
     browser.text_field(id: 'identity_user_links_attributes_0_label').set 'facebook' unless facebook.empty?
 
-    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
-    pinterest = pinterest.first.link if pinterest.first
-    browser.text_field(id: 'identity_user_links_attributes_1_url').set pinterest unless pinterest.empty?
-    browser.text_field(id: 'identity_user_links_attributes_1_label').set 'pinterest' unless pinterest.empty?
+    #pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
+    #pinterest = pinterest.first.link if pinterest.first
+    #browser.text_field(id: 'identity_user_links_attributes_1_url').set pinterest unless pinterest.empty?
+    browser.text_field(id: 'identity_user_links_attributes_1_label').set @keyword.anchor_text
+    browser.text_field(id: 'identity_user_links_attributes_1_label').set @keyword.link
 
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
     instagram = instagram.first.link if instagram.first

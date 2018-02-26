@@ -1,0 +1,30 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Udemy
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/udemy.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.udemy.com/'
+    browser.link(text: 'Sign Up').click
+    browser.text_field(id: 'id_fullname').set @keyword.anchor_text
+    browser.text_field(id: 'id_email').set @keyword.email
+    browser.text_field(id: 'id_password').set @keyword.password
+    browser.button(text: 'Sign Up').click
+    sleep 10
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, udemy profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

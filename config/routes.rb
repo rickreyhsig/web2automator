@@ -207,4 +207,7 @@ Web2automator::Application.routes.draw do
   get 'create_ted_profile' => 'keywords#create_ted_profile'
   get 'place_ted_link' => 'keywords#place_ted_link'
   #
+  get 'create_udemy_profile' => 'keywords#create_udemy_profile'
+  get 'place_udemy_link' => 'keywords#place_udemy_link'
+  #
 end

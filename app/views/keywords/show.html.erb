@@ -58,7 +58,7 @@
         <th>Place Link</th>
       </tr>
 
-    <% Web2.all.each do |web2| %>
+    <% Web2.order(:url).all.each do |web2| %>
       <tr>
         <% web2_name = URI.parse(web2.url).host.split('.').first %>
         <% web2_name.gsub!('-','') %>

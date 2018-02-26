@@ -2,7 +2,7 @@ class Web2sController < ApplicationController
   # GET /web2s
   # GET /web2s.json
   def index
-    @web2s = Web2.all
+    @web2s = Web2.order(:url)
 
     respond_to do |format|
       format.html # index.html.erb
