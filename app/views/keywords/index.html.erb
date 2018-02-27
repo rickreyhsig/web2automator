@@ -11,8 +11,6 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
       </tr>
 
     <% @keywords.each do |keyword| %>
@@ -21,15 +19,16 @@
         <td><%= keyword.link %></td>
         <td><%= keyword.email %></td>
         <td><%= keyword.password %></td>
-        <td><%= link_to 'Create Profiles', create_profiles_path(id: keyword.id), class: 'rick_button' %></td>
-        <td><%= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td>
-        <td><%= link_to 'Show', keyword %></td>
+        <!--<td><%#= link_to 'Create Profiles', create_profiles_path(id: keyword.id), class: 'rick_button' %></td>
+        <td><%#= link_to 'Create Links', create_links_path(id: keyword.id), class: 'rick_button' %></td> -->
+        <td><%= link_to 'Details', keyword %></td>
         <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
-        <td><%= link_to 'Destroy', keyword, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= button_to 'Delete', keyword, method: :delete, class: 'btn btn-danger', style: 'padding: 5px;' %></td>
       </tr>
     <% end %>
     </table>
-</div> 
-<br />
+</div>
 
-<%= link_to 'New Keyword', new_keyword_path %>
+<%= link_to 'New Keyword', new_keyword_path, class: 'btn btn-primary' %>
+<br/>
+<br/>
