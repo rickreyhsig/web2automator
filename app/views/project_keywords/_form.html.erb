@@ -13,13 +13,15 @@
 
   <div class="field">
     <%= f.label :project_id %><br />
-    <%= f.select :project_id, Project.all.collect {|p| [ p.name, p.id ] } %>
+    <%= f.select :project_id, Project.order(:name).all.collect {|p| [ p.name, p.id ] } %>
   </div>
   <div class="field">
     <%= f.label :keyword_id %><br />
-    <%= f.select :keyword_id, Keyword.all.collect {|k| [ k.keyword, k.id ] } %>
+    <%= f.select :keyword_id, Keyword.order(:keyword).all.collect {|k| [ k.keyword, k.id ] } %>
   </div>
+  <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
+  <br/>
 <% end %>

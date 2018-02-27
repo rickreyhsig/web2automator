@@ -14,13 +14,12 @@
       <tr>
         <td><%= Project.find(project_keyword.project_id).name %></td>
         <td><%= Keyword.find(project_keyword.keyword_id).keyword %></td>
-        <td><%= link_to 'Show', project_keyword %></td>
+        <td><%= link_to 'Details', project_keyword %></td>
         <td><%= link_to 'Edit', edit_project_keyword_path(project_keyword) %></td>
-        <td><%= link_to 'Destroy', project_keyword, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= button_to 'Delete', project_keyword, method: :delete, class: 'btn btn-danger', style: 'padding: 5px;' %></td>
       </tr>
     <% end %>
     </table>
 </div>
-<br />
 
-<%= link_to 'New Project keyword', new_project_keyword_path %>
+<%= link_to 'New Project keyword', new_project_keyword_path, class: 'btn btn-primary' %>
