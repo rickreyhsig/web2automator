@@ -1,6 +1,7 @@
 <h1>Listing web2s</h1>
 
-<%= link_to 'New Web2', new_web2_path %>
+<%= link_to 'New Web2', new_web2_path, class: 'btn btn-primary' %>
+<br />
 <br />
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
@@ -20,9 +21,9 @@
         <td><%= web2.manual %></td>
         <td><%= web2.easy %></td>
         <td><%= web2.bad %></td>
-        <td><%= link_to 'Show', web2 %></td>
+        <td><%= link_to 'Details', web2 %></td>
         <td><%= link_to 'Edit', edit_web2_path(web2) %></td>
-        <td><%= button_to 'Destroy', web2, method: :delete %></td>
+        <td><%= button_to 'Delete', web2, method: :delete, class: 'btn btn-danger', style: 'padding: 5px;' %></td>
       </tr>
     <% end %>
     </table>
