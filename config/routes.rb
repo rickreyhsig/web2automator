@@ -210,4 +210,7 @@ Web2automator::Application.routes.draw do
   get 'create_udemy_profile' => 'keywords#create_udemy_profile'
   get 'place_udemy_link' => 'keywords#place_udemy_link'
   #
+  get 'create_sketchfab_profile' => 'keywords#create_sketchfab_profile'
+  get 'place_sketchfab_link' => 'keywords#place_sketchfab_link'
+  #
 end
