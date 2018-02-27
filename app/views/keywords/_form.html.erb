@@ -13,42 +13,48 @@
 
   <div class="field">
     <%= f.label :keyword %><br />
-    <%= f.text_field :keyword %>
+    <%= f.text_field :keyword, class: "form-control", style: 'width: 40%' %>
   </div>
   <div class="field">
     <%= f.label :link %><br />
-    <%= f.text_field :link %>
+    <%= f.text_field :link, class: "form-control" %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= f.text_field :email, class: "form-control" %>
   </div>
   <div class="field">
     <%= f.label :password %><br />
-    <%= f.text_field :password %>
+    <%= f.text_field :password, class: "form-control", style: 'width: 40%' %>
   </div>
   <div class="field">
     <%= f.label :password2 %><br />
-    <%= f.text_field :password2 %>
+    <%= f.text_field :password2, class: "form-control", style: 'width: 40%' %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class: "form-control" %>
   </div>
   <div class="field">
     <%= f.label :logo_path %><br />
-    <%= f.text_field :logo_path %>
+    <%= f.text_field :logo_path, class: "form-control" %>
   </div>
   <div class="field">
+    <%= f.label :small_logo_path %> (Less than 500x500px) <br />
+    <%= f.text_field :small_logo_path, class: "form-control" %>
+  </div>
+ 
+  <div class="field">
     <%= f.label :anchor_text %><br />
-    <%= f.text_field :anchor_text %>
+    <%= f.text_field :anchor_text, class: "form-control", style: 'width: 40%' %>
   </div>
   <div class="field">
     <%= f.label :city %><br />
-    <%= f.text_field :city %>
+    <%= f.text_field :city, class: "form-control", style: 'width: 40%' %>
   </div>
-
+  <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-primary" %>
   </div>
+  <br/>
 <% end %>

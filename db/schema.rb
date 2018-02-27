@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180214171300) do
+ActiveRecord::Schema.define(:version => 20180227213711) do
 
   create_table "keyword_web2s", :force => true do |t|
     t.integer  "keyword_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20180214171300) do
     t.string   "logo_path"
     t.string   "anchor_text"
     t.string   "city"
+    t.string   "small_logo_path"
   end
 
   create_table "project_keywords", :force => true do |t|

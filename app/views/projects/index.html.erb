@@ -14,14 +14,12 @@
       <tr>
         <td><%= project.name %></td>
         <td><%= project.url %></td>
-        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Details', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= button_to 'Delete', project, method: :delete, class: 'btn btn-danger', style: 'padding: 5px;' %></td>
       </tr>
     <% end %>
     </table>
 </div>
 
-<br />
-
-<%= link_to 'New Project', new_project_path %>
+<%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
