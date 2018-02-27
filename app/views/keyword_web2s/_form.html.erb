@@ -21,9 +21,10 @@
   </div>
   <div class="field">
     <%= f.label :link %><br />
-    <%= f.text_field :link %>
+    <%= f.text_field :link, class: 'form-control', style: 'width: 80%' %>
   </div>
+  <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
