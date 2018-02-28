@@ -1,0 +1,26 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#GetSatisfaction
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/getsatisfaction.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://getsatisfaction.com/people'
+    browser.execute_script("alert(\"Please sign up manually with password2.\")")
+    sleep 40
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, getsatisfaction profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

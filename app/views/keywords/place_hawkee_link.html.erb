@@ -8,17 +8,17 @@ profiles = []
 
 #Hawkee
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hawkee.com%").first.id)
-#if kw2.length < 1
+if kw2.length < 1
     # Logs in and adds link
     browser.goto 'http://hawkee.com/login'
     browser.text_field(name: 'username').set @keyword.keyword
     browser.text_field(name: 'password').set @keyword.password
     browser.button(type: 'submit').click
     browser.goto 'http://hawkee.com/account'
-    # Max 640x640 avatar for this site
     browser.text_field(name: 'website').set @keyword.link
     browser.text_field(name: 'location').set @keyword.city
     browser.text_field(name: 'occupation').set @keyword.description
+    # Max 640x640 avatar for this site
     browser.file_field(name: 'avatar').set(@keyword.small_logo_path)
     browser.execute_script("window.scrollBy(0,800)")
     browser.button(text: 'Save Profile').click
@@ -32,9 +32,9 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hawkee.com%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
-#else
-#   profiles << kw2.first.link
-#end
+else
+   profiles << kw2.first.link
+end
 %>
 
 </br></br>

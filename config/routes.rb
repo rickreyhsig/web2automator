@@ -213,4 +213,9 @@ Web2automator::Application.routes.draw do
   get 'create_sketchfab_profile' => 'keywords#create_sketchfab_profile'
   get 'place_sketchfab_link' => 'keywords#place_sketchfab_link'
   #
+  get 'create_getsatisfaction_profile' => 'keywords#create_getsatisfaction_profile'
+  get 'place_getsatisfaction_link' => 'keywords#place_getsatisfaction_link'
+  #
+
+
 end
