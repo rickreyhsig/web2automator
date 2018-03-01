@@ -216,6 +216,8 @@ Web2automator::Application.routes.draw do
   get 'create_getsatisfaction_profile' => 'keywords#create_getsatisfaction_profile'
   get 'place_getsatisfaction_link' => 'keywords#place_getsatisfaction_link'
   #
-
+  get 'create_speakerdeck_profile' => 'keywords#create_speakerdeck_profile'
+  get 'place_speakerdeck_link' => 'keywords#place_speakerdeck_link'
+  #
 
 end

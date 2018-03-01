@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SpeakerDeck
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/speakerdeck.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://speakerdeck.com/signup'
+    browser.text_field(id: 'user_name').set @keyword.anchor_text
+    browser.text_field(id: 'user_username').set @keyword.keyword
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_password_confirmation').set @keyword.password
+    browser.execute_script("alert(\"Please SOLVE CAPTCHA and click Sign Upto continue. You got 12 seconds to do so..\")")
+    sleep 15
+    browser.execute_script("alert(\"Please ACTIVATE ACCOUNT.\")")
+    sleep 1
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, speakerdeck profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
