@@ -219,5 +219,8 @@ Web2automator::Application.routes.draw do
   get 'create_speakerdeck_profile' => 'keywords#create_speakerdeck_profile'
   get 'place_speakerdeck_link' => 'keywords#place_speakerdeck_link'
   #
+  get 'create_accountingweb_profile' => 'keywords#create_accountingweb_profile'
+  get 'place_accountingweb_link' => 'keywords#place_accountingweb_link'
+  #
 
 end

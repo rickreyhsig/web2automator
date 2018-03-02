@@ -1,0 +1,74 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#AccountingWeb
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/accountingweb.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.accountingweb.co.uk/user/login'
+    browser.execute_script("window.scrollBy(0,700)")
+    browser.text_field(id: 'edit-name').set @keyword.email
+    browser.text_field(id: 'edit-pass').set @keyword.password
+    browser.button(text: 'Sign in').click
+    sleep 2
+    browser.execute_script("alert(\"Please click MY ACCOUNT.\")")
+    sleep 3
+    browser.execute_script("alert(\"Please upload pic.\")")
+    sleep 20
+
+    browser.execute_script("window.scrollBy(0,1400)")
+
+    description = 'Place this in description: '+ @keyword.description
+    browser.execute_script("var test = '#{description}';alert(test);")
+
+    sleep 9
+    browser.text_field(id: 'edit-field-website-und-0-value').set @keyword.link
+    browser.execute_script("window.scrollBy(0,700)")
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    browser.text_field(id: 'edit-field-twitter-und-0-value').set twitter unless twitter.empty?
+
+    linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
+    linkedin = linkedin.first.link if linkedin.first
+    browser.text_field(id: 'edit-field-linkedin-und-0-value').set linkedin unless linkedin.empty?
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(id: 'edit-field-facebook-und-0-value').set facebook unless facebook.empty?
+
+    google = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%plus.google.com%')
+    google = google.first.link if google.first
+    browser.text_field(id: 'edit-field-google-und-0-value').set google unless google.empty?
+
+    browser.execute_script("window.scrollBy(0,2000)")
+    browser.input(id: 'edit-submit').click
+    sleep 2
+    browser.execute_script("alert(\"Please click VIEW MY PUBLIC PROFILE.\")")
+    sleep 5
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/accountingweb.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, accountingweb was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

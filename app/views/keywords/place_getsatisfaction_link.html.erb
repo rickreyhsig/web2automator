@@ -26,9 +26,9 @@ if kw2.length < 1
 
     flickr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%flickr.com%')
     flickr = flickr.first.link.gsub('https://www.flickr.com/people/', '').gsub('https://www.flickr.com/photos/', '').gsub('/', '') if flickr.first
-    browser.text_field(id: 'user_flickr').set unless flickr.empty?
-    browser.execute_script("alert(\"Please flicr USERNAME manually .. 8 seconds\")")
-    sleep 10
+    browser.text_field(id: 'user_flickr').set flickr unless flickr.empty?
+    #browser.execute_script("alert(\"Please flicr USERNAME manually .. 8 seconds\")")
+    #sleep 10
 
     browser.file_field(id: 'user_uploaded_data').set(@keyword.logo_path)
     browser.button(text: 'Save Details').click
