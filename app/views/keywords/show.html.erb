@@ -7,6 +7,15 @@
 </h2>
 
 <p>
+  <b>Easy:</b>
+  <%= Web2.where(easy: true).count %>
+  <b>Manual:</b>
+  <%= Web2.where(manual: true).count %>
+  <b>Bad:</b>
+  <%= Web2.where(bad: true).count %>
+</p>
+
+<p>
   <b>Link:</b>
   <%= @keyword.link %>
 </p>
