@@ -28,11 +28,11 @@ if kw2.length < 1
     tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%').first.link
     pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
     github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first.link
-    browser.text_field(name: 'instagram').set instagram if instagram
-    browser.text_field(name: 'twitter').set twitter if twitter
+    browser.text_field(name: 'instagram').set instagram.gsub('https://instagram.com/', '').gsub('/', '') if instagram
+    browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '').gsub('/', '') if twitter
     browser.text_field(name: 'tumblr').set tumblr if tumblr
-    browser.text_field(name: 'pinterest').set pinterest if pinterest
-    browser.text_field(name: 'github').set github if github
+    browser.text_field(name: 'pinterest').set pinterest.gsub('https://pinterest.com/', '').gsub('/', '') if pinterest
+    browser.text_field(name: 'github').set github.gsub('https://github.com/', '').gsub('/', '') if github
     browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
     sleep 15
     browser.button(text: 'Update Profile Info').click

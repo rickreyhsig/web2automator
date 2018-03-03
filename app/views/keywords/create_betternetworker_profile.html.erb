@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BetterNetworker
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/betternetworker.co%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.betternetworker.com/join'
+    browser.execute_script("window.scrollBy(0,700)")
+    browser.text_field(id: 'edit-c-access-join-first-name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'edit-c-access-join-email').set @keyword.email
+    browser.execute_script("alert(\"Please solve CAPTCHA before proceeding.\")")
+    sleep 15
+    browser.input(id: 'edit-c-access-join-submit').click
+    sleep 4
+    browser.execute_script("window.scrollBy(0,700)")
+    browser.text_field(id: 'edit-profile-basics-lastname').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'edit-name').set @keyword.keyword
+    browser.text_field(id: 'edit-pass').set @keyword.password
+    browser.execute_script("alert(\"Please solve CAPTCHA before proceeding.\")")
+    sleep 10
+    browser.execute_script("window.scrollBy(0,1500)")
+    browser.checkbox(id: 'edit-profile-tos').set
+    browser.checkbox(id: 'edit-profile-accurate-info').set
+    browser.input(id: 'edit-submit').click
+    browser.execute_script("window.scrollBy(0,1500)")
+    browser.strong(text: 'No thanks, continue with a free account.').click
+    sleep 4
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, betternetworker profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

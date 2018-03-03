@@ -222,5 +222,13 @@ Web2automator::Application.routes.draw do
   get 'create_accountingweb_profile' => 'keywords#create_accountingweb_profile'
   get 'place_accountingweb_link' => 'keywords#place_accountingweb_link'
   #
+  get 'create_betternetworker_profile' => 'keywords#create_betternetworker_profile'
+  get 'place_betternetworker_link' => 'keywords#place_betternetworker_link'
+  #
+
+
+
+
+  
 
 end
