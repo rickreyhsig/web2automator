@@ -22,7 +22,10 @@ end
 
 </br></br>
 Congrats, meetup profile was created!
-
 </br></br>
+
+<%= link_to "Place meetup link", send("place_meetup_link_path", keyword_id: @keyword.id) %>
+</br></br>
+
 
 <%= link_to 'Back', keyword_path(@keyword) %>

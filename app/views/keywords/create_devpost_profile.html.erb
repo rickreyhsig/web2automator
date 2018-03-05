@@ -18,7 +18,9 @@ if kw2.length < 1
     browser.text_field(id: 'user_password').set @keyword.password
     browser.checkbox(id: 'user_user_setting_attributes_receive_newsletter').set
     browser.execute_script("alert(\"Please solve CAPTCHA and click Sign up.\")")
-    sleep 20
+    sleep 21
+    browser.execute_script("alert(\"Please verify accoutn before continuing.\")")
+    sleep 3
     browser.close
 else
    profiles << kw2.first.link

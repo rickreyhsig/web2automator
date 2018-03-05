@@ -8,7 +8,7 @@ profiles = []
 
 #Ted
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://auth.ted.com/session/new'
     browser.text_field(id: 'user_email').set @keyword.email
@@ -17,22 +17,19 @@ if kw2.length < 1
     sleep 1
     browser.goto 'https://www.ted.com/profile/edit'
     sleep 1
-    browser.execute_script("alert(\"Please place picture to continue. You got 12 seconds to do so..\")")
-    sleep 25
+    browser.execute_script("alert(\"Please place picture to continue. You got 25 seconds to do so..\")")
+    sleep 28
     browser.goto 'https://www.ted.com/profile/edit'
     browser.execute_script("alert(\"Please select city. You got 10 seconds to do so..\")")
-    sleep 10
+    sleep 14
     browser.text_field(id: 'identity_user_place_attributes_city').set @keyword.city
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
     facebook = facebook.first.link if facebook.first
     browser.text_field(id: 'identity_user_links_attributes_0_url').set facebook unless facebook.empty?
     browser.text_field(id: 'identity_user_links_attributes_0_label').set 'facebook' unless facebook.empty?
 
-    #pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
-    #pinterest = pinterest.first.link if pinterest.first
-    #browser.text_field(id: 'identity_user_links_attributes_1_url').set pinterest unless pinterest.empty?
+    browser.text_field(id: 'identity_user_links_attributes_1_url').set @keyword.link
     browser.text_field(id: 'identity_user_links_attributes_1_label').set @keyword.anchor_text
-    browser.text_field(id: 'identity_user_links_attributes_1_label').set @keyword.link
 
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
     instagram = instagram.first.link if instagram.first
@@ -44,15 +41,15 @@ if kw2.length < 1
     browser.execute_script("window.scrollBy(0,2400)")
 
     browser.button(text: 'Save').click
-    sleep 2
+    sleep 3
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

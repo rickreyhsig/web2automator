@@ -19,7 +19,7 @@ if kw2.length < 1
     browser.file_field(id: 'photoUploadField').set(@keyword.logo_path)
     browser.link(id: 'profileUploaderClose').click
     browser.goto 'https://www.meetup.com/account/bio/'
-    browser.textarea(id: 'bio').set (@keyword.link + '' + @keyword.description)[0..179]
+    browser.textarea(id: 'bio').set (@keyword.link + ' ' + @keyword.description)[0..179]
     browser.execute_script("alert(\"Please change user ID navigate to profile manually to continue.\")")
     sleep(22)
     profiles << browser.url

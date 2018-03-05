@@ -15,6 +15,8 @@ if kw2.length < 1
     browser.div(id: 'signup-button').click
     browser.span(text: 'Go Public').click
     browser.file_field(id: 'fileupload').set(@keyword.logo_path)
+    browser.text_field(id: 'input-realname').set @keyword.anchor_text
+    browser.textarea(id: 'input-minibio').set @keyword.description
     browser.span(text: 'Continue').click
     browser.span(text: 'Skip this step').click
     browser.execute_script("alert(\"Please finish setup to continue. You got 15 seconds to do so..\")")
@@ -27,7 +29,9 @@ end
 
 </br></br>
 Congrats, pearltrees profile was created!
+</br></br>
 
+<%= link_to "Place pearltrees link", send("place_pearltrees_link_path", keyword_id: @keyword.id) %>
 </br></br>
 
 <%= link_to 'Back', keyword_path(@keyword) %>
