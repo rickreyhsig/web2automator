@@ -225,10 +225,9 @@ Web2automator::Application.routes.draw do
   get 'create_betternetworker_profile' => 'keywords#create_betternetworker_profile'
   get 'place_betternetworker_link' => 'keywords#place_betternetworker_link'
   #
+  get 'create_devpost_profile' => 'keywords#create_devpost_profile'
+  get 'place_devpost_link' => 'keywords#place_devpost_link'
+  #
 
-
-
-
-  
 
 end

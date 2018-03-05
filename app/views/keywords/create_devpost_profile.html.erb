@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#DevPost
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/devpost.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://secure.devpost.com/users/register'
+    browser.link(text: 'sign up with email').click
+    browser.execute_script("window.scrollBy(0,1000)")
+    browser.text_field(id: 'user_first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'user_last_name').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.checkbox(id: 'user_user_setting_attributes_receive_newsletter').set
+    browser.execute_script("alert(\"Please solve CAPTCHA and click Sign up.\")")
+    sleep 20
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, devpost profile was created!
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
