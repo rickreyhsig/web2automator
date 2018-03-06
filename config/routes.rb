@@ -228,6 +228,9 @@ Web2automator::Application.routes.draw do
   get 'create_devpost_profile' => 'keywords#create_devpost_profile'
   get 'place_devpost_link' => 'keywords#place_devpost_link'
   #
+  get 'create_hometalk_profile' => 'keywords#create_hometalk_profile'
+  get 'place_hometalk_link' => 'keywords#place_hometalk_link'
+  #
 
 
 end

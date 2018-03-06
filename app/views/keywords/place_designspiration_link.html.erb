@@ -25,16 +25,16 @@ if kw2.length < 1
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
-    browser.text_field(name: 'instagram').set instagram
-    browser.text_field(name: 'twitter').set twitter
-    browser.text_field(name: 'facebook').set facebook
+    browser.text_field(name: 'instagram').set instagram.gsub('https://www.instagram.com/', '')
+    browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '')
+    browser.text_field(name: 'facebook').set facebook.gsub('https://www.facebook.com/', '')
     browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
     sleep 12
     browser.execute_script("window.scrollBy(0,1800)")
     browser.button(text: 'Save').click
-    sleep(2)
+    sleep 3
     browser.span(text: 'View Profile').click
-    sleep(2)
+    sleep 3
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%designspiration%").first.id)

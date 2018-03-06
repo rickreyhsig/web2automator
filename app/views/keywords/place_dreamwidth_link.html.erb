@@ -36,14 +36,14 @@ if kw2.length < 1
     pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
     github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first.link
     deviantart = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%deviantart.com%').first.link
-    browser.text_field(name: 'instagram').set instagram
-    browser.text_field(name: 'twitter').set twitter
+    browser.text_field(name: 'instagram').set instagram.gsub('https://wwww.instagram.com','')
+    browser.text_field(name: 'twitter').set twitter.gsub('https://wwww.twitter.com','')
     browser.text_field(name: 'tumblr').set tumblr
-    browser.text_field(name: 'pinterest').set pinterest
-    browser.text_field(name: 'github').set github
+    browser.text_field(name: 'pinterest').set pinterest.gsub('https://wwww.pinterest.com','')
+    browser.text_field(name: 'github').set github.gsub('https://wwww.github.com','')
     browser.text_field(name: 'deviantart').set deviantart
-    browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
-    sleep 40
+    browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 40 seconds to do so..\")")
+    sleep 45
     browser.execute_script("window.scrollBy(0,900)")
     browser.textarea(name: 'bio').set @keyword.description
     browser.button(text: 'Save Changes').click

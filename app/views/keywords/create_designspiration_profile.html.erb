@@ -15,6 +15,8 @@ if kw2.length < 1
     browser.text_field(name: 'full_name').set @keyword.anchor_text
     browser.button(text: 'Continue').click
     browser.link(text: 'Skip').click
+    browser.execute_script("alert(\"Please confirm account in email before continuing\")")
+    sleep 7
     browser.close
 else
    profiles << kw2.first.link
@@ -23,6 +25,9 @@ end
 
 </br></br>
 Congrats, designspiration profile was created!
+</br></br>
+ 
+<%= link_to "Place designspiration link", send("place_designspiration_link_path", keyword_id: @keyword.id) %>
 
 </br></br>
 
