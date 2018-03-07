@@ -231,6 +231,8 @@ Web2automator::Application.routes.draw do
   get 'create_hometalk_profile' => 'keywords#create_hometalk_profile'
   get 'place_hometalk_link' => 'keywords#place_hometalk_link'
   #
-
+  get 'create_knoji_profile' => 'keywords#create_knoji_profile'
+  get 'place_knoji_link' => 'keywords#place_knoji_link'
+  #
 
 end

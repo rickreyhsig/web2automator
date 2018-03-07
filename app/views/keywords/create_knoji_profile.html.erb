@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Knoji
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/knoji.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://knoji.com/'
+    browser.execute_script("alert(\"Please go to register modal..\")")
+    sleep 7
+        browser.text_field(name: 'first_name').set 'test'
+
+    browser.text_field(name: 'first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'last_name').set @keyword.anchor_text.split[1]
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.link(name: 'register').click
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, knoji profile was created!
+</br></br>
+
+<%= link_to "Place knoji link", send("place_knoji_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

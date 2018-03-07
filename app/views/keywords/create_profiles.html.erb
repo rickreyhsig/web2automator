@@ -151,10 +151,14 @@ else
     profiles << kw2.first.link
 end
 
-#Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
-#browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
+#----------------------------------------------------------------------------------------------------
+Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
 #Scroll down 800 px
-#browser.execute_script("window.scrollBy(0,800)")
+browser.execute_script("window.scrollBy(0,800)")
+description = 'Place this in description: '+ @keyword.description
+browser.execute_script("var test = '#{description}';alert(test);")
+#----------------------------------------------------------------------------------------------------
 
 #Vimeo
 #Need to verify this indeed works!!
