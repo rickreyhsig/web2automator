@@ -15,9 +15,9 @@ if kw2.length < 1
     browser.text_field(name: 'password').set @keyword.password
     browser.radio(:name => 'sex', :value => 'M').set
     browser.select_list(id: 'country').select_value(@keyword.country)
-    browser.text_field(name: 'zip').set @keyword.zipcode
-    browser.execute_script("alert(\"Please solve CAPTCHA to continue. You got 25 seconds to do so..\")")
-    sleep 35
+    browser.text_field(name: 'zip').set @keyword.zipcode if @keyword.country == 'United States'
+    browser.execute_script("alert(\"Please solve CAPTCHA to continue and make sure sex is selected. You got 25 seconds to do so..\")")
+    sleep 42
     browser.close
 else
    profiles << kw2.first.link
