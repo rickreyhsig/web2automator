@@ -234,5 +234,11 @@ Web2automator::Application.routes.draw do
   get 'create_knoji_profile' => 'keywords#create_knoji_profile'
   get 'place_knoji_link' => 'keywords#place_knoji_link'
   #
+  get 'create_msjd_profile' => 'keywords#create_msjd_profile'
+  get 'place_msjd_link' => 'keywords#place_msjd_link'
+  #
+  get 'create_purevolume_profile' => 'keywords#create_purevolume_profile'
+  get 'place_purevolume_link' => 'keywords#place_purevolume_link'
+  #
 
 end

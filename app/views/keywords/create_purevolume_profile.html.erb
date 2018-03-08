@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#PureVolume
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/purevolume.co%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.purevolume.com/signup/listener'
+    browser.text_field(name: 'name').set @keyword.anchor_text
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.radio(:name => 'sex', :value => 'M').set
+    browser.select_list(id: 'country').select_value(@keyword.country)
+    browser.text_field(name: 'zip').set @keyword.zipcode
+    browser.execute_script("alert(\"Please solve CAPTCHA to continue. You got 25 seconds to do so..\")")
+    sleep 35
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, purevolume profile was created!
+</br></br>
+
+<%= link_to "Place purevolume link", send("place_purevolume_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

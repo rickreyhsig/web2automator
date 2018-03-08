@@ -1,0 +1,38 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#MsJd
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ms-jd.org%").first.id)
+if kw2.length < 1
+    browser.goto 'https://ms-jd.org/profile/register'
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.text_field(id: 'password_confirm').set @keyword.password
+    browser.text_field(id: 'username').set @keyword.keyword
+    browser.text_field(id: 'firstname').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'lastname').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'city').set @keyword.city
+    browser.checkbox(id: 'accept_terms').set
+    browser.button(text: 'Register').click
+    browser.execute_script("alert(\"Please make sure account is verified b4 proceeding\")")
+    sleep 7
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ms-jd profile was created!
+</br></br>
+
+<%= link_to "Place ms-jd link", send("place_msjd_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -12,8 +12,6 @@ if kw2.length < 1
     browser.goto 'https://knoji.com/'
     browser.execute_script("alert(\"Please go to register modal..\")")
     sleep 7
-        browser.text_field(name: 'first_name').set 'test'
-
     browser.text_field(name: 'first_name').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'last_name').set @keyword.anchor_text.split[1]
     browser.text_field(name: 'email').set @keyword.email

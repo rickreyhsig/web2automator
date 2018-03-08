@@ -1,0 +1,92 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#MsJd
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ms-jd.org%").first.id)
+if kw2.length < 1
+    browser.goto 'https://ms-jd.org/profile/register'
+
+email
+
+
+
+
+
+
+
+    browser.execute_script("alert(\"Please go to login page..\")")
+    sleep 7
+    #browser.text_field(name: 'email').set @keyword.email
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var output = '#{email}';alert(output);")
+    sleep 7
+    #browser.text_field(name: 'password').set @keyword.password
+    password = 'Place this in password: '+ @keyword.password + ' and click Login.'
+    browser.execute_script("var output = '#{password}';alert(output);")
+    sleep 7
+    #browser.link(name: 'login').click if browser.link(name: 'login').present?
+    browser.link(name: 'main_menu').click
+    browser.link(text: 'Settings').click
+    browser.file_field(name: 'avatar').set @keyword.logo_path
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.execute_script("window.scrollBy(0,1500)")
+    browser.textarea(name: 'bio').set @keyword.description
+    browser.text_field(name: 'website_url').set @keyword.link
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    facebook = 'Place this in facebook text_field: '+ facebook
+    browser.execute_script("var output = '#{facebook}';alert(output);")
+    #browser.text_field(name: 'facebook_url').set facebook unless facebook.empty?
+    sleep 7
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    browser.text_field(name: 'twitter_url').set twitter unless twitter.empty?
+
+    quora = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%quora.com%')
+    quora = quora.first.link if quora.first
+    browser.text_field(name: 'quora_url').set quora unless quora.empty?
+
+    medium = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%medium.com%')
+    medium = medium.first.link if medium.first
+    browser.text_field(name: 'medium_url').set medium unless medium.empty?
+
+    linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
+    linkedin = linkedin.first.link if linkedin.first
+    browser.text_field(name: 'linkedin_url').set linkedin unless linkedin.empty?
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link if instagram.first
+    browser.text_field(name: 'instagram_url').set instagram unless instagram.empty?
+    browser.link(name: 'settings').click
+    sleep 2
+    browser.link(text: 'Profile').click
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ms-jd.org%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, ms-jd was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
