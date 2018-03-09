@@ -20,11 +20,13 @@ if kw2.length < 1
     browser.text_field(name: 'field_3').set instagram.gsub('https://wwww.instagram.com','')
     browser.text_field(name: 'field_5').set twitter.gsub('https://wwww.twitter.com','')
     browser.text_field(name: 'field_4').set facebook.gsub('https://wwww.facebook.com','')
-    browser.execute_script("alert(\"Please fill out description and link in textarea and go to profile page  25secs..\")")
-    sleep 30
+    browser.execute_script("alert(\"Please fill out description and link in textarea..\")")
+    sleep 25
     browser.execute_script("window.scrollBy(0,1100)")
     browser.input(name: 'profile-group-edit-submit').click
     sleep 2
+    browser.execute_script("alert(\"Please upload pic and go to profile page..\")")
+    sleep 12
     browser.link(text: 'My Profile').click
     sleep 2
     # Save link

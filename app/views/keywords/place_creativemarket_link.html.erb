@@ -23,11 +23,16 @@ if kw2.length < 1
     browser.text_field(name: 'website').set @keyword.link
     browser.textarea(name: 'bio').set @keyword.description
 
-    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
-    tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%').first.link
-    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first.link
-    github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first.link
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first
+    instagram = instagram.link if instagram
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first
+    twitter = twitter.link if twitter
+    tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%').first
+    tumblr = tumblr.link  if tumblr
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%').first
+    pinterest = pinterest.link if pinterest
+    github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first
+    github = github.link if github
     browser.text_field(name: 'instagram').set instagram.gsub('https://instagram.com/', '').gsub('/', '') if instagram
     browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '').gsub('/', '') if twitter
     browser.text_field(name: 'tumblr').set tumblr if tumblr

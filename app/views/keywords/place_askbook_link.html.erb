@@ -19,10 +19,11 @@ if kw2.length < 1
     browser.textarea(name: 'website').set @keyword.link
     browser.text_field(name: 'location').set @keyword.city
     browser.execute_script("window.scrollBy(0,1500)")
-    browser.button(text: 'Save').click
+    browser.input(name: 'submit').click
+    sleep 1
     browser.file_field(name: 'userfile').set @keyword.logo_path
-    browser.execute_script("window.scrollBy(0,1500)")
-    browser.button(text: 'Save').click
+    sleep 1
+    browser.input(name: 'submitPic').click
     browser.div(id: "naviRight").links.each_with_index do | link, index |
         link.click if index == 4
     end

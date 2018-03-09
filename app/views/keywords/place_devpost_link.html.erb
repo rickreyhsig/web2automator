@@ -14,9 +14,11 @@ if kw2.length < 1
     browser.text_field(id: 'user_password').set @keyword.password
     browser.button(id: 'submit-form').click
     browser.goto 'https://devpost.com/settings'
-    browser.text_field(id: 'user_user_setting_attributes_tagline').set @keyword.description
+    browser.text_field(id: 'user_user_setting_attributes_tagline').set @keyword.description[0..139]
     browser.text_field(id: 'user_address').set @keyword.city
     browser.text_field(id: 'user_user_setting_attributes_website').set @keyword.link
+    browser.execute_script("alert(\"Please UPLOAD PHOTO.\")")
+    sleep 12
 
     github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%')
     github = github.first.link.gsub('https://github.com/', '') if github.first
@@ -32,6 +34,8 @@ if kw2.length < 1
 
     browser.execute_script("alert(\"Please fix socials if necessary.\")")
     sleep 12
+    browser.execute_script("window.scrollBy(0,1200)")
+
     browser.input(value: 'Save changes').click
     browser.link(text: 'View your Portfolio').click
     # Save link

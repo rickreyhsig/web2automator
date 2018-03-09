@@ -11,7 +11,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     # Logs in and adds link
     browser.goto 'http://hawkee.com/login'
-    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'username').set @keyword.keyword[0..25]
     browser.text_field(name: 'password').set @keyword.password
     browser.button(type: 'submit').click
     browser.goto 'http://hawkee.com/account'

@@ -8,7 +8,7 @@ profiles = []
 
 #FeedSpot
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%feedspot.com%").first.id)
-#if kw2.length < 1
+if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://www.feedspot.com/login'
 
@@ -19,19 +19,22 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.div(id: 'rssp44').click if browser.div(id: 'rssp44').exists?
     browser.span(id: 'sptls1next').click if browser.span(id: 'sptls1next').exists?
     browser.goto 'https://www.feedspot.com/useredit'
+    browser.execute_script("alert(\"Please place photo to continue. \")")
+    sleep 10
+    browser.text_field(name: 'first_name').set @keyword.anchor_text
     browser.text_field(name: 'website').set @keyword.link.gsub('https://','').gsub('http://','')
     browser.textarea(name: 'bio').set @keyword.description
     sleep 1
-    browser.execute_script("alert(\"Please click 'Save Changes'to continue. \")")
+    browser.execute_script("alert(\"Please click 'Save Changes' to continue. \")")
     sleep 5
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%feedspot.com%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
-#else
-#   profiles << kw2.first.link
-#end
+else
+   profiles << kw2.first.link
+end
 %>
 
 </br></br>

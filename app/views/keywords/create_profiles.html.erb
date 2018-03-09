@@ -160,6 +160,13 @@ description = 'Place this in description: '+ @keyword.description
 browser.execute_script("var test = '#{description}';alert(test);")
 #----------------------------------------------------------------------------------------------------
 
+
+</br></br>
+
+<%#= link_to "Place about.me link", send("place_about_link_path", keyword_id: @keyword.id) %>
+
+
+
 #Vimeo
 #Need to verify this indeed works!!
 Rails.logger.info 'Vimeo'

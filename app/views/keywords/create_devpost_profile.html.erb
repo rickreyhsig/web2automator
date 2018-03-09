@@ -19,7 +19,7 @@ if kw2.length < 1
     browser.checkbox(id: 'user_user_setting_attributes_receive_newsletter').set
     browser.execute_script("alert(\"Please solve CAPTCHA and click Sign up.\")")
     sleep 21
-    browser.execute_script("alert(\"Please verify accoutn before continuing.\")")
+    browser.execute_script("alert(\"Please verify account before continuing.\")")
     sleep 3
     browser.close
 else
@@ -29,6 +29,9 @@ end
 
 </br></br>
 Congrats, devpost profile was created!
+</br></br>
+
+<%= link_to "Place devpost link", send("place_devpost_link_path", keyword_id: @keyword.id) %>
 
 </br></br>
 

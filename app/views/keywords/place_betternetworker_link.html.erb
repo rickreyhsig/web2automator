@@ -10,7 +10,7 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/betternetworker.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.betternetworker.com/access'
-    browser.text_field(id: 'edit-name').set @keyword.keyword
+    browser.text_field(id: 'edit-name').set @keyword.keyword[0..17]
     browser.text_field(id: 'edit-pass').set @keyword.password
     browser.input(id: 'edit-submit').click
     browser.goto 'http://www.betternetworker.com/register/profile/basics'

@@ -18,9 +18,10 @@ if kw2.length < 1
     browser.text_field(name: 'website').set @keyword.link
     browser.text_field(name: 'location').set @keyword.city
     browser.textarea(name: 'about').set @keyword.description
-    browser.button(text: 'Save').click
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.input(name: 'submit1').click
     browser.execute_script("alert(\"Please upload pic and go to Public Profile page. You got 15 seconds to do so..\")")
-    sleep 26
+    sleep 25
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myvidster.com%").first.id)

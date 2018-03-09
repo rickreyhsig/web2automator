@@ -12,8 +12,10 @@ if kw2.length < 1
     # Logs in and adds link
     browser.goto 'http://www.authorstream.com/SignIn/Dashboard'
     #browser.text_field(id: 'txtEmailId').set @keyword.email
-    browser.execute_script("alert(\"Please place email to continue. You got 5 seconds to do so..\")")
-    sleep 5
+    #browser.execute_script("alert(\"Please place email to continue. You got 5 seconds to do so..\")")
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{email}';alert(test);")
+    sleep 7
     browser.text_field(id: 'txtPassword').set @keyword.password
     browser.button(text: 'Sign In').click
     sleep 2
