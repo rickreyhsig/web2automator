@@ -6,10 +6,10 @@ browser = Watir::Browser.new
 profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
-#AccountingWeb
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/accountingweb.co%").first.id)
+#TrainingZone
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/trainingzone.co%").first.id)
 if kw2.length < 1
-    browser.goto 'https://www.accountingweb.co.uk/user/login'
+    browser.goto 'https://www.trainingzone.co.uk/user/login'
     browser.execute_script("window.scrollBy(0,700)")
     browser.text_field(id: 'edit-name').set @keyword.email
     browser.text_field(id: 'edit-pass').set @keyword.password
@@ -52,7 +52,7 @@ if kw2.length < 1
     sleep 5
     # Save link
     profiles << browser.url
-    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/accountingweb.co%").first.id)
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/trainingzone.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
 
     browser.close
@@ -62,7 +62,7 @@ end
 %>
 
 </br></br>
-Congrats, accountingweb was placed!
+Congrats, trainingzone was placed!
 
 <% profiles.each do |p| %>
     <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>

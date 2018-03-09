@@ -240,5 +240,8 @@ Web2automator::Application.routes.draw do
   get 'create_purevolume_profile' => 'keywords#create_purevolume_profile'
   get 'place_purevolume_link' => 'keywords#place_purevolume_link'
   #
+  get 'create_trainingzone_profile' => 'keywords#create_trainingzone_profile'
+  get 'place_trainingzone_link' => 'keywords#place_trainingzone_link'
+  #
 
 end
