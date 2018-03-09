@@ -17,7 +17,7 @@ if kw2.length < 1
     browser.text_field(id: 'edit-pass-pass2').set @keyword.password
     browser.checkbox(id: 'edit-terms-and-conditions-use').set
     browser.execute_script("alert(\"Please SOLVE CAPTCHA and click Create new account continue. You got 12 seconds to do so..\")")
-    sleep 20
+    sleep 30
     browser.execute_script("alert(\"Please ACTIVATE ACCOUNT before proceeding.\")")
     sleep 5
     browser.close
