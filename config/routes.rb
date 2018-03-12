@@ -243,5 +243,7 @@ Web2automator::Application.routes.draw do
   get 'create_trainingzone_profile' => 'keywords#create_trainingzone_profile'
   get 'place_trainingzone_link' => 'keywords#place_trainingzone_link'
   #
-
+  get 'create_smashwords_profile' => 'keywords#create_smashwords_profile'
+  get 'place_smashwords_link' => 'keywords#place_smashwords_link'
+  #
 end

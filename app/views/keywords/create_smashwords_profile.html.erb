@@ -1,0 +1,39 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SmashWords
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/smashwords.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.smashwords.com/signup'
+    browser.execute_script("alert(\"Fields are disabled, please sign up manually\")")
+    sleep 5
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'username').set @keyword.anchor_text
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'passwordconf').set @keyword.password
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'firstname').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastname').set @keyword.anchor_text.split[1..anchor_text.length]
+    browser.radio(name: 'over18', value: 'yes').set
+    browser.textarea(name: 'howhear').set 'A friend'
+    browser.input(value: 'Sign me up!')
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, smashwords profile was created!
+</br></br>
+
+<%= link_to "Place smashwords link", send("place_smashwords_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
