@@ -246,4 +246,7 @@ Web2automator::Application.routes.draw do
   get 'create_smashwords_profile' => 'keywords#create_smashwords_profile'
   get 'place_smashwords_link' => 'keywords#place_smashwords_link'
   #
+  get 'create_prince_profile' => 'keywords#create_prince_profile'
+  get 'place_prince_link' => 'keywords#place_prince_link'
+  #
 end

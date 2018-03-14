@@ -1,0 +1,43 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Prince
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/prince.org%").first.id)
+if kw2.length < 1
+    browser.goto 'http://prince.org/login.html'
+    browser.text_field(name: 'uname').set @keyword.keyword
+    browser.text_field(name: 'pword1').set @keyword.password
+    browser.text_field(name: 'pword2').set @keyword.password
+    browser.select_list(name: 'pw_question').select_value('1')
+    browser.text_field(name: 'pw_answer').set @keyword.keyword
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'fname').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lname').set @keyword.anchor_text.split[1..@keyword.anchor_text.length]
+    browser.text_field(name: 'city').set @keyword.city
+    browser.text_field(name: 'zip').set @keyword.zipcode
+    browser.checkbox(name: 'agree').set
+    browser.execute_script("alert(\"Please select state, region and country.  15 seconds\")")
+    sleep 25
+    browser.input(name: 'register').click
+    browser.execute_script("alert(\"Please validate account through email BEFORE PROCEEDING!\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, prince.org profile was created!
+</br></br>
+
+<%= link_to "Place prince.org link", send("place_prince_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

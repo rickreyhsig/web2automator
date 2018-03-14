@@ -18,7 +18,7 @@ if kw2.length < 1
     browser.text_field(name: 'passwordconf').set @keyword.password
     browser.text_field(name: 'email').set @keyword.email
     browser.text_field(name: 'firstname').set @keyword.anchor_text.split[0]
-    browser.text_field(name: 'lastname').set @keyword.anchor_text.split[1..anchor_text.length]
+    browser.text_field(name: 'lastname').set @keyword.anchor_text.split[1..@keyword.anchor_text.length]
     browser.radio(name: 'over18', value: 'yes').set
     browser.textarea(name: 'howhear').set 'A friend'
     browser.input(value: 'Sign me up!')
