@@ -43,7 +43,7 @@ if kw2.length < 1
     browser.text_field(name: 'socialLinkedin_url').set linkedin unless linkedin.empty?
     browser.textarea(name: 'bio').set @keyword.description
     browser.input(value: 'Update Profile').click
-    sleep 4
+    sleep 3
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/smashwords.co%").first.id)

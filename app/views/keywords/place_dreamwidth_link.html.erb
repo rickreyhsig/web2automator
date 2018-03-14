@@ -42,7 +42,7 @@ if kw2.length < 1
     github = github.link if github
     deviantart = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%deviantart.com%').first
     deviantart = deviantart.link if deviantart
-    browser.text_field(name: 'instagram').set instagram.gsub('https://wwww.instagram.com','') if instagram
+    browser.text_field(name: 'instagram').set instagram.gsub('https://wwww.instagram.com/','') if instagram
     browser.text_field(name: 'twitter').set twitter.gsub('https://wwww.twitter.com','') if twitter
     browser.text_field(name: 'tumblr').set tumblr
     browser.text_field(name: 'pinterest').set pinterest.gsub('https://wwww.pinterest.com','') if pinterest

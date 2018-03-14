@@ -43,7 +43,7 @@ if kw2.length < 1
     browser.button(text: 'Update Profile Info').click
     sleep 3
     browser.execute_script("alert(\"Please go to profile page to continue. You got 5 seconds to do so..\")")
-    sleep 8
+    sleep 12
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%creativemarket%").first.id)
