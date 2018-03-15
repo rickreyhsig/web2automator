@@ -15,11 +15,7 @@ if kw2.length < 1
     browser.text_field(id: 'email_address').set @keyword.email
     browser.text_field(id: 'password').set @keyword.password2
     browser.execute_script("alert(\"Please select DOB, click Sign up and resolve CAPTCHA to continue. You got 35 seconds to do so..\")")
-    sleep(40)
-    #browser.select_list(name: 'month').select_value('1')
-    #browser.select_list(id: 'day').select_value('1')
-    #browser.select_list(id: 'year').select_value('1980')
-    #browser.button(text: 'Sign up').click
+    sleep(45)
     browser.close
 else
    profiles << kw2.first.link

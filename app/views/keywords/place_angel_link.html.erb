@@ -18,7 +18,7 @@ if kw2.length < 1
     browser.link(text: "No, I'm not looking").click
     browser.link(text: 'Skip for now »').click
     browser.execute_script("alert(\"Please update pic.\")")
-    browser.textara(placeholder: 'e.g. Worked at @Uber. Studied at Boston University and University of Sydney.').set @keyword.description
+    browser.textarea(placeholder: 'e.g. Worked at @Uber. Studied at Boston University and University of Sydney.').set @keyword.description
     browser.execute_script("alert(\"Please finish rest manually.\")")
     # Save link
     #profiles << browser.url

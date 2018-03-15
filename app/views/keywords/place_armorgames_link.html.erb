@@ -6,10 +6,26 @@ browser = Watir::Browser.new
 profiles = []
 
 #ArmorGames
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%armorgames%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%armorgames.co%").first.id)
 if kw2.length < 1
-    browser.execute_script("alert(\"Please place link manually to continue.\")")
-    sleep(5)
+	browser.goto 'https://armorgames.com/'
+    browser.text_field(id: 'username-input').set @keyword.keyword
+    browser.text_field(id: 'password-input').set @keyword.password
+    browser.execute_script("alert(\"Please fix username if necessary..\")")
+    sleep 5
+    browser.button(text: 'Login').click
+    browser.goto 'https://armorgames.com/settings/general'
+    browser.execute_script("alert(\"Pick whatever avatar\")")
+    sleep 12
+    bio = '[url='+@keyword.link+']'+@keyword.anchor_text+'[/url]' + ' - ' + @keyword.description
+    browser.textarea(id: 'bio-input').set bio
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.button(text: 'Save Changes').click
+    browser.span(class: 'username').click
+    sleep 2
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%armorgames%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
     browser.close
 else
    profiles << kw2.first.link

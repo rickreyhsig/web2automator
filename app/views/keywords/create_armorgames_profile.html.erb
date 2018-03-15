@@ -14,7 +14,7 @@ if kw2.length < 1
     browser.text_field(id: 'password_other').set @keyword.password
     browser.checkbox(:id => 'agreement-input').set
     browser.execute_script("alert(\"Please resolve CAPTCHA and click Register Now to continue..\")")
-    sleep(25)
+    sleep 40
     browser.close
 else
    profiles << kw2.first.link

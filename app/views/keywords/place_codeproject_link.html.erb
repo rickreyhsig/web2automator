@@ -12,24 +12,6 @@ if kw2.length < 1
     # Logs in and adds link
     browser.goto 'http://www.authorstream.com/SignIn/Dashboard'
     #browser.text_field(id: 'txtEmailId').set @keyword.email
-    browser.execute_script("alert(\"Please email to continue. You got 30 seconds to do so..\")")
-    sleep 5
-    browser.text_field(id: 'txtPassword').set @keyword.password
-    browser.button(text: 'Sign In').click
-    sleep 2
-    browser.goto 'http://www.authorstream.com/accountmanagement/User-profile/'
-    sleep 1
-    browser.file_field(id: 'uplPhoto').set @keyword.logo_path
-    sleep 4
-    browser.textarea(id: 'txtAboutme').set @keyword.description
-    browser.text_field(id: 'WebLink').set @keyword.link
-    browser.text_field(id: 'txtCity').set @keyword.city
-    browser.text_field(id: 'txtState').set "MD"
-    browser.select_list(id: 'ddlCountry').select_value('178')
-    browser.text_field(id: 'txtPostalCode').set "20906"
-    browser.button(text: 'Save Changes').click
-    sleep 5
-    browser.span(id: 'Header1_divUser').click
     browser.link(id: 'userProfile').click
     sleep 2
     # Save link
