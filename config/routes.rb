@@ -249,4 +249,8 @@ Web2automator::Application.routes.draw do
   get 'create_prince_profile' => 'keywords#create_prince_profile'
   get 'place_prince_link' => 'keywords#place_prince_link'
   #
+  get 'create_burdastyle_profile' => 'keywords#create_burdastyle_profile'
+  get 'place_burdastyle_link' => 'keywords#place_burdastyle_link'
+  #
+
 end

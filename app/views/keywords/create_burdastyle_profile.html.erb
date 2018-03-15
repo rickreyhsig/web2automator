@@ -1,0 +1,41 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BurdaStyle
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/burdastyle.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.burdastyle.com/join'
+    browser.execute_script("window.scrollBy(0,7000)")
+    browser.text_field(id: 'user_first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'user_last_name').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'user_username').set @keyword.keyword
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.text_field(id: 'user_password_confirmation').set @keyword.password
+    browser.text_field(id: 'user_city').set @keyword.city
+    browser.select_list(id: 'user_country').select_value(@keyword.country)
+    browser.checkbox(id: 'user_terms_of_service').set
+    browser.execute_script("alert(\"Please solve CAPTCHA and click Join now.\")")
+    sleep 49
+    browser.execute_script("alert(\"Please verify account before continuing.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, burdastyle profile was created!
+</br></br>
+
+<%= link_to "Place burdastyle link", send("place_burdastyle_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

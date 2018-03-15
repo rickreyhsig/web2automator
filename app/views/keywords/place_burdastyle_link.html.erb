@@ -1,0 +1,50 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BurdaStyle
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/burdastyle.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.burdastyle.com/login'
+    sleep 5
+    browser.text_field(id: 'user_session_username').set @keyword.keyword
+    browser.text_field(id: 'user_session_password').set @keyword.password
+    browser.execute_script("alert(\"Please solve CAPTCHA and fix username if necessary You got 30 seconds to do so..\")")
+    sleep 30
+    browser.goto "http://www.burdastyle.com/profiles/#{@keyword.keyword}/settings/profile"
+    browser.execute_script("alert(\"Please fix username in URL if necessary You got 5 seconds to do so..\")")
+    sleep 5
+    browser.file_field(id: 'profile_avatar').set @keyword.logo_path
+    browser.textarea(id: 'profile_about_me').set @keyword.description
+    browser.text_field(id: 'profile_website').set @keyword.anchor_text
+    browser.text_field(id: 'profile_website_url').set @keyword.link
+    browser.span(text: 'Update').click
+    browser.goto "http://www.burdastyle.com/profiles/#{@keyword.keyword}"
+    browser.execute_script("alert(\"Please fix username in URL if necessary You got 5 seconds to do so..\")")
+    sleep 5
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/burdastyle.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, burdastyle was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
