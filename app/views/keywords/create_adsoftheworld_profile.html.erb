@@ -15,7 +15,7 @@ if kw2.length < 1
     browser.text_field(id: 'edit-pass-pass1').set @keyword.password
     browser.text_field(id: 'edit-pass-pass2').set @keyword.password
     browser.button(text: 'Create new account').click
-    sleep 8
+    sleep 16
     browser.close
 else
    profiles << kw2.first.link

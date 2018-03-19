@@ -21,16 +21,21 @@ if kw2.length < 1
 
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
     facebook = facebook.first.link if facebook.first
-    facebook = 'Place this in facebook text_field: '+ facebook
-    browser.execute_script("var output = '#{facebook}';alert(output);")
+    unless facebook.empty?
+        facebook = 'Place this in facebook text_field: '+ facebook
+        browser.execute_script("var output = '#{facebook}';alert(output);")
+    end
     sleep 7
     browser.link(text: '+ Link').click
     browser.select_list(id: 'site_pulldown_2').select_value('9')
 
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
-    twitter = twitter.first.link if twitter.first
-    twitter = 'Place this in twitter text_field: '+ twitter
-    browser.execute_script("var output = '#{twitter}';alert(output);")
+    unless twitter.empty?
+        twitter = twitter.first.link if twitter.first
+        twitter = 'Place this in twitter text_field: '+ twitter if twitter
+        browser.execute_script("var output = '#{twitter}';alert(output);")
+
+    end
     sleep 7
     browser.input(name: 'save_links').click
 
