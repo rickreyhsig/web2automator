@@ -1,0 +1,63 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BuzzFeed
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.buzzfeed.com/signin'
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{email}';alert(test);")
+    sleep 8
+    password = 'Place this in password: '+ @keyword.password
+    browser.execute_script("var test = '#{password}';alert(test);")
+    sleep 8
+    browser.button(text: 'Log in').click if browser.button(text: 'Log in').exists?
+    sleep 1
+    browser.goto 'https://www.buzzfeed.com/settings'
+    browser.input(id: 'upload_profile_pic_input').click
+    browser.file_field(name: 'file').set @keyword.logo_path
+    browser.execute_script("alert(\"Please crop and center photo\")")
+    sleep 15
+
+    browser.textarea(id: 'profile-description').set @keyword.description
+    browser.text_field(id: 'location').set @keyword.city
+    browser.text_field(id: 'website-link').set @keyword.link
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    browser.text_field(id: 'twitter-link').set twitter if twitter
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(id: 'facebook-link').set facebook if facebook
+
+    browser.input(id: 'submit-button').click
+    browser.div(id: 'usernav-profile').click
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, buzzfeed was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

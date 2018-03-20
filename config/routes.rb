@@ -252,5 +252,14 @@ Web2automator::Application.routes.draw do
   get 'create_burdastyle_profile' => 'keywords#create_burdastyle_profile'
   get 'place_burdastyle_link' => 'keywords#place_burdastyle_link'
   #
+  get 'create_alignable_profile' => 'keywords#create_alignable_profile'
+  get 'place_alignable_link' => 'keywords#place_alignable_link'
+  #
+  get 'create_blogger_profile' => 'keywords#create_blogger_profile'
+  get 'place_blogger_link' => 'keywords#place_blogger_link'
+  #
+  get 'create_buzzfeed_profile' => 'keywords#create_buzzfeed_profile'
+  get 'place_buzzfeed_link' => 'keywords#place_buzzfeed_link'
+  #
 
 end

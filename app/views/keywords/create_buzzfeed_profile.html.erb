@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BuzzFeed
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.buzzfeed.com/signup'
+    browser.text_field(id: 'username-input-text').set @keyword.keyword
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{email}';alert(test);")
+    sleep 8
+    password = 'Place this in password: '+ @keyword.password
+    browser.execute_script("var test = '#{password}';alert(test);")
+    sleep 8
+    browser.button(text: 'Sign up').click
+    browser.execute_script("alert(\"Please verify account BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, buzzfeed profile was created!
+</br></br>
+
+<%= link_to "Place buzzfeed link", send("place_buzzfeed_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

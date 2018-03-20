@@ -161,6 +161,7 @@ browser.execute_script("window.scrollBy(0,800)")
 
 description = 'Place this in description: '+ @keyword.description
 browser.execute_script("var test = '#{description}';alert(test);")
+sleep 8
 
 linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
 linkedin = linkedin.first.link if linkedin.first
