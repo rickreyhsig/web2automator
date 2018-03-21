@@ -1,0 +1,36 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#HubPages
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hubpages.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://hubpages.com/user/new/'
+    browser.text_field(name: 'usname3').set @keyword.keyword
+    browser.text_field(name: 'usemail3').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'password2').set @keyword.password
+    browser.checkbox(name: 'eula').set
+    browser.execute_script("alert(\"Please resolve CAPTCHA and click Sign Up\")")
+    sleep 25
+    browser.execute_script("alert(\"VERIFY ACCOUNT BEFORE PROCEEDING\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, hubpages profile was created!
+</br></br>
+
+<%= link_to "Place hubpages link", send("place_hubpages_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

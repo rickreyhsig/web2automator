@@ -261,5 +261,11 @@ Web2automator::Application.routes.draw do
   get 'create_buzzfeed_profile' => 'keywords#create_buzzfeed_profile'
   get 'place_buzzfeed_link' => 'keywords#place_buzzfeed_link'
   #
+  get 'create_dailymotion_profile' => 'keywords#create_dailymotion_profile'
+  get 'place_dailymotion_link' => 'keywords#place_dailymotion_link'
+  #
+  get 'create_hubpages_profile' => 'keywords#create_hubpages_profile'
+  get 'place_hubpages_link' => 'keywords#place_hubpages_link'
+  #
 
 end

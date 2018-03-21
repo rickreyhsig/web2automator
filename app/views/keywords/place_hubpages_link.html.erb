@@ -1,0 +1,77 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#HubPages
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hubpages.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://hubpages.com/signin/'
+    browser.text_field(name: 'us1shem2').set @keyword.email
+    browser.text_field(name: 'us1sisma2').set @keyword.password
+    browser.input(value: 'Sign In').click
+    browser.goto 'https://hubpages.com/my/profile/profile'
+
+    browser.text_field(name: 'realname').set @keyword.anchor_text
+    browser.text_field(name: 'city').set @keyword.city
+    browser.execute_script("window.scrollBy(0,800)")
+
+    description = 'Place this in description: '+ @keyword.description
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    facebook = 'Place this in facebook: '+ facebook unless facebook.empty?
+    browser.execute_script("var test = '#{facebook}';alert(test);") unless facebook.empty?
+    sleep 8
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    browser.text_field(name: 'twitter').set twitter unless twitter.empty?
+
+    google_plus = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%plus.google.com%')
+    google_plus = google_plus.first.link if google_plus.first
+    browser.text_field(name: 'google_plus').set google_plus unless google_plus.empty?
+
+    linked_in = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
+    linked_in = linked_in.first.link if linked_in.first
+    browser.text_field(name: 'linkedin').set linked_in unless linked_in.empty?
+
+    browser.text_field(name: 'website').set @keyword.link
+
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
+    pinterest = pinterest.first.link if pinterest.first
+    browser.text_field(name: 'pinterest').set pinterest unless pinterest.empty?
+
+    browser.execute_script("window.scrollBy(0,800)")
+    browser.input(value: 'Save Changes').click
+    browser.execute_script("alert(\"Please place photo and save to continue.\")")
+    sleep 25
+
+    browser.link(text: 'view your profile').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hubpages.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, hubpages was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

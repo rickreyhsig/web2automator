@@ -1,0 +1,31 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#DailyMotion
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/dailymotion.co%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.dailymotion.com/signup'
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password2
+    browser.span(text: 'Continue').click
+    sleep 10
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, dailymotion profile was created!
+</br></br>
+
+<%= link_to "Place dailymotion link", send("place_dailymotion_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
