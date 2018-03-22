@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#BlogTalkRadio
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/blogtalkradio.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://secure.blogtalkradio.com/register.aspx'
+    browser.execute_script("window.scrollBy(0,1200)")
+    browser.input(value: 'free').click
+    browser.execute_script("alert(\"Please click continue.\")")
+    sleep 5
+    browser.text_field(name: 'txtEmail').set @keyword.email
+    browser.text_field(name: 'txtPassword').set @keyword.password
+    browser.text_field(name: 'txtConfirmPassword').set @keyword.password
+    browser.execute_script("alert(\"Please solve CAPCTHA\")")
+    sleep 11
+    browser.text_field(name: 'txtUserName').set @keyword.keyword
+    browser.text_field(name: 'txtProfilePageTitle').set @keyword.anchor_text
+    browser.textarea(name: 'txtDescription').set @keyword.description
+    browser.select_list(name: 'ddlDefaultGenre$ddlGenre').select_value('4')
+    browser.link(id: 'lbtnRegister').click
+    sleep 1
+    browser.execute_script("alert(\"VERIFY ACCOUNT BEFORE PROCEEDING\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, blogtalkradio profile was created!
+</br></br>
+
+<%= link_to "Place blogtalkradio link", send("place_blogtalkradio_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

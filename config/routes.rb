@@ -267,5 +267,11 @@ Web2automator::Application.routes.draw do
   get 'create_hubpages_profile' => 'keywords#create_hubpages_profile'
   get 'place_hubpages_link' => 'keywords#place_hubpages_link'
   #
+  get 'create_bold_profile' => 'keywords#create_bold_profile'
+  get 'place_bold_link' => 'keywords#place_bold_link'
+  #
+  get 'create_blogtalkradio_profile' => 'keywords#create_blogtalkradio_profile'
+  get 'place_blogtalkradio_link' => 'keywords#place_blogtalkradio_link'
+  #
 
 end
