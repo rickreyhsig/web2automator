@@ -273,5 +273,11 @@ Web2automator::Application.routes.draw do
   get 'create_blogtalkradio_profile' => 'keywords#create_blogtalkradio_profile'
   get 'place_blogtalkradio_link' => 'keywords#place_blogtalkradio_link'
   #
+  get 'create_sheknows_profile' => 'keywords#create_sheknows_profile'
+  get 'place_sheknows_link' => 'keywords#place_sheknows_link'
+  #
+  get 'create_hatena_profile' => 'keywords#create_hatena_profile'
+  get 'place_hatena_link' => 'keywords#place_hatena_link'
+  #
 
 end

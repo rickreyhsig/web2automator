@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Hatena
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hatena.%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.hatena.ne.jp/register'
+    browser.text_field(name: 'name').set @keyword.keyword
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'mail').set @keyword.email
+    browser.execute_script("alert(\"Please select Country and complete CAPCTHA to continue. You got 30 seconds to do so..\")")
+    sleep 28
+    browser.input(id: 'submit-button').click if browser.input(id: 'submit-button').exists?
+    browser.execute_script("alert(\"Please validate email BEFORE CONTINUING.\")")
+    sleep 7
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, hatena profile was created!
+</br></br>
+
+<%= link_to "Place hatena link", send("place_hatena_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

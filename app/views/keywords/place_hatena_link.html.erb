@@ -1,0 +1,54 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Hatena
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hatena.%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.hatena.ne.jp/login'
+    browser.text_field(name: 'name').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.input(value: 'Send').click if browser.input(value: 'Send').exists?
+    sleep 1
+    browser.goto "http://profile.hatena.ne.jp/#{@keyword.keyword}/edit"
+    browser.execute_script("alert(\"Please fix username in URL if necessary.\")")
+    sleep 7
+    browser.input(id: 'privacy-alert-ok').click if browser.input(id: 'privacy-alert-ok').exists?
+    #Photo
+    browser.link(text: 'Change').click
+    browser.file_field(name: 'profile_image').set @keyword.logo_path
+    browser.input(value: 'Update').click
+
+    browser.text_field(name: 'nickname').set @keyword.keyword[0..19]
+    browser.textarea(name: 'detail').set @keyword.description
+    browser.textarea(name: 'realname').set @keyword.anchor_text
+    browser.textarea(name: 'origin').set @keyword.city
+    browser.select_list(name: 'label').select_value('hp1')
+    browser.text_field(name: 'hp1').set @keyword.link
+    browser.input(id: 'profile_submit').click
+    browser.link(text: 'Confirm profile').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hatena.%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, hatena was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

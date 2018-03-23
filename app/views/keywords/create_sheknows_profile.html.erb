@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SheKnows
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/sheknows.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://connect.sheknows.com/register/'
+    browser.text_field(id: 'registration_firstname').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'registration_lastname').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1]
+    browser.text_field(id: 'registration_username').set @keyword.keyword
+    browser.text_field(id: 'registration_plainPassword').set @keyword.password2
+    browser.text_field(id: 'registration_email').set @keyword.email
+    browser.button(text: 'Register').click
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+    # PROFILES NO LONGER ALLOWED
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, sheknows profile was created!
+</br></br>
+
+<%= link_to "Place sheknows link", send("place_sheknows_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
