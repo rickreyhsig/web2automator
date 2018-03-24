@@ -279,5 +279,14 @@ Web2automator::Application.routes.draw do
   get 'create_hatena_profile' => 'keywords#create_hatena_profile'
   get 'place_hatena_link' => 'keywords#place_hatena_link'
   #
+  get 'create_moonfruit_profile' => 'keywords#create_moonfruit_profile'
+  get 'place_moonfruit_link' => 'keywords#place_moonfruit_link'
+  #
+  get 'create_notey_profile' => 'keywords#create_notey_profile'
+  get 'place_notey_link' => 'keywords#place_notey_link'
+  #
+  get 'create_pen_profile' => 'keywords#create_pen_profile'
+  get 'place_pen_link' => 'keywords#place_pen_link'
+  #
 
 end
