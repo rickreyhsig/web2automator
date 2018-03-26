@@ -288,5 +288,11 @@ Web2automator::Application.routes.draw do
   get 'create_pen_profile' => 'keywords#create_pen_profile'
   get 'place_pen_link' => 'keywords#place_pen_link'
   #
+  get 'create_weebly_profile' => 'keywords#create_weebly_profile'
+  get 'place_weebly_link' => 'keywords#place_weebly_link'
+  #
+  get 'create_linksys_profile' => 'keywords#create_linksys_profile'
+  get 'place_linksys_link' => 'keywords#place_linksys_link'
+  #
 
 end
