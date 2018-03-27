@@ -1,0 +1,38 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Linksys
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/linksys.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.linksys.com/us/login/'
+
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'pwd').set @keyword.password
+    browser.text_field(name: 'checkPwd').set @keyword.password
+    browser.button(text: 'REGISTER').click
+    browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
+    browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
+    browser.execute_script("alert(\"Please LOGIN again and make SURE community username is setup.\")")
+    sleep 20
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, linksys profile was created!
+</br></br>
+
+<%= link_to "Place linksys link", send("place_linksys_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,50 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Linksys
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/linksys.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.linksys.com/us/login/'
+    browser.radio(name: 'socialOptRadios', value: 'option2').set if browser.radio(name: 'socialOptRadios').exists?
+    browser.text_field(name: 'j_username').set @keyword.email
+    browser.text_field(name: 'j_password').set @keyword.password
+    browser.button(text: 'SIGN IN').click
+    browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
+    browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
+    browser.goto 'https://community.linksys.com/t5/user/myprofilepage/tab/personal-profile%3Apersonal-info'
+    browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
+    browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
+    browser.text_field(name: 'profiletitle').set @keyword.anchor_text
+    browser.text_field(name: 'profilelocation').set @keyword.city
+    browser.text_field(name: 'profileurl_homepage').set @keyword.link
+    browser.textarea(name: 'profilebiography').set @keyword.description
+    browser.input(value: 'Save').click
+    browser.execute_script("alert(\"Please navigate to profile.. top right\")")
+    sleep 8
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/linksys.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, linksys was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
