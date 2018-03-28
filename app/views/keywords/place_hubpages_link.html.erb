@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #HubPages
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hubpages.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "hubpages.co%").first.id)
 #if kw2.length < 1
     browser.goto 'https://hubpages.com/signin/'
     browser.text_field(name: 'us1shem2').set @keyword.email

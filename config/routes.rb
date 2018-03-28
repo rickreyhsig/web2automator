@@ -294,5 +294,8 @@ Web2automator::Application.routes.draw do
   get 'create_linksys_profile' => 'keywords#create_linksys_profile'
   get 'place_linksys_link' => 'keywords#place_linksys_link'
   #
+  get 'create_symantec_profile' => 'keywords#create_symantec_profile'
+  get 'place_symantec_link' => 'keywords#place_symantec_link'
+  #
 
 end

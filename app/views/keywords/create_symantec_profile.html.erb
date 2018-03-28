@@ -1,0 +1,36 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Symantec
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "symantec.com").first.id)
+if kw2.length < 1
+    browser.goto 'https://login.symantec.com/sso/embedded/update'
+    browser.button(id: 'registerToggleButton').click
+    browser.text_field(name: 'registerUsername').set @keyword.email
+    browser.text_field(name: 'confirmEmailAddress').set @keyword.email
+    browser.text_field(name: 'registerPassword').set @keyword.password2
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.input(value: 'Create Account').click
+    browser.execute_script("alert(\"Please verify account BEFORE PROCEEDING\")")
+    sleep 8
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, symantec profile was created!
+</br></br>
+
+<%= link_to "Place symantec link", send("place_symantec_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
