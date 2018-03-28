@@ -8,7 +8,7 @@ profiles = []
 
 #HubPages
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hubpages.co%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     browser.goto 'https://hubpages.com/signin/'
     browser.text_field(name: 'us1shem2').set @keyword.email
     browser.text_field(name: 'us1sisma2').set @keyword.password
@@ -59,9 +59,9 @@ if kw2.length < 1
     keyword_web2.update_attributes(link: browser.url)
 
    browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

@@ -8,13 +8,13 @@ profiles = []
 
 #Pen
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/pen.io%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     browser.execute_script("alert(\"Please use create script!\")")
     sleep 7
     browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

@@ -8,7 +8,7 @@ profiles = []
 #Twitter
 Rails.logger.info 'Twitter'
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://twitter.com/'
     browser.link(:text =>/Log in/).click if browser.link(:text =>/Log in/).exists?
@@ -24,9 +24,9 @@ if kw2.length < 1
     browser.button(text: "Save changes").click
     browser.close
     profiles << browser.url
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

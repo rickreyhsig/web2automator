@@ -8,7 +8,7 @@ profiles = []
 
 #Knoji
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/knoji.co%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     browser.goto 'https://knoji.com/'
     browser.execute_script("alert(\"Please go to login page..\")")
     sleep 7
@@ -65,9 +65,9 @@ if kw2.length < 1
     keyword_web2.update_attributes(link: browser.url)
 
    browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

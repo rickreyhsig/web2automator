@@ -8,7 +8,7 @@ profiles = []
 
 #AdsOfTheworld
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%adsoftheworld%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://www.adsoftheworld.com/user/login'
     browser.text_field(id: 'edit-name').set @keyword.keyword
@@ -33,9 +33,9 @@ if kw2.length < 1
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%adsoftheworld%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

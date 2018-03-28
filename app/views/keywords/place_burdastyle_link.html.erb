@@ -8,7 +8,7 @@ profiles = []
 
 #BurdaStyle
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/burdastyle.co%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     browser.goto 'https://www.burdastyle.com/login'
     sleep 5
     browser.text_field(id: 'user_session_username').set @keyword.keyword
@@ -32,9 +32,9 @@ if kw2.length < 1
     keyword_web2.update_attributes(link: browser.url)
 
     browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>

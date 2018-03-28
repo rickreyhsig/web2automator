@@ -7,7 +7,7 @@ profiles = []
 
 #LiveJournal
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%livejournal%").first.id)
-if kw2.length < 1
+#if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://www.livejournal.com/'
     browser.link(text: 'Login').click
@@ -16,15 +16,17 @@ if kw2.length < 1
     browser.execute_script("alert(\"Please type # in password and fix username. You got 4 seconds to do so..\")")
     sleep(7)
     browser.button(name: 'action:login').click
+    browser.execute_script("alert(\"Please ask SEXY RICARDO to fix this one...\")")
+
     Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
     # Save link
     #profiles << browser.url
     #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%livejournal%").first.id)
     #keyword_web2.update_attributes(link: browser.url)
     #browser.close
-else
-   profiles << kw2.first.link
-end
+#else
+#   profiles << kw2.first.link
+#end
 %>
 
 </br></br>
