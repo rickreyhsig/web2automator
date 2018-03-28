@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #BuzzFeed
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%buzzfeed.co%").first.id)
 #if kw2.length < 1
     browser.goto 'https://www.buzzfeed.com/signin'
     email = 'Place this in email: '+ @keyword.email
@@ -41,7 +41,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep 2
     # Save link
     profiles << browser.url
-    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%buzzfeed.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
 
    browser.close
