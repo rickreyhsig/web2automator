@@ -6,7 +6,7 @@ browser = Watir::Browser.new
 profiles = []
 
 #Yelp
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%yelp%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "yelp%").first.id)
 if kw2.length < 1
 
     browser.goto 'https://www.yelp.com/signup'

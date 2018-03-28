@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #BuzzFeed
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/buzzfeed.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%buzzfeed.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.buzzfeed.com/signup'
     browser.text_field(id: 'username-input-text').set @keyword.keyword

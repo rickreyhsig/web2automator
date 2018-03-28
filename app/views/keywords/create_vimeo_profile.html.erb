@@ -6,7 +6,7 @@ browser = Watir::Browser.new
 profiles = []
 
 #Vimeo
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%vimeo%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "vimeo%").first.id)
 if kw2.length < 1
     browser.goto 'https://vimeo.com/join'
     browser.text_field(id: 'signup_name').set @keyword.keyword

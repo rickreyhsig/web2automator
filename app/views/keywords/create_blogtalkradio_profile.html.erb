@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #BlogTalkRadio
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/blogtalkradio.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%blogtalkradio.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://secure.blogtalkradio.com/register.aspx'
     browser.execute_script("window.scrollBy(0,1200)")

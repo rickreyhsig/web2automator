@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #Udemy
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/udemy.com%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "udemy.com%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.udemy.com/'
     browser.link(text: 'Sign Up').click

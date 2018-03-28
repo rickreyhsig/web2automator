@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #TrainingZone
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/trainingzone.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "trainingzone.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.trainingzone.co.uk/user/register'
     browser.execute_script("window.scrollBy(0,700)")

@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #SheKnows
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/sheknows.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%sheknows.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://connect.sheknows.com/register/'
     browser.text_field(id: 'registration_firstname').set @keyword.anchor_text.split[0]

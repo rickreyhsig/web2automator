@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #DailyMotion
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/dailymotion.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%dailymotion.co%").first.id)
 if kw2.length < 1
     browser.goto 'http://www.dailymotion.com/signup'
     browser.text_field(name: 'email').set @keyword.email

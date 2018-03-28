@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #SmashWords
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/smashwords.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%smashwords.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.smashwords.com/signup'
     browser.execute_script("alert(\"Fields are disabled, please sign up manually\")")

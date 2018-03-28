@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #GetSatisfaction
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/getsatisfaction.com%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%getsatisfaction.com%").first.id)
 if kw2.length < 1
     browser.goto 'https://getsatisfaction.com/people'
     browser.execute_script("alert(\"Please sign up manually with password2.\")")

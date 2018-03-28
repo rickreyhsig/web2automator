@@ -6,7 +6,7 @@ browser = Watir::Browser.new
 profiles = []
 
 #Twitter
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%twitter%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "twitter%").first.id)
 if kw2.length < 1
     # Creates account
     browser.goto 'https://twitter.com'

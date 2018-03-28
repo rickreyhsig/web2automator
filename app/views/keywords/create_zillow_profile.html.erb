@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #Zillow
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%zillow.com%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "zillow.com").first.id)
 if kw2.length < 1
     browser.goto 'https://www.zillow.com/user/acct/register/'
     browser.text_field(id: 'inputs-newEmail').set @keyword.email

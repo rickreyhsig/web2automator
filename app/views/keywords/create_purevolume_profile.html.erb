@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #PureVolume
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/purevolume.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%purevolume.co%").first.id)
 if kw2.length < 1
     browser.goto 'http://www.purevolume.com/signup/listener'
     browser.text_field(name: 'name').set @keyword.anchor_text

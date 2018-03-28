@@ -6,7 +6,7 @@ browser = Watir::Browser.new
 profiles = []
 
 #WeHeartIt
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%weheartit%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "weheartit%").first.id)
 if kw2.length < 1
     browser.goto 'https://weheartit.com/join'
     browser.text_field(id: 'user_email').set @keyword.email

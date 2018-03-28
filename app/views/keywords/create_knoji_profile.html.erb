@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #Knoji
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/knoji.co%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%knoji.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://knoji.com/'
     browser.execute_script("alert(\"Please go to register modal..\")")

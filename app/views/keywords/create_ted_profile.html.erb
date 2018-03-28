@@ -7,7 +7,7 @@ profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
 #Ted
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/ted.com%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "ted.com%").first.id)
 if kw2.length < 1
     browser.goto 'https://auth.ted.com/users/new'
     browser.text_field(id: 'user_first_name').set @keyword.anchor_text.split[0]
