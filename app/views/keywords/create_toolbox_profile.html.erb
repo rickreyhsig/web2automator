@@ -1,0 +1,42 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#ToolBox
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "toolbox.com").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.toolbox.com/sign-up'
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(name: 'userName').set @keyword.keyword
+    #browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'emailAgain').set @keyword.email
+    #browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'passwordAgain').set @keyword.password
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{email}';alert(test);")
+    sleep 8
+    password = 'Place this in password: '+ @keyword.password
+    browser.execute_script("var test = '#{password}';alert(test);")
+    sleep 8
+    browser.button(text: 'Join the Community').click if browser.button(text: 'Join the Community').exists?
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, toolbox profile was created!
+</br></br>
+
+<%= link_to "Place toolbox link", send("place_toolbox_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
