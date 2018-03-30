@@ -20,7 +20,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.goto 'https://wordpress.com/me'
     
     browser.text_field(id: 'first_name').set @keyword.anchor_text.split[0]
-    browser.text_field(id: 'last_name').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'last_name').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
     browser.textarea(id: 'description').set @keyword.description
     browser.button(text: 'Save Profile Details').click
     browser.execute_script("window.scrollBy(0,1000)")
@@ -32,8 +32,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.button(text: 'Add Site').click
 
     browser.execute_script("alert(\"Please place photo manually to continue. You got 10 seconds to do so..\")")
-    sleep(15)
-    sleep 1
+    sleep 18
     # Save link
     profiles << browser.link(text: 'your profile').href
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%gravatar%").first.id)

@@ -16,6 +16,8 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep 4
     browser.goto 'https://ello.co/settings'
     sleep 2
+    browser.execute_script("alert(\"Please UPLOAD photo BEFORE CONTINUING..\")")
+    sleep 10
     browser.text_field(name: 'user[name]').set @keyword.anchor_text
     browser.text_field(name: 'user[location]').set @keyword.city
     browser.text_field(name: 'user[links]').set @keyword.link

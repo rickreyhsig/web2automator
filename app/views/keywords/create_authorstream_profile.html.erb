@@ -11,13 +11,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 if kw2.length < 1
     browser.goto 'http://www.authorstream.com/Register/Dashboard'
     browser.link(text: 'Sign Up for authorSTREAM').click
-    browser.text_field(id: 'txtFirstName').set @keyword.anchor_text
+    browser.text_field(id: 'txtFirstName').set @keyword.anchor_text.gsub(',', '')
     browser.text_field(id: 'txtUserID').set @keyword.keyword
     browser.text_field(id: 'txtEmail').set @keyword.email
     browser.text_field(id: 'txtPassword').set @keyword.password
     browser.select_list(id: 'ddlAccountType').select_value('1')
     browser.button(text: 'Sign Up').click
-    sleep 4
+    sleep 5
     browser.close
 else
    profiles << kw2.first.link

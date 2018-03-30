@@ -16,6 +16,8 @@ if kw2.length < 1
     browser.text_field(id: 'edit-pass-pass2').set @keyword.password
     browser.button(text: 'Create new account').click
     sleep 16
+    browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
+    sleep 5
     browser.close
 else
    profiles << kw2.first.link

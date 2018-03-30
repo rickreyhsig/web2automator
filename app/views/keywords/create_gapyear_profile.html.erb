@@ -17,9 +17,9 @@ if kw2.length < 1
     browser.text_field(placeholder: 'Last Name').set @keyword.anchor_text.split[1]
     browser.execute_script("window.scrollBy(0,500)")
     browser.execute_script("alert(\"Please finish creating account manually.\")")
-    sleep 30
+    sleep 35
     browser.execute_script("alert(\"Please verify account b4 proceeding.\")")
-    sleep 4
+    sleep 5
     browser.close
 else
    profiles << kw2.first.link

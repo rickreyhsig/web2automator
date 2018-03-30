@@ -297,5 +297,12 @@ Web2automator::Application.routes.draw do
   get 'create_symantec_profile' => 'keywords#create_symantec_profile'
   get 'place_symantec_link' => 'keywords#place_symantec_link'
   #
+  get 'create_stumbleupon_profile' => 'keywords#create_stumbleupon_profile'
+  get 'place_stumbleupon_link' => 'keywords#place_stumbleupon_link'
+  #
+  get 'create_toolbox_profile' => 'keywords#create_toolbox_profile'
+  get 'place_toolbox_link' => 'keywords#place_toolbox_link'
+  #
+
 
 end

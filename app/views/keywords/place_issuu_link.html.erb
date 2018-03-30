@@ -24,20 +24,16 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'website').set @keyword.link
     browser.execute_script("window.scrollBy(0,800)")
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
-    instagram = instagram.first.link unless instagram.empty?
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
-    twitter = twitter.first.link unless twitter.empty?
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    facebook = facebook.first.link unless facebook.empty?
     pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
-    pinterest = pinterest.first.link unless pinterest.empty?
     browser.execute_script("window.scrollBy(0,800)")
 
     # Place BIG 4
-    browser.text_field(name: 'social-instagram').set instagram
-    browser.text_field(name: 'social-twitter').set twitter
-    browser.text_field(name: 'social-facebook').set facebook
-    browser.text_field(name: 'social-pinterest').set pinterest
+    browser.text_field(name: 'social-instagram').set instagram.first.link unless instagram.empty?
+    browser.text_field(name: 'social-twitter').set twitter.first.link unless twitter.empty?
+    browser.text_field(name: 'social-facebook').set facebook.first.link unless facebook.empty?
+    browser.text_field(name: 'social-pinterest').set pinterest.first.link unless pinterest.empty?
     browser.text_field(name: 'firstname').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'lastname').set @keyword.anchor_text.split[1]
     sleep 1

@@ -14,7 +14,9 @@ if kw2.length < 1
     browser.text_field(id: 'username').set @keyword.keyword
     browser.text_field(id: 'password').set @keyword.password
     browser.button(text: 'Continue').click
-    sleep(10)
+    sleep 10
+   	browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
+   	sleep 3
     browser.close
 else
    profiles << kw2.first.link

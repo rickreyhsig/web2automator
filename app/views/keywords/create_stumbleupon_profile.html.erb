@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#StumbleUpon
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%stumbleupon.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.stumbleupon.com/'
+    browser.div(text: 'Click here to sign up with Email').click
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'password-signup').set @keyword.password
+    browser.select_list(name: 'month').select_value('1')
+    browser.select_list(name: 'day').select_value('1')
+    browser.select_list(name: 'year').select_value('1980')
+    browser.radio(name: 'gender', value: '1').set
+    browser.execute_script("alert(\"Please solve CAPTCHA and click Join to continue.\")")
+    sleep 35
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, stumbleupon profile was created!
+</br></br>
+
+<%= link_to "Place stumbleupon link", send("place_stumbleupon_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

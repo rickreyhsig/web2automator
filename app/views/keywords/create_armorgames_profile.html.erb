@@ -12,9 +12,12 @@ if kw2.length < 1
     browser.text_field(id: 'user_name').set @keyword.keyword
     browser.text_field(id: 'email').set @keyword.email
     browser.text_field(id: 'password_other').set @keyword.password
+    browser.select_list(name: 'birth_year').select_value('1980')
     browser.checkbox(:id => 'agreement-input').set
     browser.execute_script("alert(\"Please resolve CAPTCHA and click Register Now to continue..\")")
     sleep 40
+    browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
+    sleep 5
     browser.close
 else
    profiles << kw2.first.link

@@ -15,10 +15,10 @@ if kw2.length < 1
     browser.text_field(id: 'edit-c-access-join-email').set @keyword.email
     browser.execute_script("alert(\"Please solve CAPTCHA before proceeding.\")")
     sleep 15
-    browser.input(id: 'edit-c-access-join-submit').click
+    #browser.input(id: 'edit-c-access-join-submit').click
     sleep 4
     browser.execute_script("window.scrollBy(0,700)")
-    browser.text_field(id: 'edit-profile-basics-lastname').set @keyword.anchor_text.split[1]
+    browser.text_field(id: 'edit-profile-basics-lastname').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
     browser.text_field(id: 'edit-name').set @keyword.keyword[0..17]
     browser.text_field(id: 'edit-pass').set @keyword.password
     browser.execute_script("alert(\"Please solve CAPTCHA before proceeding.\")")

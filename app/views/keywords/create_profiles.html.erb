@@ -157,6 +157,8 @@ Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
 browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
 
 browser.execute_script("alert(\"Please place link to continue. You got 30 seconds to do so..\")")
+browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
+
 
 #Scroll down 800 px
 browser.execute_script("window.scrollBy(0,800)")

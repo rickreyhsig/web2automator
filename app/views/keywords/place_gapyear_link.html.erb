@@ -14,12 +14,12 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'pwd').set @keyword.password
     browser.button(id: 'wp-submit').click
     browser.link(id: 'edit').click
-    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first.link
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first.link
-    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first.link
-    browser.text_field(name: 'field_3').set instagram.gsub('https://wwww.instagram.com','')
-    browser.text_field(name: 'field_5').set twitter.gsub('https://wwww.twitter.com','')
-    browser.text_field(name: 'field_4').set facebook.gsub('https://wwww.facebook.com','')
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    browser.text_field(name: 'field_3').set instagram.first.link.gsub('https://wwww.instagram.com','') unless instagram.empty?
+    browser.text_field(name: 'field_5').set twitter.first.link.gsub('https://wwww.twitter.com','') unless twitter.empty?
+    browser.text_field(name: 'field_4').set facebook.first.link.gsub('https://wwww.facebook.com','') unless facebook.empty?
     browser.execute_script("alert(\"Please fill out description and link in textarea..\")")
     sleep 25
     browser.execute_script("window.scrollBy(0,1100)")
