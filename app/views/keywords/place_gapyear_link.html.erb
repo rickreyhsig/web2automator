@@ -20,13 +20,21 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'field_3').set instagram.first.link.gsub('https://wwww.instagram.com','') unless instagram.empty?
     browser.text_field(name: 'field_5').set twitter.first.link.gsub('https://wwww.twitter.com','') unless twitter.empty?
     browser.text_field(name: 'field_4').set facebook.first.link.gsub('https://wwww.facebook.com','') unless facebook.empty?
-    browser.execute_script("alert(\"Please fill out description and link in textarea..\")")
-    sleep 25
+    #browser.execute_script("alert(\"Please fill out description and link in textarea..\")")
+    #sleep 25
+    description = 'Place this in description: '+ @keyword.anchor_text + ' ' + @keyword.description
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+
+    link = 'Place a link over anchor _text: '+ @keyword.link
+    browser.execute_script("var test = '#{link}';alert(test);")
+    sleep 14
+
     browser.execute_script("window.scrollBy(0,1100)")
     browser.input(name: 'profile-group-edit-submit').click
     sleep 2
     browser.execute_script("alert(\"Please upload pic and go to profile page..\")")
-    sleep 12
+    sleep 21
     browser.link(text: 'My Profile').click
     sleep 2
     # Save link

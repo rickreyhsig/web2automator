@@ -29,14 +29,19 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'website_url').set @keyword.link
 
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
-    twitter = twitter.first.link if twitter.first
-    browser.text_field(name: 'socialTwitter_username').set twitter.gsub('https://twitter.com/', '') if twitter
-    browser.execute_script("alert(\"Please fix twitter url if necessary SHOULD BE USERNAME ONLY.\")")
-    sleep 8
+    if twitter.first
+        twitter = twitter.first.link 
+        browser.text_field(name: 'socialTwitter_username').set twitter.gsub('https://twitter.com/', '')
+        browser.execute_script("alert(\"Please fix twitter url if necessary SHOULD BE USERNAME ONLY.\")")
+        sleep 8
+    end
 
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    facebook = facebook.first.link if facebook.first
-    browser.text_field(name: 'socialFacebook_url').set facebook if facebook
+
+    if facebook.first
+        facebook = facebook.first.link
+        browser.text_field(name: 'socialFacebook_url').set facebook
+    end
 
     linkedin = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%linkedin.com%')
     linkedin = linkedin.first.link if linkedin.first

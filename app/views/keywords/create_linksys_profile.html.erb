@@ -19,7 +19,7 @@ if kw2.length < 1
     browser.button(text: 'REGISTER').click
     browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
     browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
-    browser.execute_script("alert(\"Please LOGIN again and make SURE community username is setup.\")")
+    browser.execute_script("alert(\"Please make SURE community username is setup.\")")
     sleep 20
     browser.close
 else

@@ -30,10 +30,11 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'website_url').set @keyword.link
 
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    facebook = facebook.first.link if facebook.first
-    facebook = 'Place this in facebook text_field: '+ facebook
-    browser.execute_script("var output = '#{facebook}';alert(output);")
-    #browser.text_field(name: 'facebook_url').set facebook unless facebook.empty?
+    if facebook.first
+        facebook = facebook.first.link
+        facebook = 'Place this in facebook text_field: '+ facebook
+        browser.execute_script("var output = '#{facebook}';alert(output);")
+    end 
     sleep 7
 
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')

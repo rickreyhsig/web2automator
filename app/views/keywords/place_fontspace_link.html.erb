@@ -15,7 +15,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'password').set @keyword.password
     browser.execute_script("alert(\"Please fix username if necessary\")")
     sleep 8
-    browser.button(text: 'Login').click
+    browser.button(text: 'Login').click if browser.button(text: 'Login').exists?
     browser.goto 'http://www.fontspace.com/account/settings'
     sleep 2
     browser.execute_script("alert(\"Please place photo to continue. You got 15 seconds to do so..\")")

@@ -14,7 +14,7 @@ if kw2.length < 1
     browser.text_field(name: 'password').set @keyword.password
     browser.text_field(name: 'mail').set @keyword.email
     browser.execute_script("alert(\"Please select Country and complete CAPCTHA to continue. You got 30 seconds to do so..\")")
-    sleep 28
+    sleep 35
     browser.input(id: 'submit-button').click if browser.input(id: 'submit-button').exists?
     browser.execute_script("alert(\"Please validate email BEFORE CONTINUING.\")")
     sleep 7

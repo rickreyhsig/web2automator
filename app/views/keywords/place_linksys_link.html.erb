@@ -16,9 +16,9 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.button(text: 'SIGN IN').click
     browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
     browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
+    #browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
+    #browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
     browser.goto 'https://community.linksys.com/t5/user/myprofilepage/tab/personal-profile%3Apersonal-info'
-    browser.text_field(name: 'login').set @keyword.keyword if browser.text_field(name: 'login').exists?
-    browser.input(name: 'submitContext').click if browser.input(name: 'submitContext').exists?
     browser.text_field(name: 'profiletitle').set @keyword.anchor_text
     browser.text_field(name: 'profilelocation').set @keyword.city
     browser.text_field(name: 'profileurl_homepage').set @keyword.link

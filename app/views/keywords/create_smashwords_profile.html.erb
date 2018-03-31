@@ -22,6 +22,7 @@ if kw2.length < 1
     browser.radio(name: 'over18', value: 'yes').set
     browser.textarea(name: 'howhear').set 'A friend'
     browser.input(value: 'Sign me up!')
+    sleep 14
     browser.close
 else
    profiles << kw2.first.link

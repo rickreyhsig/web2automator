@@ -22,7 +22,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.file_field(name: 'userPicture').set(@keyword.logo_path)
     browser.execute_script("window.scrollBy(0,800)")
     browser.execute_script("alert(\"Please click Save Profile twice to continue. You got 7 seconds to do so..\")")
-    sleep(10)
+    sleep 14
     browser.span(class: 'user-name').click
     # Save link
     profiles << browser.url
