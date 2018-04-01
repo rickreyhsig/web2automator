@@ -13,7 +13,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(id: 'password-input').set @keyword.password
     browser.execute_script("alert(\"Please fix username if necessary..\")")
     sleep 5
-    browser.button(text: 'Login').click
+    browser.button(text: 'Login').click if browser.button(text: 'Login').exists?
     browser.goto 'https://armorgames.com/settings/general'
     browser.execute_script("alert(\"Pick whatever avatar\")")
     sleep 12
