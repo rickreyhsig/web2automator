@@ -160,6 +160,7 @@ browser.execute_script("alert(\"Please place link to continue. You got 30 second
 browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
 
 browser.select_list(name: 'label').select_value('hp1')
+browser.radio(name: 'gender', value: 'male').set
 browser.file_field(id: 'profile_avatar').set @keyword.logo_path
 
 #Scroll down 800 px

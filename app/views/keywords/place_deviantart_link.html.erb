@@ -14,7 +14,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(id: 'login_password').set @keyword.password
     browser.execute_script("alert(\"Please fix username if necessary. You got 10 seconds to do so..\")")
     sleep 7
-    browser.button(value: 'Log In').click
+    browser.button(value: 'Log In').click if browser.button(value: 'Log In').exists?
     browser.link(text: 'COMPLETE YOUR PROFILE').click
     browser.text_field(id: 'realname').set @keyword.anchor_text
     browser.text_field(id: 'website').set @keyword.link

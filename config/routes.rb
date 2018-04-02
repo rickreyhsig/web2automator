@@ -303,6 +303,8 @@ Web2automator::Application.routes.draw do
   get 'create_toolbox_profile' => 'keywords#create_toolbox_profile'
   get 'place_toolbox_link' => 'keywords#place_toolbox_link'
   #
-
+  get 'create_crunchyroll_profile' => 'keywords#create_crunchyroll_profile'
+  get 'place_crunchyroll_link' => 'keywords#place_crunchyroll_link'
+  #
 
 end

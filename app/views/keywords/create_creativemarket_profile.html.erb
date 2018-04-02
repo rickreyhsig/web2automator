@@ -6,7 +6,7 @@ browser = Watir::Browser.new
 profiles = []
 
 #CreativeMarket
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%creativemarket%").first.id)
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "creativemarket%").first.id)
 if kw2.length < 1
     browser.goto 'https://creativemarket.com/'
     browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').click if browser.link(text: 'No thanks, I don’t want a 10% discount and free assets.').present?
@@ -16,8 +16,16 @@ if kw2.length < 1
     browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1]
     browser.text_field(name: 'email').set @keyword.email
-    browser.execute_script("alert(\"Please type in username/passswd and click Sign Up to continue..\")")
-    sleep(20)
+
+    username = 'Place this in username: '+ @keyword.keyword
+    browser.execute_script("var test = '#{username}';alert(test);")
+    sleep 8
+
+    password = 'Place this in password: '+ @keyword.password + ' and then click Sign up button!'
+    browser.execute_script("var test = '#{password}';alert(test);")
+    sleep 8
+
+    sleep 5
     browser.close
 else
    profiles << kw2.first.link

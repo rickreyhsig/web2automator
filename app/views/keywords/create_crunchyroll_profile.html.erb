@@ -1,0 +1,39 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#CrunchyRoll
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "crunchyroll.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.crunchyroll.com/login'
+    browser.text_field(id: 'signup_with_profile_email').set @keyword.email
+    browser.text_field(id: 'signup_with_profile_username').set @keyword.keyword
+    browser.text_field(id: 'signup_with_profile_password').set @keyword.password
+    browser.radio(id: 'signup_with_profile_gender_1', value: '1').set
+    browser.select_list(id: 'signup_with_profile_date_of_birth_month').select_value('1')
+    browser.select_list(id: 'signup_with_profile_date_of_birth_day').select_value('1')
+    browser.select_list(id: 'signup_with_profile_date_of_birth_year').select_value('1980')
+    browser.execute_script("alert(\"Please Solve CAPTCHA\")")
+    sleep 21
+    browser.button(id: 'signup_submit_button').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, crunchyroll profile was created!
+</br></br>
+
+<%= link_to "Place crunchyroll link", send("place_crunchyroll_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
