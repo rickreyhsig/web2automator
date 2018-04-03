@@ -1,0 +1,43 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Tagged
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "tagged.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://secure.tagged.com/register.html'
+    browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
+    browser.text_field(name: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.text_field(name: 'zipCode').set @keyword.zipcode
+    browser.radio(name: 'gender', value: 'M').set
+    browser.select_list(name: 'birthMonth').select_value('1')
+    browser.select_list(name: 'birthDay').select_value('1')
+    browser.select_list(name: 'birthYear').select_value('1980')
+    browser.select_list(name: 'ethnicity').select_value('other')
+    browser.input(id: 'submitBtnAlt1').click
+    browser.link(text: 'Skip »').click
+    browser.execute_script("alert(\"Please UPLOAD PHOTO.\")")
+    sleep 15
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, tagged profile was created!
+</br></br>
+
+<%= link_to "Place tagged link", send("place_tagged_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,58 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Tagged
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "tagged.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://secure.tagged.com/register.html?display=login'
+    browser.iframe(id: 'unified_login').text_field(name: 'username').set @keyword.email
+    browser.iframe(id: 'unified_login').text_field(name: 'password').set @keyword.password
+    browser.iframe(id: 'unified_login').input(id: 'submit_button').click
+    sleep 2
+    browser.goto 'http://www.tagged.com/edit_profile.html?#t=1'
+    browser.text_field(name: 'display_name').set @keyword.anchor_text
+    browser.text_field(name: 'tagline').set @keyword.description
+    browser.button(text: 'Save').click
+    sleep 2
+    browser.goto 'http://www.tagged.com/profile.html'
+    browser.text_field(name: 'profile_url').set @keyword.keyword if browser.text_field(name: 'profile_url').exists?
+    if browser.input(name: 'submit_btn').exists?
+        browser.input(name: 'submit_btn').click
+        sleep 15
+    end
+    if browser.span(text: 'Write anything you want...').exists?
+        browser.span(text: 'Write anything you want...').click
+        description = 'Place this in about me: \n'+ @keyword.link + ' ' + @keyword.description
+        browser.execute_script("var test = '#{description}';alert(test);")
+        sleep 10
+        browser.button(text: 'Save').click if browser.button(text: 'Save').exists?
+    end
+    browser.execute_script("alert(\"Please click on profile URL\")")
+    sleep 7
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%tagged.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, tagged was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

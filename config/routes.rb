@@ -306,5 +306,8 @@ Web2automator::Application.routes.draw do
   get 'create_crunchyroll_profile' => 'keywords#create_crunchyroll_profile'
   get 'place_crunchyroll_link' => 'keywords#place_crunchyroll_link'
   #
+  get 'create_tagged_profile' => 'keywords#create_tagged_profile'
+  get 'place_tagged_link' => 'keywords#place_tagged_link'
+  #
 
 end
