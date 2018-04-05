@@ -1,0 +1,11 @@
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+  <tr> <th>Link</th> <td><%= @keyword.link %></td>  <th>Anchor Text</th>  <td><%= @keyword.anchor_text %></td> </tr>
+  <tr> <th>Email</th> <td><%= @keyword.email %></td> <th>Address</th>  <td><%= @keyword.address %></td>  </tr>
+  <tr> <th>Password</th> <td><%= @keyword.password %></td> <th>City</th>  <td><%= @keyword.city %></td> </tr>
+  <tr> <th>Password 2</th> <td><%= @keyword.password2 %></td> <th>State</th>  <td><%= @keyword.state %></td> </tr>
+  <tr> <th>Description</th> <td><%= @keyword.description %></td> <th>Zip Code</th>  <td><%= @keyword.zipcode %></td> </tr>
+  <tr> <th>Logo Path</th> <td><%= @keyword.logo_path %></td> <th>Country</th>  <td><%= @keyword.country %></td> </tr>
+  <tr> <th>Small Logo Path</th> <td><%= @keyword.small_logo_path %></td> <th></th>  <td><%#= @keyword. %></td></tr>
+</table>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

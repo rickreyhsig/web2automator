@@ -31,5 +31,4 @@ Congrats, hatena profile was created!
 <%= link_to "Place hatena link", send("place_hatena_link_path", keyword_id: @keyword.id) %>
 
 </br></br>
-
-<%= link_to 'Back', keyword_path(@keyword) %>
+<%= render "keyword_details" %>

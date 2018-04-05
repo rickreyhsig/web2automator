@@ -28,4 +28,4 @@ Congrats, pastebin profile was created!
 <%= link_to "Place pastebin link", send("place_pastebin_link_path", keyword_id: @keyword.id) %>
 </br></br>
 
-<%= link_to 'Back', keyword_path(@keyword) %>
+<%= render "keyword_details" %>

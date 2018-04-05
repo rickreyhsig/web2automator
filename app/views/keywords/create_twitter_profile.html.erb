@@ -16,6 +16,7 @@ if kw2.length < 1
     browser.text_field(name: 'user[email]').set @keyword.email
     browser.text_field(name: 'user[user_password]').set @keyword.password
     browser.input(id: 'submit_button').click
+    browser.close
 else
    profiles << kw2.first.link
 end
@@ -29,5 +30,4 @@ Congrats, twitter profile was created!
 
 </br></br>
 
-<%= link_to 'Back', keyword_path(@keyword) %>
-<% browser.close %>
+<%= render "keyword_details" %>

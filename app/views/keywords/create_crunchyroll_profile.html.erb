@@ -17,9 +17,9 @@ if kw2.length < 1
     browser.select_list(id: 'signup_with_profile_date_of_birth_month').select_value('1')
     browser.select_list(id: 'signup_with_profile_date_of_birth_day').select_value('1')
     browser.select_list(id: 'signup_with_profile_date_of_birth_year').select_value('1980')
-    browser.execute_script("alert(\"Please Solve CAPTCHA\")")
+    browser.execute_script("alert(\"Please Solve CAPTCHA if necessary\")")
     sleep 21
-    browser.button(id: 'signup_submit_button').click
+    browser.button(id: 'signup_submit_button').click if browser.button(id: 'signup_submit_button').exists?
     browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
     sleep 5
     browser.close
@@ -36,4 +36,4 @@ Congrats, crunchyroll profile was created!
 
 </br></br>
 
-<%= link_to 'Back', keyword_path(@keyword) %>
+<%= render "keyword_details" %>

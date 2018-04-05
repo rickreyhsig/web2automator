@@ -34,4 +34,4 @@ Congrats, pearltrees profile was created!
 <%= link_to "Place pearltrees link", send("place_pearltrees_link_path", keyword_id: @keyword.id) %>
 </br></br>
 
-<%= link_to 'Back', keyword_path(@keyword) %>
+<%= render "keyword_details" %>
