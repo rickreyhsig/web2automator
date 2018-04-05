@@ -1,0 +1,52 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Dzone
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "dzone.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://dzone.com/'
+    browser.link(text: 'Sign Up').click
+    #browser.text_field(name: 'email').set @keyword.email
+    email = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{email}';alert(test);")
+    sleep 8
+    browser.button(text: 'Sign Up').click
+    sleep 8
+    browser.text_field(id: 'name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'lastName').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(id: 'username').set @keyword.keyword
+    browser.text_field(id: 'password').set @keyword.password
+    browser.text_field(id: 'confPass').set @keyword.password
+    browser.div(id: 'infoi').checkbox.set
+    browser.button(text: 'Continue').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 15
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, dzone profile was created!
+</br></br>
+
+<%= link_to "Place dzone link", send("place_dzone_link_path", keyword_id: @keyword.id) %>
+</br></br>
+
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+  <tr> <th>Link</th> <td><%= @keyword.link %></td>  <th>Anchor Text</th>  <td><%= @keyword.anchor_text %></td> </tr>
+  <tr> <th>Email</th> <td><%= @keyword.email %></td> <th>Address</th>  <td><%= @keyword.address %></td>  </tr>
+  <tr> <th>Password</th> <td><%= @keyword.password %></td> <th>City</th>  <td><%= @keyword.city %></td> </tr>
+  <tr> <th>Password 2</th> <td><%= @keyword.password2 %></td> <th>State</th>  <td><%= @keyword.state %></td> </tr>
+  <tr> <th>Description</th> <td><%= @keyword.description %></td> <th>Zip Code</th>  <td><%= @keyword.zipcode %></td> </tr>
+  <tr> <th>Logo Path</th> <td><%= @keyword.logo_path %></td> <th>Country</th>  <td><%= @keyword.country %></td> </tr>
+  <tr> <th>Small Logo Path</th> <td><%= @keyword.small_logo_path %></td> <th></th>  <td><%#= @keyword. %></td></tr>
+</table>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

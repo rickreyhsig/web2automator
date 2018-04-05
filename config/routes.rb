@@ -309,5 +309,8 @@ Web2automator::Application.routes.draw do
   get 'create_tagged_profile' => 'keywords#create_tagged_profile'
   get 'place_tagged_link' => 'keywords#place_tagged_link'
   #
+  get 'create_dzone_profile' => 'keywords#create_dzone_profile'
+  get 'place_dzone_link' => 'keywords#place_dzone_link'
+  #
 
 end
