@@ -1,0 +1,59 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#TinyPic
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "tinypic.co%").first.id)
+if kw2.length < 1
+    browser.goto 'http://tinypic.com/join.php'
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.select_list(id: 'dob_Month').select_value('01')
+    browser.select_list(id: 'dob_Day').select_value('1')
+    browser.select_list(id: 'dob_Year').select_value('1980')
+    browser.checkbox(id: 'termsVerification').set
+    browser.execute_script("alert(\"Please Solve CAPTCHA if necessary\")")
+    sleep 14
+    browser.button(text: 'Join Now »').click if browser.button(text: 'Join Now »').exists?
+    browser.file_field(id: 'the_file').set @keyword.logo_path
+    browser.button(text: 'Upload').click
+    browser.link(text: 'Settings').click
+    browser.text_field(id: 'vanityurl').set @keyword.keyword
+    browser.text_field(id: 'fullname').set @keyword.anchor_text
+    browser.text_field(id: 'firstname').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'lastname').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.button(text: 'Save Changes').click
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
+    browser.text_field(id: 'signup_with_profile_email').set @keyword.email
+    browser.text_field(id: 'signup_with_profile_username').set @keyword.keyword
+    browser.text_field(id: 'signup_with_profile_password').set @keyword.password
+    browser.radio(id: 'signup_with_profile_gender_1', value: '1').set
+    browser.select_list(id: 'signup_with_profile_date_of_birth_month').select_value('1')
+    browser.select_list(id: 'signup_with_profile_date_of_birth_day').select_value('1')
+    browser.select_list(id: 'signup_with_profile_date_of_birth_year').select_value('1980')
+    browser.execute_script("alert(\"Please Solve CAPTCHA if necessary\")")
+    sleep 21
+    browser.button(id: 'signup_submit_button').click if browser.button(id: 'signup_submit_button').exists?
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, tinypic profile was created!
+</br></br>
+
+<%= link_to "Place tinypic link", send("place_tinypic_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

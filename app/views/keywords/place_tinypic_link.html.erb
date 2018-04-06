@@ -1,0 +1,45 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#TinyPic
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "tinypic.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'http://tinypic.com/'
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.input(id: 'submitSignIn').click
+    browser.goto 'http://tinypic.com/accountsettings.php'
+    browser.text_field(id: 'vanityurl').set @keyword.keyword
+    browser.text_field(id: 'fullname').set @keyword.anchor_text
+    browser.text_field(id: 'firstname').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'lastname').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.button(text: 'Save Changes').click
+    browser.goto "http://tinypic.com/{@keyword.keyword}"
+    sleep 5
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%crunchyroll.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, tinypic was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

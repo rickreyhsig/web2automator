@@ -17,7 +17,7 @@ Web2automator::Application.routes.draw do
   #
   get 'create_youtube_profile' => 'keywords#create_youtube_profile'
   get 'place_youtube_link' => 'keywords#place_youtube_link'
-  ###
+  #
   get 'create_profiles' => 'keywords#create_profiles', as: 'create_profiles'
   get 'create_links' => 'keywords#create_links', as: 'create_links'
   #
@@ -312,5 +312,10 @@ Web2automator::Application.routes.draw do
   get 'create_dzone_profile' => 'keywords#create_dzone_profile'
   get 'place_dzone_link' => 'keywords#place_dzone_link'
   #
-
+  get 'create_photobucket_profile' => 'keywords#create_photobucket_profile'
+  get 'place_photobucket_link' => 'keywords#place_photobucket_link'
+  #
+  get 'create_tinypic_profile' => 'keywords#create_tinypic_profile'
+  get 'place_tinypic_link' => 'keywords#place_tinypic_link'
+  #
 end
