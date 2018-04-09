@@ -1,0 +1,53 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Archive
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "archive.org%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://archive.org/account/login.php'
+    browser.text_field(id: 'username').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.button(id: 'submit').click if browser.button(id: 'submit').exists?
+    browser.link(class: 'mypic ghost80').click
+    sleep 1
+    browser.link(text: 'My library').click
+    browser.span(text: 'Edit').click
+    browser.text_field(name: 'field_default_title').set @keyword.anchor_text
+
+    #browser.textarea(name: 'field_default_description').set @keyword.description
+    description = 'Place this in description: \n'+ @keyword.description + ' | ' + @keyword.link
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+
+    browser.input(name: 'submit').click
+    sleep 1
+    browser.link(class: 'mypic ghost80').click
+    sleep 1
+    browser.link(text: 'My library').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%archive.org%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, archive.org was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -161,6 +161,7 @@ browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
 
 browser.select_list(name: 'label').select_value('hp1')
 browser.radio(name: 'gender', value: 'male').set
+browser.checkbox(id: 'termsVerification').set
 browser.file_field(id: 'profile_avatar').set @keyword.logo_path
 browser.iframe(name: 'submit-frame').text_field(name: 'url').set @keyword.link
 

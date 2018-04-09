@@ -318,4 +318,7 @@ Web2automator::Application.routes.draw do
   get 'create_tinypic_profile' => 'keywords#create_tinypic_profile'
   get 'place_tinypic_link' => 'keywords#place_tinypic_link'
   #
+  get 'create_archive_profile' => 'keywords#create_archive_profile'
+  get 'place_archive_link' => 'keywords#place_archive_link'
+  #
 end

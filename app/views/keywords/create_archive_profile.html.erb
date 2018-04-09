@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Archive
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "archive.org%").first.id)
+if kw2.length < 1
+    browser.goto 'https://archive.org/account/login.createaccount.php'
+    browser.text_field(id: 'username').set @keyword.email
+    browser.text_field(id: 'screenname').set @keyword.keyword
+    browser.text_field(id: 'password1').set @keyword.password
+    browser.text_field(id: 'password2').set @keyword.password
+    browser.checkbox(id: 'terms').set
+    browser.execute_script("alert(\"Please Solve CAPTCHA\")")
+    sleep 21
+    browser.button(id: 'submit').click if browser.button(id: 'submit').exists?
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, archive.org profile was created!
+</br></br>
+
+<%= link_to "Place archive.org link", send("place_archive_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
