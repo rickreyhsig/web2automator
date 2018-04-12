@@ -321,4 +321,8 @@ Web2automator::Application.routes.draw do
   get 'create_archive_profile' => 'keywords#create_archive_profile'
   get 'place_archive_link' => 'keywords#place_archive_link'
   #
+  get 'create_trello_profile' => 'keywords#create_trello_profile'
+  get 'place_trello_link' => 'keywords#place_trello_link'
+  #
+
 end
