@@ -324,5 +324,18 @@ Web2automator::Application.routes.draw do
   get 'create_trello_profile' => 'keywords#create_trello_profile'
   get 'place_trello_link' => 'keywords#place_trello_link'
   #
+  get 'create_photos_profile' => 'keywords#create_photos_profile'
+  get 'place_photos_link' => 'keywords#place_photos_link'
+  #
+  get 'create_drive_profile' => 'keywords#create_drive_profile'
+  get 'place_drive_link' => 'keywords#place_drive_link'
+  #
+  get 'create_shutterfly_profile' => 'keywords#create_shutterfly_profile'
+  get 'place_shutterfly_link' => 'keywords#place_shutterfly_link'
+  #
+  get 'create_slashdot_profile' => 'keywords#create_slashdot_profile'
+  get 'place_slashdot_link' => 'keywords#place_slashdot_link'
+  #
 
+  
 end

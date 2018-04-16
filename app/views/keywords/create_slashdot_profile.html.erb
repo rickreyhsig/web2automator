@@ -1,0 +1,40 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SlashDot
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "slashdot.org%").first.id)
+if kw2.length < 1
+    browser.goto 'https://slashdot.org/'
+    browser.span(text: 'Sign up').click
+    browser.text_field(id: 'newusernick').set @keyword.keyword
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'email2').set @keyword.email
+	browser.select_list(id: 'nl_job_title').select_value('CEO')
+	browser.select_list(id: 'nl_company_size').select_value('TINY')
+	browser.select_list(id: 'nl_country').select_value('USA')
+    browser.execute_script("alert(\"Please solve CAPTCHA.\")")
+    sleep 10
+    browser.execute_script("window.scrollBy(0,150)")
+    browser.input(id: 'modal_submit').click if browser.input(id: 'modal_submit').exists?
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, slashdot profile was created!
+</br></br>
+
+<%= link_to "Place slashdot link", send("place_slashdot_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
