@@ -24,7 +24,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.execute_script("alert(\"Please solve CAPTCHA.\")")
     sleep 10
     browser.execute_script("window.scrollBy(0,150)")
-    browser.input(id: 'edit-edit-save').click
+    browser.input(id: 'edit-edit-save').click if browser.input(id: 'edit-edit-save').exists?
     browser.execute_script("alert(\"Please navigate to profile.\")")
     sleep 10
     # Save link

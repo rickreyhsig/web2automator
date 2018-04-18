@@ -336,6 +336,9 @@ Web2automator::Application.routes.draw do
   get 'create_slashdot_profile' => 'keywords#create_slashdot_profile'
   get 'place_slashdot_link' => 'keywords#place_slashdot_link'
   #
+  get 'create_answers_profile' => 'keywords#create_answers_profile'
+  get 'place_answers_link' => 'keywords#place_answers_link'
+  #
 
-  
+
 end

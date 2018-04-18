@@ -1,0 +1,46 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Answers
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "answers.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.answers.com/login'
+    browser.link(text: 'Sign up').click
+    browser.link(text: 'or sign up with email').click
+    browser.text_field(placeholder: 'first name').set @keyword.anchor_text.split[0]
+    browser.text_field(placeholder: 'last name').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(placeholder: 'email address').set @keyword.email
+	browser.checkbox(class: 'checkbox').set
+
+    keyword = 'Place this in username: '+ @keyword.keyword
+	browser.execute_script("var test = '#{keyword}';alert(test);")
+	sleep 8
+
+	password = 'Place this in password: '+ @keyword.password
+	browser.execute_script("var test = '#{password}';alert(test);")
+	sleep 8
+
+    browser.execute_script("alert(\"Please solve CAPTCHA.\")")
+    sleep 42
+
+    browser.button(text: 'Sign up').click if browser.button(text: 'Sign up').exists?
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, answers profile was created!
+</br></br>
+
+<%= link_to "Place answers link", send("place_answers_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

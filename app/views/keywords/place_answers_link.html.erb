@@ -1,0 +1,74 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Answers
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "answers.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.answers.com/login'
+    browser.text_field(placeholder: 'username').set @keyword.keyword
+    browser.text_field(placeholder: 'password').set @keyword.password
+    browser.button(text: 'Log in').click if browser.button(text: 'Log in').exists?
+    browser.button(class: 'user_button').click
+    browser.link(text: 'Settings').click
+    browser.textarea(name: 'tagline').set @keyword.description
+    browser.text_field(name: 'website_name').set @keyword.anchor_text
+    browser.text_field(name: 'website_url').set @keyword.link
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(name: 'social_facebook').set facebook unless facebook.empty?
+
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    browser.text_field(name: 'social_twitter').set twitter unless twitter.empty?
+
+    googleplus = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%plus.google.com%')
+    googleplus = googleplus.first.link if googleplus.first
+    browser.text_field(name: 'social_googleplus').set googleplus unless googleplus.empty?
+
+    pinterest = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%pinterest.com%')
+    pinterest = pinterest.first.link if pinterest.first
+    browser.text_field(name: 'social_googleplus').set pinterest unless pinterest.empty?
+
+    tumblr = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%tumblr.com%')
+    tumblr = tumblr.first.link if tumblr.first
+    browser.text_field(name: 'social_tumblr').set tumblr unless tumblr.empty?
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link if instagram.first
+    browser.text_field(name: 'social_instagram').set instagram unless instagram.empty?
+    browser.textarea(name: 'profile_text').set @keyword.description
+    browser.link(text: 'SAVE CHANGES').click
+    sleep 2
+    browser.button(class: 'user_button').click
+    browser.link(text: 'Profile').click
+    sleep 2
+    browser.execute_script("alert(\"Please make sure socials are OK\")")
+    sleep 12
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%answers.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, answers was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
