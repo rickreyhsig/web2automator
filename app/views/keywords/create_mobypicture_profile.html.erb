@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#MobyPicture
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "mobypicture.co%").first.id)
+if kw2.length < 1
+    browser.goto 'http://www.mobypicture.com/signup'
+    browser.text_field(id: 'username').set @keyword.keyword
+    browser.text_field(id: 'enter-password').set '1234'
+    browser.text_field(id: 'enter-email').set @keyword.email
+    browser.text_field(id: 'enter-fullname').set @keyword.anchor_text
+    browser.span(text: 'Sign up').click
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, mobypicture profile was created!
+</br></br>
+
+<%= link_to "Place mobypicture link", send("place_mobypicture_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

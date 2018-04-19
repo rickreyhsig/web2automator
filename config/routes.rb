@@ -339,6 +339,12 @@ Web2automator::Application.routes.draw do
   get 'create_answers_profile' => 'keywords#create_answers_profile'
   get 'place_answers_link' => 'keywords#place_answers_link'
   #
+  get 'create_imgur_profile' => 'keywords#create_imgur_profile'
+  get 'place_imgur_link' => 'keywords#place_imgur_link'
+  #
+  get 'create_mobypicture_profile' => 'keywords#create_mobypicture_profile'
+  get 'place_mobypicture_link' => 'keywords#place_mobypicture_link'
+  #
 
 
 end

@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#MobyPicture
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "mobypicture.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'http://www.mobypicture.com/signin'
+    browser.text_field(id: 'username').set @keyword.keyword[0..19]
+    browser.text_field(id: 'enter-password').set '1234'
+    browser.button(text: 'Login').click
+    sleep 1
+    browser.goto 'http://www.mobypicture.com/account'
+    browser.textarea(name: 'account_bio').set @keyword.description + ' | '+ @keyword.address
+    browser.text_field(name: 'account_location').set @keyword.city + ' | '+ @keyword.state
+    browser.text_field(name: 'account_url').set @keyword.link
+    browser.button(text: 'Save!').click
+    browser.link(class: 'username').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%mobypicture.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, mobypicture was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
