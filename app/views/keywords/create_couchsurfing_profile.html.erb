@@ -1,0 +1,47 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#CouchSurfing
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "couchsurfing.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.couchsurfing.com/users/sign_up'
+    browser.text_field(id: 'first_name').set @keyword.anchor_text.split[0]
+    browser.text_field(id: 'last_name').set @keyword.anchor_text.split[1..@keyword.anchor_text.split.length-1].join(' ')
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(text: 'Join with Email').click
+	browser.select_list(id: 'day').select_value('1')
+	browser.select_list(id: 'month').select_value('1')
+	browser.select_list(id: 'year').select_value('1980')
+	browser.select_list(id: 'gender').select_value('male')
+
+    description = 'Place this in city: \n'+ @keyword.address + ' ' + @keyword.city + ' ' + @keyword.state
+	browser.execute_script("var test = '#{description}';alert(test);")
+	sleep 8
+
+    browser.execute_script("alert(\"Please solve CAPTCHA.\")")
+    sleep 42
+    browser.button(text: 'Create account').when_present.click if browser.button(text: 'Create account').exists?
+
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, couchsurfing profile was created!
+</br></br>
+
+<%= link_to "Place couchsurfing link", send("place_couchsurfing_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

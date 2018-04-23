@@ -345,6 +345,10 @@ Web2automator::Application.routes.draw do
   get 'create_mobypicture_profile' => 'keywords#create_mobypicture_profile'
   get 'place_mobypicture_link' => 'keywords#place_mobypicture_link'
   #
+  get 'create_couchsurfing_profile' => 'keywords#create_couchsurfing_profile'
+  get 'place_couchsurfing_link' => 'keywords#place_couchsurfing_link'
+  #
+
 
 
 end
