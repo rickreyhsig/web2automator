@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Diigo
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "diigo.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.diigo.com/sign-up?plan=free'
+    browser.text_field(id: 'username').set @keyword.keyword[0..15]
+    browser.text_field(id: 'email').set @keyword.email
+    browser.text_field(id: 'password').set @keyword.password
+    browser.execute_script("alert(\"Please resolve CAPTCHA.\")")
+    sleep 42
+    browser.button(text: 'Create Account').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, diigo profile was created!
+</br></br>
+
+<%= link_to "Place diigo link", send("place_diigo_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

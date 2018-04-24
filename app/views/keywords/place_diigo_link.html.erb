@@ -1,0 +1,64 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Diigo
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "diigo.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.diigo.com/sign-in'
+    browser.text_field(name: 'Username').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.button(text: 'Sign in').click
+    sleep 1
+    browser.goto 'https://www.diigo.com/setting'
+    sleep 1
+    # Place photo
+    browser.execute_script("alert(\"Please select photo when dropdown appears.\")")
+    sleep 4
+    browser.link(text: 'Change Avatar').click
+    sleep 15
+    browser.link(text: 'My Library').click
+    browser.div(class: 'addItemButton blue').click
+    browser.div(class: 'add-type-item link').click
+
+    link = 'Place this in link: \n'+ @keyword.link
+    browser.execute_script("var test = '#{link}';alert(test);")
+    sleep 8
+    browser.button(text: 'Next').click if browser.button(text: 'Next').exists?
+
+    description = 'Place this in description: \n'+ @keyword.description
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+    browser.button(text: 'Add').click if browser.button(text: 'Add').exists?
+
+    sleep 3
+    # Go to profile page
+    browser.div(class: 'avatar').click
+    browser.link(text: 'Public Library').click
+
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%diigo.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, diigo was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

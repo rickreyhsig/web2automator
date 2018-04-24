@@ -168,7 +168,7 @@ browser.iframe(name: 'submit-frame').text_field(name: 'url').set @keyword.link
 #Scroll down 800 px
 browser.execute_script("window.scrollBy(0,800)")
 
-description = 'Place this in description: '+ @keyword.description
+description = 'Place this in description: \n'+ @keyword.description
 browser.execute_script("var test = '#{description}';alert(test);")
 sleep 8
 
