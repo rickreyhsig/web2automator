@@ -1,0 +1,36 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#IntenseDebate
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "intensedebate.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://intensedebate.com/signup'
+    browser.text_field(id: 'txtName').set @keyword.keyword[0..14]
+    browser.text_field(id: 'txtEmail').set @keyword.email
+    browser.text_field(id: 'txtPassword').set @keyword.password
+    browser.text_field(id: 'txtPassword2').set @keyword.password
+    browser.span(text: 'Sign up').click
+    browser.execute_script("alert(\"Please fix username if necessary\")")
+    sleep 15
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, intensedebate profile was created!
+</br></br>
+
+<%= link_to "Place intensedebate link", send("place_intensedebate_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

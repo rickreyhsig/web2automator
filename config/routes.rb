@@ -351,6 +351,9 @@ Web2automator::Application.routes.draw do
   get 'create_diigo_profile' => 'keywords#create_diigo_profile'
   get 'place_diigo_link' => 'keywords#place_diigo_link'
   #
+  get 'create_intensedebate_profile' => 'keywords#create_intensedebate_profile'
+  get 'place_intensedebate_link' => 'keywords#place_intensedebate_link'
+  #
 
 
 
