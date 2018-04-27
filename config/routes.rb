@@ -354,6 +354,9 @@ Web2automator::Application.routes.draw do
   get 'create_intensedebate_profile' => 'keywords#create_intensedebate_profile'
   get 'place_intensedebate_link' => 'keywords#place_intensedebate_link'
   #
+  get 'create_kiva_profile' => 'keywords#create_kiva_profile'
+  get 'place_kiva_link' => 'keywords#place_kiva_link'
+  #
 
 
 

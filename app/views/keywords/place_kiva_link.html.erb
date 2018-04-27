@@ -1,0 +1,75 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Kiva
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "kiva.org%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.kiva.org/login'
+    sleep 30
+    browser.text_field(id: 'loginForm_email').set @keyword.email
+    browser.text_field(id: 'loginForm_pass').set @keyword.password
+    browser.button(id: 'loginForm_submit').click
+    browser.goto 'https://www.kiva.org/settings/account'
+    browser.text_field(name: 'contactRecord.streetAddress').set @keyword.address
+    browser.text_field(name: 'contactRecord.city').set @keyword.city
+    browser.text_field(name: 'contactRecord.state').set @keyword.state
+    browser.text_field(name: 'contactRecord.postalCode').set @keyword.zipcode
+    #browser.execute_script("alert(\"Please select country\")")
+    #sleep 10
+    browser.execute_script("alert(\"Please select photo\")")
+    sleep 2
+    browser.button(class: 'chooseImageButton').click
+    sleep 8
+    browser.text_field(name: 'publicId').set @keyword.keyword
+    browser.text_field(name: 'city').set @keyword.city
+    browser.text_field(name: 'state').set @keyword.state
+    browser.execute_script("alert(\"Please select country\")")
+    sleep 10
+    browser.text_field(name: 'url').set @keyword.link
+    browser.textarea(name: 'otherInfo').set @keyword.description
+    browser.button(text: 'Save profile info').click
+    browser.link(text: 'View your lender page »').click
+
+Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
+
+    browser.input(id: 'login').click
+    browser.img(class: 'member-avatar').click
+    browser.link(text: 'Settings').click
+    browser.span(text: 'Change Avatar…').click
+    browser.file_field(name: 'file').set @keyword.logo_path
+    browser.link(class: 'pop-over-header-close-btn icon-sm icon-close').click
+    browser.span(text: 'Change Name, Initials, or Bio…').click
+    browser.textarea(id: 'bio').set @keyword.description + " | " + @keyword.link
+    #browser.input(type: 'submit').click
+    browser.execute_script("alert(\"Please click Save!\")")
+    sleep 5
+    browser.img(class: 'member-avatar').click
+    browser.link(text: 'Profile').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%kiva.org%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, kiva was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
