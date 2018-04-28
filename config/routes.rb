@@ -357,6 +357,9 @@ Web2automator::Application.routes.draw do
   get 'create_kiva_profile' => 'keywords#create_kiva_profile'
   get 'place_kiva_link' => 'keywords#place_kiva_link'
   #
+  get 'create_last_profile' => 'keywords#create_last_profile'
+  get 'place_last_link' => 'keywords#place_last_link'
+  #
 
 
 
