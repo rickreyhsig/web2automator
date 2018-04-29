@@ -1,0 +1,37 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#LastFM
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "last.fm%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.last.fm/join'
+    browser.text_field(id: 'id_userName').set @keyword.keyword[0..14]
+    browser.text_field(id: 'id_email').set @keyword.email
+    browser.text_field(id: 'id_password').set @keyword.password2
+    browser.text_field(id: 'id_passwordConf').set @keyword.password2
+	browser.checkbox(id: 'id_terms').set
+	browser.execute_script("alert(\"Please resolve CAPTCHA..\")")
+	sleep 42
+    browser.button(text: 'Create my account').click if browser.button(text: 'Create my account').exists?
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, last.fm profile was created!
+</br></br>
+
+<%= link_to "Place last.fm link", send("place_last_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

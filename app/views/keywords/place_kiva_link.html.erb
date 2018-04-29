@@ -10,10 +10,11 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "kiva.org%").first.id)
 #if kw2.length < 1
     browser.goto 'https://www.kiva.org/login'
-    sleep 30
     browser.text_field(id: 'loginForm_email').set @keyword.email
     browser.text_field(id: 'loginForm_pass').set @keyword.password
     browser.button(id: 'loginForm_submit').click
+    #sleep 35
+
     browser.goto 'https://www.kiva.org/settings/account'
     browser.text_field(name: 'contactRecord.streetAddress').set @keyword.address
     browser.text_field(name: 'contactRecord.city').set @keyword.city
