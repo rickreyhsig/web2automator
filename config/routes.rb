@@ -360,7 +360,8 @@ Web2automator::Application.routes.draw do
   get 'create_last_profile' => 'keywords#create_last_profile'
   get 'place_last_link' => 'keywords#place_last_link'
   #
-
-
+  get 'create_scoop_profile' => 'keywords#create_scoop_profile'
+  get 'place_scoop_link' => 'keywords#place_scoop_link'
+  #
 
 end

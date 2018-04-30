@@ -1,0 +1,41 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Scoop
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "scoop.it%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.scoop.it/subscribe?&token=&sn=&showForm=true'
+    browser.text_field(name: 'displayName').set @keyword.anchor_text
+    browser.text_field(name: 'email').set @keyword.email
+    browser.text_field(name: 'password').set @keyword.password
+    browser.link(text: 'Upload').click
+    browser.execute_script("alert(\"Please select picture..\")")
+    sleep 10
+    browser.select_list(name: 'job').select_value('For marketing')
+    browser.execute_script("alert(\"Please solve CAPTCHA..\")")
+    sleep 49
+    browser.button(name: 'subscribe').click if browser.button(name: 'subscribe').exists?
+    browser.div(text: '1 to 5').click
+    browser.div(id: 'next').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, scoop.it profile was created!
+</br></br>
+
+<%= link_to "Place scoop link", send("place_scoop_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
