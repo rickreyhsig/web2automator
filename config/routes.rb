@@ -363,5 +363,8 @@ Web2automator::Application.routes.draw do
   get 'create_scoop_profile' => 'keywords#create_scoop_profile'
   get 'place_scoop_link' => 'keywords#place_scoop_link'
   #
+  get 'create_scribd_profile' => 'keywords#create_scribd_profile'
+  get 'place_scribd_link' => 'keywords#place_scribd_link'
+  #
 
 end

@@ -1,0 +1,53 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Scribd
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "scribd.co%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.scribd.com/login'
+    browser.text_field(id: 'login_or_email').set @keyword.email
+    browser.text_field(id: 'login_password').set @keyword.password
+    browser.button(type: 'submit').click
+
+    sleep 1
+    browser.goto 'https://www.scribd.com/account-settings'
+    browser.link(text: 'Upload Image').click if browser.link(text: 'Upload Image').exists?
+    if browser.button(text: 'Choose File').exists?
+        browser.button(text: 'Choose File').click
+        browser.execute_script("alert(\"Please choose photo and click save!\")")
+        sleep 12
+    end
+    browser.goto 'https://www.scribd.com/account-settings#edit-profile'
+    browser.text_field(id: 'login').set @keyword.keyword
+    browser.textarea(name: 'about').set @keyword.link + ' | ' + @keyword.description
+    browser.span(text: 'Save').click
+    sleep 5
+    browser.div(class: 'auto__base_component auto__shared_react_persona_icon persona_icon small').click
+    browser.link(text: 'Public Profile').click
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%scribd.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, scribd was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

@@ -1,0 +1,32 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Scribd
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "scribd.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.scribd.com/join'
+    browser.text_field(id: 'word_user[name]').set @keyword.anchor_text
+    browser.text_field(id: 'email_address[email]').set @keyword.email
+    browser.text_field(id: 'word_user[password]').set @keyword.password
+    browser.span(text: 'Sign Up').click
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, scribd profile was created!
+</br></br>
+
+<%= link_to "Place scribd link", send("place_scribd_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
