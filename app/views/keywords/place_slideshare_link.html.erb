@@ -1,0 +1,50 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SlideShare
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "slideshare.net%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.slideshare.net/login'
+    browser.text_field(id: 'user_login').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.button(id: 'login_from_loginpage').click
+    sleep 1
+    browser.goto "https://www.slideshare.net/#{@keyword.keyword}/edit_mypersonalinfo"
+    browser.execute_script("alert(\"Please fix username in URL if necessary\")")
+    sleep 7
+    browser.file_field(name: 'file').set @keyword.logo_path
+    sleep 8
+    browser.text_field(id: 'user_organization').set @keyword.anchor_text
+    browser.textarea(id: 'user_description').set @keyword.description
+    browser.text_field(id: 'user_url').set @keyword.link
+    browser.select_list(id: 'user_more_info_industry_cause_id').select_value('1')
+    browser.button(text: 'Save').click
+    browser.goto "https://www.slideshare.net/#{@keyword.keyword}"
+    browser.execute_script("alert(\"Please fix username in URL if necessary\")")
+    sleep 8
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%slideshare.net%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, slideshare was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>

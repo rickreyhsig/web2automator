@@ -366,5 +366,8 @@ Web2automator::Application.routes.draw do
   get 'create_scribd_profile' => 'keywords#create_scribd_profile'
   get 'place_scribd_link' => 'keywords#place_scribd_link'
   #
+  get 'create_slideshare_profile' => 'keywords#create_slideshare_profile'
+  get 'place_slideshare_link' => 'keywords#place_slideshare_link'
+  #
 
 end

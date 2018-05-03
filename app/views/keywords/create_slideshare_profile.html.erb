@@ -1,0 +1,35 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#SlideShare
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "slideshare.net%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.slideshare.net/w/signup/organization'
+    browser.text_field(id: 'j-user-login').set @keyword.keyword
+    browser.text_field(id: 'j-user-email').set @keyword.email
+    browser.text_field(id: 'j-user-password').set @keyword.password
+    browser.execute_script("alert(\"Please solve CAPTCHA\")")
+    sleep 60
+    browser.button(text: 'Join now').click if browser.button(text: 'Join now').exists?
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, slideshare profile was created!
+</br></br>
+
+<%= link_to "Place slideshare link", send("place_slideshare_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
