@@ -22,10 +22,10 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 
     browser.execute_script("window.scrollBy(0,1400)")
 
-    description = 'Place this in description: '+ @keyword.description
-    browser.execute_script("var test = '#{description}';alert(test);")
+    @description = 'Place this in description: \n'+ @keyword.description
+    browser.execute_script("var test = '#{@description}'")
+    sleep 8
 
-    sleep 9
     browser.text_field(id: 'edit-field-website-und-0-value').set @keyword.link
     browser.execute_script("window.scrollBy(0,700)")
 
