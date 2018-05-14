@@ -15,7 +15,7 @@ if kw2.length < 1
     browser.text_field(id: 'password').set @keyword.password
     browser.execute_script("alert(\"Please resolve CAPTCHA.\")")
     sleep 42
-    browser.button(text: 'Create Account').click
+    browser.button(text: 'Create Account').click if browser.button(text: 'Create Account').exists?
     browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
     sleep 5
     browser.close

@@ -11,10 +11,11 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 #if kw2.length < 1
     browser.goto 'https://www.burdastyle.com/login'
     sleep 5
-    browser.text_field(id: 'user_session_username').set @keyword.keyword
+    browser.text_field(id: 'user_session_username').set @keyword.keyword.tr('_','')
     browser.text_field(id: 'user_session_password').set @keyword.password
     browser.execute_script("alert(\"Please solve CAPTCHA and fix username if necessary You got 30 seconds to do so..\")")
-    sleep 30
+    sleep 49
+    browser.span(text: 'Login').click if browser.span(text: 'Login').exists?
     browser.goto "http://www.burdastyle.com/profiles/#{@keyword.keyword}/settings/profile"
     browser.execute_script("alert(\"Please fix username in URL if necessary You got 5 seconds to do so..\")")
     sleep 5
@@ -22,7 +23,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.textarea(id: 'profile_about_me').set @keyword.description
     browser.text_field(id: 'profile_website').set @keyword.anchor_text
     browser.text_field(id: 'profile_website_url').set @keyword.link
-    browser.span(text: 'Update').click
+    browser.span(text: 'Update').click if browser.span(text: 'Update').exists?
     browser.goto "http://www.burdastyle.com/profiles/#{@keyword.keyword}"
     browser.execute_script("alert(\"Please fix username in URL if necessary You got 5 seconds to do so..\")")
     sleep 5

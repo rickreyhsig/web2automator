@@ -13,7 +13,7 @@ if kw2.length < 1
     browser.execute_script("window.scrollBy(0,7000)")
     browser.text_field(id: 'user_first_name').set @keyword.anchor_text.split[0]
     browser.text_field(id: 'user_last_name').set @keyword.anchor_text.split[1]
-    browser.text_field(id: 'user_username').set @keyword.keyword
+    browser.text_field(id: 'user_username').set @keyword.keyword.tr('_','')
     browser.text_field(id: 'user_email').set @keyword.email
     browser.text_field(id: 'user_password').set @keyword.password
     browser.text_field(id: 'user_password_confirmation').set @keyword.password

@@ -10,16 +10,17 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 #if kw2.length < 1
     # Logs in and adds link
     browser.goto 'https://www.dreamwidth.org/login'
-    browser.text_field(name: 'user').set @keyword.keyword[0..24]
+    browser.text_field(name: 'user').set @keyword.keyword.tr('_','')[0..24]
     browser.text_field(name: 'password').set @keyword.password2
     browser.button(text: 'Log in').click
-    browser.goto 'https://www.dreamwidth.org/manage/icons'
-    sleep(2)
-    browser.file_field(name: 'userpic_0').set(@keyword.logo_path)
-    browser.button(text: 'Proceed').click
-    sleep(1)
-    browser.button(text: 'Create Icon').click
-    sleep(1)
+    sleep 1
+    #browser.goto 'https://www.dreamwidth.org/manage/icons'
+    #sleep(2)
+    #browser.file_field(name: 'userpic_0').set(@keyword.logo_path)
+    #browser.button(text: 'Proceed').click
+    #sleep(1)
+    #browser.button(text: 'Create Icon').click
+    #sleep(1)
     browser.goto 'https://www.dreamwidth.org/manage/profile/'
     sleep(2)
     browser.select_list(id: 'country_choice').select_value('US')

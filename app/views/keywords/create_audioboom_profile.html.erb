@@ -15,7 +15,7 @@ if kw2.length < 1
     browser.text_field(name: 'password').set @keyword.password
     browser.checkbox(name: 'terms').set
     browser.button(text: 'Continue').click
-    sleep 10
+    sleep 35
     browser.close
 else
    profiles << kw2.first.link

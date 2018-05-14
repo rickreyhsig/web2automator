@@ -13,7 +13,7 @@ if kw2.length < 1
     browser.text_field(placeholder: 'Password').set @keyword.password
     browser.button(text: 'Log In').click
     sleep(1)
-    browser.text_field(name: 'username').set @keyword.keyword
+    browser.text_field(name: 'username').set @keyword.keyword.gsub('_','')
     browser.text_field(name: 'fullname').set @keyword.keyword
     browser.text_field(name: 'email').set @keyword.email
     browser.text_field(name: 'password').set @keyword.password
