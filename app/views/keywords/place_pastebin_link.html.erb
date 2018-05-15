@@ -23,18 +23,18 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.button(text: 'Update Profile').click
     sleep 2
     # -----
-    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
-    twitter = twitter.first.link unless twitter.empty?
-    browser.execute_script("window.scrollBy(0,50)")
-    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    facebook = facebook.first.link unless facebook.empty?
+    #twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    #twitter = twitter.first.link unless twitter.empty?
+    #browser.execute_script("window.scrollBy(0,50)")
+    #facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    #facebook = facebook.first.link unless facebook.empty?
 
-    browser.execute_script("window.scrollBy(0,50)")
+    #browser.execute_script("window.scrollBy(0,50)")
     # Place fb and twitter
-    browser.text_field(name: 'user_twitter_handle').set twitter.gsub('https://twitter.com', '') unless twitter.empty?
-    browser.text_field(name: 'user_facebook_handle').set facebook.gsub('https://facebook.com', '') unless facebook.empty?
-    browser.execute_script("alert(\"Please make sure ONLY USERNAMES are written for fb+twitter. You got 10 seconds to do so..\")")
-    sleep 16
+    #browser.text_field(name: 'user_twitter_handle').set twitter.gsub('https://twitter.com', '') unless twitter.empty?
+    #browser.text_field(name: 'user_facebook_handle').set facebook.gsub('https://facebook.com', '') unless facebook.empty?
+    #browser.execute_script("alert(\"Please make sure ONLY USERNAMES are written for fb+twitter. You got 10 seconds to do so..\")")
+    #sleep 16
 
     # -----
     browser.button(text: 'Update Profile').click

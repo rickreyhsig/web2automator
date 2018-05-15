@@ -151,7 +151,7 @@ else
     profiles << kw2.first.link
 end
 
-#----------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
 
 browser.text_field(name: 'firstName').set @keyword.anchor_text.split[0]
