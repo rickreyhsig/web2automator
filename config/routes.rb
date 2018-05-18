@@ -369,5 +369,10 @@ Web2automator::Application.routes.draw do
   get 'create_slideshare_profile' => 'keywords#create_slideshare_profile'
   get 'place_slideshare_link' => 'keywords#place_slideshare_link'
   #
+  get 'create_visualcv_profile' => 'keywords#create_visualcv_profile'
+  get 'place_visualcv_link' => 'keywords#place_visualcv_link'
+  #
+
+  
 
 end
