@@ -3,10 +3,12 @@
 
 <h2>
   <b>Keyword:</b>
-  <%= @keyword.keyword + " - Web2.0 count: "+ KeywordWeb2.where(keyword_id: @keyword.id).count.to_s %> 
+  <%= @keyword.keyword + " - Web2.0 count: "+ KeywordWeb2.where(keyword_id: @keyword.id).count.to_s %>
 </h2>
 
 <p>
+  <b>No CAPTCHA:</b>
+  <%= Web2.where(no_captcha: true).count %>
   <b>Easy:</b>
   <%= Web2.where(easy: true).count %>
   <b>Manual:</b>
