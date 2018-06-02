@@ -10,7 +10,8 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hometalk.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://www.hometalk.com/'
-    browser.link(text: 'Join Now').click
+    browser.execute_script("alert(\"Please click Join Now\")")
+    sleep 5
     browser.text_field(name: 'email').set @keyword.email
     browser.input(name: 'signup').click
     browser.text_field(name: 'username').set @keyword.anchor_text
@@ -27,7 +28,7 @@ if kw2.length < 1
     browser.button(text: 'Save').click
     sleep 2
     browser.execute_script("alert(\"Please go to profile.\")")
-    sleep 2
+    sleep 4
     # Save link
     #profiles << browser.url
     #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%/hometalk.co%").first.id)
@@ -41,7 +42,7 @@ end
 </br></br>
 Congrats, hometalk profile was created!
 </br></br>
- 
+
 <%= link_to "Place hometalk link", send("place_hometalk_link_path", keyword_id: @keyword.id) %>
 
 </br></br>

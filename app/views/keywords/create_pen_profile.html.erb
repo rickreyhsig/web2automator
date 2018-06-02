@@ -14,7 +14,7 @@ if kw2.length < 1
     browser.text_field(name: 'password').set @keyword.password
     browser.input(type: 'submit').click
     browser.execute_script("alert(\"Please solve CAPTCHA\")")
-    sleep 21
+    sleep 50
     browser.text_field(name: 'title').set @keyword.anchor_text
     browser.textarea(name: 'text').set @keyword.description + ' ' + @keyword.link
     browser.input(type: 'submit').click

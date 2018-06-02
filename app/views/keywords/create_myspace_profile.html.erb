@@ -9,7 +9,7 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%myspace%").first.id)
 if kw2.length < 1
     browser.goto 'https://myspace.com/signup/email'
-    browser.text_field(id: 'signupEmailFullName').set @keyword.keyword
+    browser.text_field(id: 'signupEmailFullName').set @keyword.anchor_text
     browser.select_list(:id, "signupEmailGender").select_value("Male")
     browser.text_field(id: 'signupEmailUsername').set @keyword.keyword
     browser.text_field(id: 'signupEmailPassword').set @keyword.password
