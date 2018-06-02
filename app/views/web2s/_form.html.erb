@@ -16,7 +16,12 @@
     <%= f.text_field :url, class: 'form-control', style: 'width:80%' %>
   </div>
   <br/>
- <div class="field">
+  <div class="field">
+    <%= f.label :no_captcha %><br />
+    <%= f.check_box :no_captcha %>
+  </div>
+  <br/>
+  <div class="field">
     <%= f.label :easy %><br />
     <%= f.check_box :easy %>
   </div>

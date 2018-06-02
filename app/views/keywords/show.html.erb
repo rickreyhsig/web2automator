@@ -28,6 +28,16 @@
   <tr> <th>Small Logo Path</th> <td><%= @keyword.small_logo_path %></td> <th>Keyword</th>  <td><%= @keyword.keyword %></td></tr>
 </table>
 
+<h4>Color Legend:</h4>
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+  <tr>
+    <th style="background-color: #FF4500;">Bad</th>
+    <th style="background-color: #FFD700;">Manual</th>
+    <th style="background-color: #80ffbf;">Easy</th>
+    <th style="background-color: #99ffff;">No CAPTCHA</th>
+  </tr>
+</table>
+
 <h4>Profiles:</h4>
 
 <div class="table-responsive">
@@ -48,7 +58,9 @@
         <% if web2.manual %>
             <td style="background-color: #FFD700;"><%= web2.url %></td>
         <% elsif web2.easy %>
-            <td style="background-color: #AFEEEE;"><%= web2.url %></td>
+            <td style="background-color: #80ffbf;"><%= web2.url %></td>
+        <% elsif web2.no_captcha %>
+            <td style="background-color: #99ffff;"><%= web2.url %></td>
         <% elsif web2.bad %>
             <td style="background-color: #FF4500;"><%= web2.url %></td>
         <% else %>

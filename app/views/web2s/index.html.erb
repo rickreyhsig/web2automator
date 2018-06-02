@@ -7,6 +7,7 @@
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
       <tr>
         <th>Url</th>
+        <th>No Captcha</th>
         <th>Easy</th>
         <th>Manual</th>
         <th>Bad</th>
@@ -18,6 +19,7 @@
     <% @web2s.each do |web2| %>
       <tr>
         <td><%= web2.url %></td>
+        <td><%= web2.no_captcha %></td>
         <td><%= web2.easy %></td>
         <td><%= web2.manual %></td>
         <td><%= web2.bad %></td>
