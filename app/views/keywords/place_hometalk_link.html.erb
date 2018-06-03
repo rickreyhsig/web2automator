@@ -10,7 +10,9 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hometalk.co%").first.id)
 #if kw2.length < 1
     browser.goto 'https://www.hometalk.com/'
-    browser.link(text: 'Join Now').click
+    #browser.link(text: 'Join Now').click
+    browser.execute_script("alert(\"Please click Join Now\")")
+    sleep 5
     browser.execute_script("alert(\"Please click Log In.\")")
     sleep 5
 

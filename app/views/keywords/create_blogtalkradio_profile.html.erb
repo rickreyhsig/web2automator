@@ -18,15 +18,16 @@ if kw2.length < 1
     browser.text_field(name: 'txtPassword').set @keyword.password
     browser.text_field(name: 'txtConfirmPassword').set @keyword.password
     browser.execute_script("alert(\"Please solve CAPCTHA\")")
-    sleep 11
+    sleep 10
     browser.text_field(name: 'txtUserName').set @keyword.keyword
     browser.text_field(name: 'txtProfilePageTitle').set @keyword.anchor_text
     browser.textarea(name: 'txtDescription').set @keyword.description
     browser.select_list(name: 'ddlDefaultGenre$ddlGenre').select_value('4')
     browser.link(id: 'lbtnRegister').click
+    #browser.input(id: 'TCCheckbox').click
     sleep 1
-    browser.execute_script("alert(\"VERIFY ACCOUNT BEFORE PROCEEDING\")")
-    sleep 5
+    browser.execute_script("alert(\"Please set AGREE on policy, click CONTINUE AND - VERIFY ACCOUNT BEFORE PROCEEDING\")")
+    sleep 8
     browser.close
 else
    profiles << kw2.first.link

@@ -29,7 +29,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
         browser.span(text: 'Write anything you want...').click
         description = 'Place this in about me: \n'+ @keyword.link + ' ' + @keyword.description
         browser.execute_script("var test = '#{description}';alert(test);")
-        sleep 10
+        sleep 15
         browser.button(text: 'Save').click if browser.button(text: 'Save').exists?
     end
     browser.execute_script("alert(\"Please click on profile URL\")")

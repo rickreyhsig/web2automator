@@ -16,7 +16,7 @@ if kw2.length < 1
     browser.text_field(id: 'user_password').set @keyword.password
     browser.text_field(id: 'user_password_confirmation').set @keyword.password
     browser.execute_script("alert(\"Please SOLVE CAPTCHA and click Sign Upto continue. You got 12 seconds to do so..\")")
-    sleep 15
+    sleep 35
     browser.execute_script("alert(\"Please ACTIVATE ACCOUNT.\")")
     sleep 1
     browser.close

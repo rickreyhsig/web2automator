@@ -12,6 +12,8 @@ if kw2.length < 1
     browser.text_field(id: 'display-name-input').set @keyword.keyword
     browser.text_field(id: 'email-input').set @keyword.email
     browser.text_field(id: 'password-input').set @keyword.password
+    browser.checkbox(name: 'tos').set
+    browser.checkbox(name: 'privacy-policy').set
     browser.button(text: 'Signup').click
     browser.close
 else

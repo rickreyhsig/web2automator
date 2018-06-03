@@ -17,7 +17,7 @@ if kw2.length < 1
     browser.text_field(id: 'user_password').set @keyword.password
     browser.text_field(id: 'user_password_confirmation').set @keyword.password
     browser.execute_script("alert(\"Please set First Name, gender and birthday. You got 15 seconds to do so..\")")
-    sleep 20
+    sleep 50
     browser.button(text: 'Sign up').click
     browser.close
 else

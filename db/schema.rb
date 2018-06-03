@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180404155154) do
+ActiveRecord::Schema.define(:version => 20180601233842) do
 
   create_table "keyword_web2s", :force => true do |t|
     t.integer  "keyword_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20180404155154) do
     t.boolean  "manual"
     t.boolean  "easy"
     t.boolean  "bad"
+    t.boolean  "no_captcha"
   end
 
 end

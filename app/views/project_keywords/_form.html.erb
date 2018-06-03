@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :keyword_id %><br />
-    <%= f.select :keyword_id, Keyword.order(:keyword).all.collect {|k| [ k.keyword, k.id ] } %>
+    <%= f.select :keyword_id, Keyword.order('id desc').all.collect {|k| [ k.keyword, k.id ] } %>
   </div>
   <br/>
   <div class="actions">

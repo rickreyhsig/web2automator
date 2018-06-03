@@ -16,7 +16,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep(3)
     browser.text_field(id: 'blog').set @keyword.link
     browser.text_field(id: 'nickname').set @keyword.keyword
-    browser.text_field(id: 'tagline').set @keyword.description    
+    browser.text_field(id: 'tagline').set @keyword.description
     browser.execute_script("window.scrollBy(0,1800)")
     browser.span(text: 'Save Changes').click
     sleep(3)
@@ -25,7 +25,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.execute_script("alert(\"Please set URL link to continue. You got 15 seconds to do so..\")")
     sleep(15)
     browser.link(class: 'vanity-url_link').click
-    url = browser.link(class: 'vanity-url_link').href 
+    url = browser.link(class: 'vanity-url_link').href
     sleep(3)
     browser.goto 'https://www.yelp.com/user_photos/add'
     browser.execute_script("alert(\"Please add pic to continue. You got 8 seconds to do so..\")")
@@ -33,7 +33,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     # Save link
     profiles << url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%yelp.com%").first.id)
-    keyword_web2.update_attributes(link: browser.url)
+    keyword_web2.update_attributes(link: url)
     browser.close
 #else
 #   profiles << kw2.first.link
