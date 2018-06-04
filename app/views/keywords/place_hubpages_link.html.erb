@@ -50,9 +50,9 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.execute_script("window.scrollBy(0,800)")
     browser.input(value: 'Save Changes').click
     browser.execute_script("alert(\"Please place photo and save to continue.\")")
-    sleep 25
+    sleep 20
 
-    browser.link(text: 'view your profile').click
+    browser.link(text: 'view your profile').click if browser.link(text: 'view your profile').exists?
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%hubpages.co%").first.id)

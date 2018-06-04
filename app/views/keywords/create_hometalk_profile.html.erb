@@ -14,10 +14,10 @@ if kw2.length < 1
     sleep 5
     browser.text_field(name: 'email').set @keyword.email
     browser.input(name: 'signup').click
-    browser.text_field(name: 'username').set @keyword.anchor_text
+    browser.text_field(name: 'name').set @keyword.anchor_text
     browser.text_field(name: 'password').set @keyword.password
     browser.text_field(name: 'zipcode').set @keyword.zipcode
-    browser.file_field(name: 'image').set @keyword.logo_path
+    browser.file_field(name: 'photo').set @keyword.logo_path
     browser.execute_script("alert(\"Please click Save.\")")
     sleep 5
     #browser.button(text: 'Save').click

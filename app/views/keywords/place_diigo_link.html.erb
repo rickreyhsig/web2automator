@@ -27,7 +27,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 
     link = 'Place this in link: \n'+ @keyword.link
     browser.execute_script("var test = '#{link}';alert(test);")
-    sleep 8
+    sleep 15
     browser.button(text: 'Next').click if browser.button(text: 'Next').exists?
 
     description = 'Place this in description: \n'+ @keyword.description

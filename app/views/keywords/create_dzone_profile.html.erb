@@ -10,7 +10,7 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "dzone.co%").first.id)
 if kw2.length < 1
     browser.goto 'https://dzone.com/'
-    browser.link(text: 'Sign Up').click
+    browser.link(text: 'Sign Up').click if browser.link(text: 'Sign Up').exists?
     #browser.text_field(name: 'email').set @keyword.email
     email = 'Place this in email: '+ @keyword.email
     browser.execute_script("var test = '#{email}';alert(test);")
@@ -25,7 +25,7 @@ if kw2.length < 1
     browser.div(id: 'infoi').checkbox.set
     browser.button(text: 'Continue').click
     browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
-    sleep 15
+    sleep 25
     browser.close
 else
    profiles << kw2.first.link

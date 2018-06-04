@@ -16,7 +16,7 @@ if kw2.length < 1
     browser.text_field(id: 'signupEmailDobMonth').set '01'
     browser.text_field(id: 'signupEmailDobDay').set '01'
     browser.text_field(id: 'signupEmailDobYear').set '1980'
-    browser.text_field(id: 'signupEmailZipcode').set '20906'
+    browser.text_field(id: 'signupEmailZipcode').set @keyword.zipcode
     browser.text_field(id: 'signupEmailEmail').set @keyword.email
     #Have to finish the process manually
     browser.execute_script("alert(\"Please finish manually to continue. You got 30 seconds to do so..\")")
