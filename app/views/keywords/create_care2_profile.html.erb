@@ -15,12 +15,12 @@ if kw2.length < 1
     browser.text_field(name: 'f[firstname]').set @keyword.anchor_text.split[0]
     browser.text_field(name: 'f[lastname]').set @keyword.anchor_text.split[1]
     browser.text_field(name: 'f[loginemail]').set @keyword.email
-	browser.select_list(name: 'f[gender]').select_value('1')
-	browser.select_list(name: 'f[birthmonth]').select_value('1')
-	browser.select_list(name: 'f[birthday]').select_value('1')
-	browser.text_field(name: 'f[zipcode]').set '20906'
-	browser.checkbox(name: 'f[c2cOption]').set
-	browser.file_field(name: 'photo').set(@keyword.logo_path)
+	  browser.select_list(name: 'f[gender]').select_value('1')
+	  browser.select_list(name: 'f[birthmonth]').select_value('1')
+	  browser.select_list(name: 'f[birthday]').select_value('1')
+	  browser.text_field(name: 'f[zipcode]').set @keyword.zipcode
+	  browser.checkbox(name: 'f[c2cOption]').set
+	  browser.file_field(name: 'photo').set(@keyword.logo_path)
     browser.execute_script("alert(\"Please resolve CAPTCHA and click Sign Up Now to continue...\")")
 	sleep(75)
     browser.close
