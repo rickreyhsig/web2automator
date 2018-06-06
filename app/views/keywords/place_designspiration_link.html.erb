@@ -25,9 +25,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%').first
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%').first
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%').first
+    behance = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%behance.net%').first
+
     browser.text_field(name: 'instagram').set instagram.link.gsub('https://www.instagram.com/', '') if instagram
     browser.text_field(name: 'twitter').set twitter.link.gsub('https://twitter.com/', '') if twitter
     browser.text_field(name: 'facebook').set facebook.link.gsub('https://www.facebook.com/', '') if facebook
+    browser.text_field(name: 'behance').set behance.link.gsub('https://www.behance.net/', '') if behance
+
     browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
     sleep 12
     browser.execute_script("window.scrollBy(0,1800)")

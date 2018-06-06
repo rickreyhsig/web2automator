@@ -17,7 +17,7 @@ if kw2.length < 1
     password = 'Place this in password: '+ @keyword.password
     browser.execute_script("var test = '#{password}';alert(test);")
     sleep 8
-    browser.button(text: 'Sign up').click
+    browser.button(text: 'Sign up').click if browser.button(text: 'Sign up').exists?
     browser.execute_script("alert(\"Please verify account BEFORE PROCEEDING.\")")
     sleep 5
     browser.close

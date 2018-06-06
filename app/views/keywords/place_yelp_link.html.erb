@@ -17,9 +17,16 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(id: 'blog').set @keyword.link
     browser.text_field(id: 'nickname').set @keyword.keyword
     browser.text_field(id: 'tagline').set @keyword.description
+    browser.text_field(id: 'hometown').set @keyword.city
     browser.execute_script("window.scrollBy(0,1800)")
     browser.span(text: 'Save Changes').click
     sleep(3)
+    browser.goto 'https://www.yelp.com/profile_location'
+    browser.execute_script("alert(\"Please click on the pencil to EDIT \")")
+    sleep 2
+    zipcode = 'Place this in zipcode: \n'+ @keyword.zipcode + ' and then click save!'
+    browser.execute_script("var test = '#{zipcode}';alert(test);")
+    sleep 8
     browser.goto 'https://www.yelp.com/user_personal_url'
     sleep(3)
     browser.execute_script("alert(\"Please set URL link to continue. You got 15 seconds to do so..\")")

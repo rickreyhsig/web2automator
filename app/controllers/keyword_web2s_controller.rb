@@ -2,7 +2,7 @@ class KeywordWeb2sController < ApplicationController
   # GET /keyword_web2s
   # GET /keyword_web2s.json
   def index
-    @keyword_web2s = KeywordWeb2.all.reverse
+    @keyword_web2s = KeywordWeb2.includes(:keyword).includes(:web2).all.reverse
 
     respond_to do |format|
       format.html # index.html.erb

@@ -16,8 +16,8 @@
 
     <% @keyword_web2s.each do |keyword_web2| %>
       <tr>
-        <td><%= Keyword.find(keyword_web2.keyword_id).keyword %></td>
-        <td><%= Web2.find(keyword_web2.web2_id).url %></td>
+        <td><%= keyword_web2.keyword.keyword %></td>
+        <td><%= keyword_web2.web2.url %></td>
         <td><%= link_to keyword_web2.link, keyword_web2.link %></td>
         <td><%= link_to 'Details', keyword_web2 %></td>
         <td><%= link_to 'Edit', edit_keyword_web2_path(keyword_web2) %></td>

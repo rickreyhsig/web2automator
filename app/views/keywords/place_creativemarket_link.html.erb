@@ -18,7 +18,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.execute_script("var test = '#{username}';alert(test);")
     sleep 8
 
-    password = "Place this in password and then click Sign in button:"+ @keyword.password
+    password = "Place this in password and then click Sign in button: "+ @keyword.password
     browser.execute_script("var test = '#{password}';alert(test);")
     sleep 8
 
@@ -40,11 +40,15 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     pinterest = pinterest.link if pinterest
     github = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%github.com%').first
     github = github.link if github
+    behance = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%behance.net%').first
+    behance = behance.link if behance
     browser.text_field(name: 'instagram').set instagram.gsub('https://instagram.com/', '').gsub('/', '') if instagram
     browser.text_field(name: 'twitter').set twitter.gsub('https://twitter.com/', '').gsub('/', '') if twitter
     browser.text_field(name: 'tumblr').set tumblr if tumblr
     browser.text_field(name: 'pinterest').set pinterest.gsub('https://pinterest.com/', '').gsub('/', '') if pinterest
     browser.text_field(name: 'github').set github.gsub('https://github.com/', '').gsub('/', '') if github
+    browser.text_field(name: 'github').set github.gsub('https://www.behance.net/', '').gsub('/', '') if behance
+
     browser.execute_script("alert(\"Please make sure only usernames are filled out in socials, not entire URL. You got 5 seconds to do so..\")")
     sleep 15
     browser.button(text: 'Update Profile Info').click

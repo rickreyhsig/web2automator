@@ -25,7 +25,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep 15
 
     browser.textarea(id: 'profile-description').set @keyword.description
-    browser.text_field(id: 'location').set @keyword.city
+    #browser.text_field(id: 'location').set @keyword.city
     browser.text_field(id: 'website-link').set @keyword.link
 
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')

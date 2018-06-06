@@ -14,13 +14,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'password').set @keyword.password2
     browser.button(text: 'Log in').click
     sleep 1
-    #browser.goto 'https://www.dreamwidth.org/manage/icons'
-    #sleep(2)
-    #browser.file_field(name: 'userpic_0').set(@keyword.logo_path)
-    #browser.button(text: 'Proceed').click
-    #sleep(1)
-    #browser.button(text: 'Create Icon').click
-    #sleep(1)
+    browser.goto 'https://www.dreamwidth.org/manage/icons'
+    sleep(2)
+    browser.file_field(name: 'userpic_0').set(@keyword.logo_path)
+    browser.button(text: 'Proceed').click
+    sleep(1)
+    browser.button(text: 'Create Icon').click
+    sleep(1)
     browser.goto 'https://www.dreamwidth.org/manage/profile/'
     sleep(2)
     browser.select_list(id: 'country_choice').select_value('US')
@@ -43,6 +43,8 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     github = github.link if github
     deviantart = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%deviantart.com%').first
     deviantart = deviantart.link if deviantart
+    lastfm = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%last.fm%').first
+    lastfm = lastfm.link if lastfm
     browser.text_field(name: 'instagram').set instagram.gsub('https://wwww.instagram.com/','') if instagram
     browser.text_field(name: 'twitter').set twitter.gsub('https://wwww.twitter.com','') if twitter
     browser.text_field(name: 'tumblr').set tumblr
