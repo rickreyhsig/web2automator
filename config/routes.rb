@@ -375,6 +375,12 @@ Web2automator::Application.routes.draw do
   get 'create_docs_profile' => 'keywords#create_docs_profile'
   get 'place_docs_link' => 'keywords#place_docs_link'
   #
+  get 'create_visualcv_profile' => 'keywords#create_visualcv_profile'
+  get 'place_visualcv_link' => 'keywords#place_visualcv_link'
+  #
+  get 'create_wattpad_profile' => 'keywords#create_wattpad_profile'
+  get 'place_wattpad_link' => 'keywords#place_wattpad_link'
+  #
 
   
 

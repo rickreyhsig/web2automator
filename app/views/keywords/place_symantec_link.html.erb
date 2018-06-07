@@ -17,7 +17,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep 4 # Allow page to load
     browser.select_list(name: 'company_info_company_size').select_value('1-50') if browser.select_list(name: 'company_info_company_size').exists?
     browser.select_list(name: 'company_info_job_role').select_value('Executive') if browser.select_list(name: 'company_info_job_role').exists?
-    browser.select_list(name: 'profile_country').select_value(@keyword.country) if browser.select_list(name: 'profile_country').exists?
+    browser.select_list(name: 'profile_country').select_value('United States') if browser.select_list(name: 'profile_country').exists?
     browser.checkbox(name: 'legal_accept').set if browser.checkbox(name: 'legal_accept').exists?
     browser.input(value: 'Save changes').click if browser.input(value: 'Save changes').exists?
     browser.goto 'https://www.symantec.com/connect/user'

@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#Wattpad
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "wattpad.com%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.wattpad.com/'
+    browser.text_field(id: 'signup-username').set @keyword.keyword[0..19]
+    browser.text_field(id: 'signup-email').set @keyword.email
+    browser.text_field(id: 'signup-password').set @keyword.password
+    browser.input(value: 'Start Reading').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, wattpad profile was created!
+</br></br>
+
+<%= link_to "Place wattpad link", send("place_wattpad_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
