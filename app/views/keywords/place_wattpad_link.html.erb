@@ -10,11 +10,9 @@ profiles = []
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "wattpad.com%").first.id)
 #if kw2.length < 1
     browser.goto 'https://www.wattpad.com/login'
-
-    browser.text_field(id: 'login-user').set @keyword.email
+    browser.text_field(id: 'login-user').set @keyword.email.tr('.', '')
     browser.text_field(id: 'login-password').set @keyword.password
     browser.input(value: 'Log in').click
-
     browser.goto 'https://www.wattpad.com/user_profile'
     browser.text_field(name: 'realname').set @keyword.anchor_text
     browser.text_field(name: 'birthdate').set '01-01-1980'

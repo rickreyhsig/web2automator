@@ -17,6 +17,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.goto 'https://www.foursquare.com/settings'
     browser.textarea(id: 'inputBio').set (@keyword.link + " " + @keyword.description)[0..159]
     browser.text_field(id: 'inputLocation').set @keyword.city
+    browser.file_field(id: 'inputProfilePhoto').set @keyword.logo_path
     browser.execute_script("alert(\"Please make sure city is correct\")")
     sleep 7
     browser.execute_script("window.scrollBy(0,800)")

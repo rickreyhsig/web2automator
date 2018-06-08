@@ -381,6 +381,9 @@ Web2automator::Application.routes.draw do
   get 'create_wattpad_profile' => 'keywords#create_wattpad_profile'
   get 'place_wattpad_link' => 'keywords#place_wattpad_link'
   #
+  get 'create_yaliberty_profile' => 'keywords#create_yaliberty_profile'
+  get 'place_yaliberty_link' => 'keywords#place_yaliberty_link'
+  #
 
   
 

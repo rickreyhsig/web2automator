@@ -33,6 +33,8 @@ GEM
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (2.2.3)
+    bootstrap-will_paginate (1.0.0)
+      will_paginate
     builder (3.0.4)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
@@ -149,11 +151,13 @@ GEM
       rack
       rails
       watir (>= 6.0.0.beta4)
+    will_paginate (3.0.12)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-will_paginate
   chromedriver-helper
   coffee-rails (~> 3.1.1)
   jquery-rails
@@ -167,6 +171,7 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   watir-rails
+  will_paginate (~> 3.0.6)
 
 RUBY VERSION
    ruby 2.2.4p230
