@@ -384,7 +384,9 @@ Web2automator::Application.routes.draw do
   get 'create_yaliberty_profile' => 'keywords#create_yaliberty_profile'
   get 'place_yaliberty_link' => 'keywords#place_yaliberty_link'
   #
+  get 'create_kiwibox_profile' => 'keywords#create_kiwibox_profile'
+  get 'place_kiwibox_link' => 'keywords#place_kiwibox_link'
+  #
 
   
-
 end
