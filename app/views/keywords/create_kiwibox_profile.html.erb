@@ -1,0 +1,44 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#KiwiBox
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "kiwibox.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.kiwibox.com/tunnel/registration'
+    browser.text_field(name: 'registerUsername').set @keyword.keyword
+    browser.text_field(name: 'registerEmail').set @keyword.email
+    browser.text_field(name: 'registerPassword').set @keyword.password
+    #browser.radio(id: 'registerGenderMale', value: '2').set
+    #browser.label(text: 'male').click
+
+    browser.text_field(id: 'registerDateOfBirth')
+    browser.button(text: '1980').click
+
+    browser.text_field(name: 'registerLocationText').set @keyword.zipcode + ' ' + @keyword.city
+    browser.checkbox(name: 'registerAcceptTerms').set
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
+    browser.input(id: 'signup').click
+    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, kiwibox profile was created!
+</br></br>
+
+<%= link_to "Place kiwibox link", send("place_kiwibox_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>
