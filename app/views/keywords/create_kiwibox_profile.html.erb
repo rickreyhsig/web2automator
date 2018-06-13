@@ -15,17 +15,21 @@ if kw2.length < 1
     browser.text_field(name: 'registerPassword').set @keyword.password
     #browser.radio(id: 'registerGenderMale', value: '2').set
     #browser.label(text: 'male').click
-
-    browser.text_field(id: 'registerDateOfBirth')
-    browser.button(text: '1980').click
-
+    # ----
+    #browser.text_field(id: 'registerDateOfBirth')
+    #browser.button(text: '1980').click
+    browser.execute_script("alert(\"Please set gender and Date of Birth to 01/01/1980.\")")
+    sleep 10
     browser.text_field(name: 'registerLocationText').set @keyword.zipcode + ' ' + @keyword.city
-    browser.checkbox(name: 'registerAcceptTerms').set
-
-    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
-
-    browser.input(id: 'signup').click
-    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
+    #browser.checkbox(name: 'registerAcceptTerms').set
+    sleep 3
+    browser.execute_script("alert(\"Please check ACCEPT TERMS\")")
+    sleep 3
+    browser.button(id: 'finishRegistration').click if browser.button(id: 'finishRegistration').exists?
+    sleep 3
+    browser.execute_script("alert(\"Please answer question\")")
+    sleep 12
+    browser.button(id: 'finishCaptcha').click if browser.button(id: 'finishCaptcha').exists?
     sleep 5
     browser.close
 else

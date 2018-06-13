@@ -1,0 +1,57 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#KiwiBox
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "kiwibox.com%").first.id)
+#if kw2.length < 1
+    browser.goto 'https://www.kiwibox.com/tunnel/login'
+    browser.text_field(id: 'kwick_username').set @keyword.keyword[0..14]
+    browser.text_field(id: 'kwick_password').set @keyword.password
+    browser.button(id: 'confirmLogin').click if browser.button(id: 'confirmLogin').exists?
+    sleep 2
+    browser.goto "https://www.kiwibox.com/#{@keyword.keyword[0..14]}/portrait/"
+    sleep 2
+    browser.link(id: 'profilePicture').click
+    browser.file_field(name: 'pic').set @keyword.logo_path
+    sleep 3
+    browser.button(id: 'uploadbutton').click if browser.button(id: 'uploadbutton').exists?
+    sleep 5
+    browser.goto "https://www.kiwibox.com/#{@keyword.keyword[0..14]}/mypage/"
+
+    description =  'Place this in description:  '+ @keyword.description + ' | ' + @keyword.anchor_text
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+
+    description =  'Place link over anchor text at the end:  '+ @keyword.link
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+
+    browser.input(name: 'publish').click if browser.button(name: 'publish').exists?
+    sleep 2
+    # Save link
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id,
+      web2_id: Web2.where("url LIKE ?", "%kiwibox.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+   browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, kiwibox was placed!
+
+<% profiles.each do |p| %>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+    </br>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
