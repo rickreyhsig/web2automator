@@ -387,6 +387,9 @@ Web2automator::Application.routes.draw do
   get 'create_kiwibox_profile' => 'keywords#create_kiwibox_profile'
   get 'place_kiwibox_link' => 'keywords#place_kiwibox_link'
   #
+  get 'create_carbonmade_profile' => 'keywords#create_carbonmade_profile'
+  get 'place_carbonmade_link' => 'keywords#place_carbonmade_link'
+  #
 
   
 end
