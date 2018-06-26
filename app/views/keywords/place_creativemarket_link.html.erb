@@ -14,7 +14,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep(2)
     browser.link(text: 'Sign In').click
 
-    username = 'Place this in username: '+ @keyword.keyword
+    username = 'Place this in username: '+ @keyword.keyword[0..19]
     browser.execute_script("var test = '#{username}';alert(test);")
     sleep 8
 
