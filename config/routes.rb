@@ -390,6 +390,36 @@ Web2automator::Application.routes.draw do
   get 'create_carbonmade_profile' => 'keywords#create_carbonmade_profile'
   get 'place_carbonmade_link' => 'keywords#place_carbonmade_link'
   #
+  get 'create_vox_profile' => 'keywords#create_vox_profile'
+  get 'place_vox_link' => 'keywords#place_vox_link'
+  #
+  get 'create_voxmedia_profile' => 'keywords#create_voxmedia_profile'
+  get 'place_voxmedia_link' => 'keywords#place_voxmedia_link'
+  #
+  get 'create_sbnation_profile' => 'keywords#create_sbnation_profile'
+  get 'place_sbnation_link' => 'keywords#place_sbnation_link'
+  #
+  get 'create_theverge_profile' => 'keywords#create_theverge_profile'
+  get 'place_theverge_link' => 'keywords#place_theverge_link'
+  #
+  get 'create_eater_profile' => 'keywords#create_eater_profile'
+  get 'place_eater_link' => 'keywords#place_eater_link'
+  #
+  get 'create_polygon_profile' => 'keywords#create_polygon_profile'
+  get 'place_polygon_link' => 'keywords#place_polygon_link'
+  #
+  get 'create_racked_profile' => 'keywords#create_racked_profile'
+  get 'place_racked_link' => 'keywords#place_racked_link'
+  #
+  get 'create_curbed_profile' => 'keywords#create_curbed_profile'
+  get 'place_curbed_link' => 'keywords#place_curbed_link'
+  #
+  get 'create_recode_profile' => 'keywords#create_recode_profile'
+  get 'place_recode_link' => 'keywords#place_recode_link'
+  #
+  get 'create_theringer_profile' => 'keywords#create_theringer_profile'
+  get 'place_theringer_link' => 'keywords#place_theringer_link'
+  #
 
-  
+
 end
