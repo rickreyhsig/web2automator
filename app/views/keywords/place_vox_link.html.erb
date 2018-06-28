@@ -2,20 +2,33 @@
 require 'rubygems'
 require 'watir'
 
-browser = Watir::Browser.new
+#browser = Watir::Browser.new
 profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
-#Vox websites
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "vox.co%").first.id)
-#if kw2.length < 1
-    browser.goto 'https://auth.voxmedia.com/login'
-    browser.text_field(name: 'username').set @keyword.keyword
-    browser.text_field(name: 'password').set @keyword.password
-    browser.input(value: 'Login').click
-    sleep 2
-=begin
-    browser.goto "https://www.vox.com/users/#{@keyword.keyword}/edit_profile"
+def new_session_and_authenticate
+  browser = Watir::Browser.new
+  browser.goto 'https://auth.voxmedia.com/login'
+  browser.text_field(name: 'username').set @keyword.keyword
+  browser.text_field(name: 'password').set @keyword.password
+  browser.input(value: 'Login').click
+  sleep 1
+  return browser
+end
+
+# Vox websites
+# kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "vox.co%").first.id)
+# if kw2.length < 1
+    browser = new_session_and_authenticate
+    # --------------------- Vox
+    Rails.logger.info 'Vox'
+    begin
+      browser.goto "https://www.vox.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.vox.com/users/#{@keyword.keyword}/edit_profile"
+    end
+    sleep 1
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -34,13 +47,20 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.input(value: 'Update').click
     sleep 1
     browser.goto "https://www.vox.com/users/#{@keyword.keyword}/"
+    sleep 1
 
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%vox.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
-    # ----------------------------------- VoxMedia
-    sleep 2
-    browser.goto "https://www.voxmedia.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    # VoxMedia
+    begin
+      browser.goto "https://www.voxmedia.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.voxmedia.com/users/#{@keyword.keyword}/edit_profile"
+    end
+    sleep 1
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -64,8 +84,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%voxmedia.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     # ----------------------------------- SBnation
-    sleep 2
-    browser.goto "https://www.sbnation.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    begin
+      browser.goto "https://www.sbnation.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.sbnation.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -85,8 +110,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%sbnation.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     # ----------------------------------- TheVerge
-    sleep 2
-    browser.goto "https://www.theverge.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    begin
+      browser.goto "https://www.theverge.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.theverge.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
 
@@ -105,8 +135,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%theverge.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     # ----------------------------------- Eater
-    sleep 2
-    browser.goto "https://www.eater.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    begin
+      browser.goto "https://www.eater.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.eater.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -130,8 +165,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%eater.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     # ----------------------------------- Polygon
-    sleep 2
-    browser.goto "https://www.polygon.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    begin
+      browser.goto "https://www.polygon.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.polygon.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
 
@@ -150,8 +190,13 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%polygon.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
     # ----------------------------------- Racked
-    sleep 2
-    browser.goto "https://www.racked.com/users/#{@keyword.keyword}/edit_profile"
+    sleep 1
+    begin
+      browser.goto "https://www.racked.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.racked.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -174,9 +219,14 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%racked.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
-=end
-    sleep 2
-    browser.goto "http://www.curbed.com/users/#{@keyword.keyword}/edit_profile"
+    # ----------------------------------- Curbed
+    sleep 1
+    begin
+      browser.goto "https://www.curbed.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "https://www.curbed.com/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -199,32 +249,44 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%curbed.co%").first.id)
     keyword_web2.update_attributes(link: browser.url)
-    sleep 2
-    #browser.goto "http://www.theringer.com/users/#{@keyword.keyword}/edit_profile"
-    #browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
-    #browser.textarea(id: 'network_membership_bio').set @keyword.description
-    #browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
+    # ----------------------------------- TheRinger
+    sleep 1
+    begin
+      browser.goto "http://www.theringer.com/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "http://www.theringer.com/users/#{@keyword.keyword}/edit_profile"
+    end
+    browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
+    browser.textarea(id: 'network_membership_bio').set @keyword.description
+    browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
 
-    #browser.text_field(id: 'network_membership_public_email').set @keyword.email
-    #browser.text_field(id: 'network_membership_website_name').set @keyword.anchor_text
-    #browser.text_field(id: 'network_membership_website_url').set @keyword.link
+    browser.text_field(id: 'network_membership_public_email').set @keyword.email
+    browser.text_field(id: 'network_membership_website_name').set @keyword.anchor_text
+    browser.text_field(id: 'network_membership_website_url').set @keyword.link
 
-    #facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
-    #facebook = facebook.first.link if facebook.first
-    #browser.text_field(id: 'network_membership_facebook_page_url').set facebook unless facebook.empty?
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(id: 'network_membership_facebook_page_url').set facebook unless facebook.empty?
 
-    #instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
-    #instagram = instagram.first.link if instagram.first
-    #browser.text_field(id: 'network_membership_network_membership_items_attributes_0_value').set instagram unless instagram.empty?
-    #browser.input(value: 'Update').click
-    #sleep 1
-    #browser.goto "https://www.theringer.com/users/#{@keyword.keyword}/"
-    #profiles << browser.url
-    #keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%theringer.co%").first.id)
-    #keyword_web2.update_attributes(link: browser.url)
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link if instagram.first
+    browser.text_field(id: 'network_membership_network_membership_items_attributes_0_value').set instagram unless instagram.empty?
+    browser.input(value: 'Update').click
+    sleep 1
+    browser.goto "https://www.theringer.com/users/#{@keyword.keyword}/"
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%theringer.co%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
 
-    sleep 2
-    browser.goto "http://www.recode.net/users/#{@keyword.keyword}/edit_profile"
+    # ----------------------------------- Recode
+    sleep 1
+    begin
+      browser.goto "http://www.recode.net/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "http://www.recode.net/users/#{@keyword.keyword}/edit_profile"
+    end
     browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
     browser.textarea(id: 'network_membership_bio').set @keyword.description
     browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
@@ -257,8 +319,8 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
 Congrats, vox sites were placed!
 
 <% profiles.each do |p| %>
-    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
     </br>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
 <% end %>
 
 </br></br>
