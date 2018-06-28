@@ -15,6 +15,10 @@
   <%= Web2.where(manual: true).count %>
   <b>Bad:</b>
   <%= Web2.where(bad: true).count %>
+  <b>Hybrid:</b>
+  <%= Web2.where(hybrid: true).count %>
+  <b>Hybrid Sub:</b>
+  <%= Web2.where(hybrid_sub: true).count %>
   <b>Total:</b>
   <%= Web2.count %>
 
@@ -37,6 +41,8 @@
     <th style="background-color: #FFD700;">Manual</th>
     <th style="background-color: #80ffbf;">Easy</th>
     <th style="background-color: #99ffff;">No CAPTCHA</th>
+    <th style="background-color: #A482CF;">Hybrid</th>
+    <th style="background-color: #D7BFF6">Hybrid Sub</th>
   </tr>
 </table>
 
@@ -66,6 +72,10 @@
             <td style="background-color: #99ffff;"><%= web2.url %></td>
         <% elsif web2.bad %>
             <td style="background-color: #FF4500;"><%= web2.url %></td>
+        <% elsif web2.hybrid %>
+            <td style="background-color: #A482CF;"><%= web2.url %></td>
+        <% elsif web2.hybrid_sub %>
+            <td style="background-color: #D7BFF6;"><%= web2.url %></td>
         <% else %>
             <td><%= web2.url %></td>
         <% end %>
