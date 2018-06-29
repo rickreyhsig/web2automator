@@ -1,0 +1,33 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#8Tracks
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "8tracks.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://8tracks.com/signup'
+    browser.text_field(id: 'user_login').set @keyword.keyword[0..21]
+    browser.text_field(id: 'user_email').set @keyword.email
+    browser.text_field(id: 'user_password').set @keyword.password
+    browser.input(value: 'Sign up').click
+    browser.execute_script("alert(\"Please SOLVE CAPTCHA..\")")
+    sleep 65
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, 8tracks profile was created!
+</br></br>
+
+<%= link_to "Place 8tracks link", send("place_8tracks_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

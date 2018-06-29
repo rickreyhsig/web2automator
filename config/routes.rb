@@ -420,6 +420,9 @@ Web2automator::Application.routes.draw do
   get 'create_theringer_profile' => 'keywords#create_theringer_profile'
   get 'place_theringer_link' => 'keywords#place_theringer_link'
   #
+  get 'create_8tracks_profile' => 'keywords#create_8tracks_profile'
+  get 'place_8tracks_link' => 'keywords#place_8tracks_link'
+  #
 
 
 end
