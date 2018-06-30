@@ -9,7 +9,12 @@ profiles = []
 #ToolBox
 kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "toolbox.com").first.id)
 #if kw2.length < 1
-    browser.goto 'https://www.toolbox.com/'
+    begin
+      browser.goto 'https://www.toolbox.com/'
+    rescue
+      browser = Watir::Browser.new
+      browser.goto 'https://www.toolbox.com/'
+    end
     browser.div(class: 'PageHeaderWithMenu-signin-trigger toggle-trigger fa fa-user').click
     browser.text_field(name: 'email').set @keyword.email
     browser.text_field(name: 'password').set @keyword.password

@@ -13,6 +13,8 @@ if kw2.length < 1
     browser.text_field(id: 'signup_email').set @keyword.email
     browser.text_field(id: 'signup_password').set @keyword.password
     browser.button(value: 'Join with email').click
+    browser.execute_script("alert(\"Please verify account BEFORE CONTINUING..\")")
+    sleep 4
     browser.close
 else
    profiles << kw2.first.link

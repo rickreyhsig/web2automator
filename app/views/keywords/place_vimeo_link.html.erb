@@ -14,7 +14,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(id: 'login_password').set @keyword.password
     browser.button(value: 'Log in with email').click
     browser.goto 'https://vimeo.com/settings/profile/general'
-    sleep(3)
+    sleep 7
     browser.execute_script("window.scrollBy(0,400)")
     browser.link(text: '+ Add a new link').click
     browser.text_field(name: 'title').set @keyword.keyword
@@ -22,12 +22,12 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'location').set @keyword.city
     browser.text_field(name: 'description').set @keyword.keyword
     browser.execute_script("alert(\"Please click save to continue. You got 7 seconds to do so..\")")
-    sleep(7)
+    sleep 7
     browser.text_field(id: 'location').set @keyword.city
     browser.textarea(name: 'short_bio').set @keyword.description
     browser.text_field(name: 'url_slug').set @keyword.keyword
     browser.execute_script("alert(\"Please click save and add picture to continue and go to profile page. You got 20 seconds to do so..\")")
-    sleep(25)
+    sleep 25
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%vimeo%").first.id)
     keyword_web2.update_attributes(link: browser.url)

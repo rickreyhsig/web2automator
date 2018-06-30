@@ -16,7 +16,6 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     begin
       browser.goto "https://8tracks.com/users/#{@keyword.keyword[0..21]}/edit"
     rescue
-      browser = new_session_and_authenticate
       browser = Watir::Browser.new
       browser.goto 'https://8tracks.com/login'
       browser.text_field(id: 'login').set @keyword.email
@@ -44,7 +43,6 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     begin
       browser.goto "https://8tracks.com/users/#{@keyword.keyword[0..21]}"
     rescue
-      browser = new_session_and_authenticate
       browser = Watir::Browser.new
       browser.goto 'https://8tracks.com/login'
       browser.text_field(id: 'login').set @keyword.email
