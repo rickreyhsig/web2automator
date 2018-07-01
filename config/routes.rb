@@ -423,6 +423,9 @@ Web2automator::Application.routes.draw do
   get 'create_8tracks_profile' => 'keywords#create_8tracks_profile'
   get 'place_8tracks_link' => 'keywords#place_8tracks_link'
   #
+  get 'create_fc2_profile' => 'keywords#create_fc2_profile'
+  get 'place_fc2_link' => 'keywords#place_fc2_link'
+  #
 
 
 end
