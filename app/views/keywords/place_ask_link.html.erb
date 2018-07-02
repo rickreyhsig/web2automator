@@ -23,7 +23,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.file_field(id: 'user_avatar').set @keyword.logo_path
     browser.execute_script("window.scrollBy(0,1200)")
     browser.button(text: 'Save').click
-    sleep 1
+    sleep 3
     # Save link
     profiles << browser.url
     keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%ask.fm%").first.id)
