@@ -426,6 +426,9 @@ Web2automator::Application.routes.draw do
   get 'create_fc2_profile' => 'keywords#create_fc2_profile'
   get 'place_fc2_link' => 'keywords#place_fc2_link'
   #
+  get 'create_spoke_profile' => 'keywords#create_spoke_profile'
+  get 'place_spoke_link' => 'keywords#place_spoke_link'
+  #
 
 
 end
