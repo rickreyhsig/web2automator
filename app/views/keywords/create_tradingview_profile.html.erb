@@ -1,0 +1,34 @@
+<%
+require 'rubygems'
+require 'watir'
+
+browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+#TradingView
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "tradingview.co%").first.id)
+if kw2.length < 1
+    browser.goto 'https://www.tradingview.com/login#signup'
+    #browser.span(text: 'Join For Free').click
+    #browser.text_field(name: 'username').set @keyword.anchor_text
+    #browser.text_field(name: 'email').set @keyword.email
+    #browser.text_field(name: 'password').set @keyword.password
+    #browser.input(id: 'signup').click
+    browser.execute_script("alert(\"Please fill this out manually.\")")
+    sleep 5
+    browser.close
+else
+   profiles << kw2.first.link
+end
+%>
+
+</br></br>
+Congrats, tradingview profile was created!
+</br></br>
+
+<%= link_to "Place tradingview link", send("place_tradingview_link_path", keyword_id: @keyword.id) %>
+
+</br></br>
+
+<%= render "keyword_details" %>

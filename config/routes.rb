@@ -428,6 +428,9 @@ Web2automator::Application.routes.draw do
   #
   get 'create_spoke_profile' => 'keywords#create_spoke_profile'
   get 'place_spoke_link' => 'keywords#place_spoke_link'
+  # CAPTCHA message but doesn't allow to place links
+  get 'create_tradingview_profile' => 'keywords#create_tradingview_profile'
+  get 'place_tradingview_link' => 'keywords#place_tradingview_link'
   #
 
 
