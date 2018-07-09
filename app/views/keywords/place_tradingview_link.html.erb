@@ -19,6 +19,9 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     sleep 1
     browser.goto "https://www.tradingview.com/u/#{@keyword.keyword}/#settings-profile"
     browser.textarea(id: 'id_about').set @keyword.description
+    browser.text_field(id: 'id_location').set @keyword.city
+
+
 
 
     Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
