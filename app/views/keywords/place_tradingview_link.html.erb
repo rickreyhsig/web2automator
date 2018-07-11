@@ -21,15 +21,15 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.textarea(id: 'id_about').set @keyword.description
     browser.text_field(id: 'id_location').set @keyword.city
     browser.text_field(id: 'id_website').set @keyword.link
-
+    twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
+    twitter = twitter.first.link if twitter.first
+    twitter = twitter.gsub!('https://twitter.com/', '')
+    browser.text_field(id: 'id_twitter').set twitter unless twitter.empty?
 
     Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
 
     #browser.execute_script("alert(\"Please fill this out manually.\")")
     #sleep 5
-
-
-
 
     browser.text_field(id: 'user').set @keyword.email
     browser.text_field(id: 'password').set @keyword.password
