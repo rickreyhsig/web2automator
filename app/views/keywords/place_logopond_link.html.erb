@@ -23,7 +23,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     twitter = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%twitter.com%')
     facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
     # Place fb+tw
-    browser.text_field(name: 'twitter').set twitter.first.link.gsub('https://twitter.com/', '').tr('/', '') unless twitter.empty?
+    browser.text_field(name: 'twitter').set '@' + twitter.first.link.gsub('https://twitter.com/', '').tr('/', '') unless twitter.empty?
     browser.text_field(name: 'facebook').set facebook.first.link unless facebook.empty?
     browser.text_field(name: 'city').set @keyword.city
     browser.execute_script("window.scrollBy(0,600)")
