@@ -432,6 +432,9 @@ Web2automator::Application.routes.draw do
   get 'create_tradingview_profile' => 'keywords#create_tradingview_profile'
   get 'place_tradingview_link' => 'keywords#place_tradingview_link'
   #
+  get 'create_younow_profile' => 'keywords#create_younow_profile'
+  get 'place_younow_link' => 'keywords#place_younow_link'
+  #
 
 
 end
