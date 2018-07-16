@@ -1,0 +1,69 @@
+<%
+require 'rubygems'
+require 'watir'
+
+#browser = Watir::Browser.new
+profiles = []
+@keyword = Keyword.find(params[:keyword_id])
+
+def new_session_and_authenticate
+  browser = Watir::Browser.new
+  browser.goto 'https://auth.voxmedia.com/login'
+  browser.text_field(name: 'username').set @keyword.keyword
+  browser.text_field(name: 'password').set @keyword.password
+  browser.input(value: 'Login').click
+  sleep 1
+  return browser
+end
+
+# Vox websites
+# kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "vox.co%").first.id)
+# if kw2.length < 1
+    browser = new_session_and_authenticate
+    # ----------------------------------- Recode
+    sleep 1
+    begin
+      browser.goto "http://www.recode.net/users/#{@keyword.keyword}/edit_profile"
+    rescue
+      browser = new_session_and_authenticate
+      browser.goto "http://www.recode.net/users/#{@keyword.keyword}/edit_profile"
+    end
+    browser.file_field(id: 'profile_image_filename').set @keyword.logo_path
+    browser.textarea(id: 'network_membership_bio').set @keyword.description
+    browser.textarea(id: 'network_membership_signature').set @keyword.anchor_text + ' | ' + @keyword.link
+
+    browser.text_field(id: 'network_membership_public_email').set @keyword.email
+    browser.text_field(id: 'network_membership_website_name').set @keyword.anchor_text
+    browser.text_field(id: 'network_membership_website_url').set @keyword.link
+
+    facebook = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%facebook.com%')
+    facebook = facebook.first.link if facebook.first
+    browser.text_field(id: 'network_membership_facebook_page_url').set facebook unless facebook.empty?
+
+    instagram = KeywordWeb2.where(keyword_id: @keyword.id).where('link LIKE ?', '%instagram.com%')
+    instagram = instagram.first.link if instagram.first
+    browser.text_field(id: 'network_membership_network_membership_items_attributes_0_value').set instagram unless instagram.empty?
+    browser.input(value: 'Update').click
+    sleep 1
+    browser.goto "https://www.recode.net/users/#{@keyword.keyword}/"
+
+    profiles << browser.url
+    keyword_web2 = KeywordWeb2.find_or_create_by_keyword_id_and_web2_id(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "%recode.ne%").first.id)
+    keyword_web2.update_attributes(link: browser.url)
+    browser.close
+#else
+#   profiles << kw2.first.link
+#end
+%>
+
+</br></br>
+Congrats, recode was placed!
+
+<% profiles.each do |p| %>
+    </br>
+    <%= "<a href=\"#{p}\">#{p}</a>".html_safe %>
+<% end %>
+
+</br></br>
+
+<%= link_to 'Back', keyword_path(@keyword) %>
