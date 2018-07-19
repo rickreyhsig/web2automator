@@ -20,7 +20,7 @@ kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?
     browser.text_field(name: 'field_default_title').set @keyword.anchor_text
 
     #browser.textarea(name: 'field_default_description').set @keyword.description
-    description = 'Place this in description: \n'+ @keyword.description + ' | ' + @keyword.link
+    description = 'Place this in description: '+ @keyword.description + ' | ' + @keyword.link
     browser.execute_script("var test = '#{description}';alert(test);")
     sleep 20
 
