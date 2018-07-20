@@ -6,16 +6,12 @@ browser = Watir::Browser.new
 profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
-#Trello
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "trello.co%").first.id)
+#YouNow
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "younow.co%").first.id)
 if kw2.length < 1
-    browser.goto 'https://trello.com/signup'
-    browser.text_field(id: 'name').set @keyword.anchor_text
-    browser.text_field(id: 'email').set @keyword.email
-    browser.text_field(id: 'password').set @keyword.password
-    browser.input(id: 'signup').click
-    browser.execute_script("alert(\"Please CONFIRM ACCOUNT IN EMAIL BEFORE PROCEEDING.\")")
-    sleep 5
+    browser.goto 'https://www.younow.com/'
+    browser.execute_script("alert(\"Please create account WITH GMAIL!\")")
+    sleep 7
     browser.close
 else
    profiles << kw2.first.link
@@ -23,10 +19,10 @@ end
 %>
 
 </br></br>
-Congrats, trello profile was created!
+Congrats, younow profile was created!
 </br></br>
 
-<%= link_to "Place trello link", send("place_trello_link_path", keyword_id: @keyword.id) %>
+<%= link_to "Place younow link", send("place_younow_link_path", keyword_id: @keyword.id) %>
 
 </br></br>
 
