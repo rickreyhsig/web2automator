@@ -6,10 +6,24 @@ browser = Watir::Browser.new
 profiles = []
 @keyword = Keyword.find(params[:keyword_id])
 
-#Trello
-kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "trello.co%").first.id)
+#YouNow
+kw2 = KeywordWeb2.where(keyword_id: @keyword.id, web2_id: Web2.where("url LIKE ?", "younow.co%").first.id)
 #if kw2.length < 1
-    browser.goto 'https://trello.com/login'
+    browser.goto 'https://www.younow.com/'
+    browser.execute_script("alert(\"Please sign in with GMAIL!\")")
+    sleep 7
+    description = 'Place this in email: '+ @keyword.email
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+    description = 'Place this in password: '+ @keyword.password2
+    browser.execute_script("var test = '#{description}';alert(test);")
+    sleep 8
+    browser.goto 'https://www.younow.com/settings'
+    sleep 1
+    browser.text_field(placeholder: 'Nickname').set @keyword.keyword
+
+    Watir::Wait.until(1800) { browser.text.include? 'Boom Shakalaka!' }
+
     browser.text_field(id: 'user').set @keyword.email
     browser.text_field(id: 'password').set @keyword.password
     browser.input(id: 'login').click
