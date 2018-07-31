@@ -435,6 +435,9 @@ Web2automator::Application.routes.draw do
   get 'create_younow_profile' => 'keywords#create_younow_profile'
   get 'place_younow_link' => 'keywords#place_younow_link'
   #
-
+  get 'create_liveleak_profile' => 'keywords#create_liveleak_profile'
+  get 'place_liveleak_link' => 'keywords#place_liveleak_link'
+  #
+  
 
 end
